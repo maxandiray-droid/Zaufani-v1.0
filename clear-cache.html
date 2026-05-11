@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Clear Cache - Zaufani</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #FAF6EF;
+    padding: 40px;
+    text-align: center;
+  }
+  .message {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 50px auto;
+  }
+  .success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+  }
+  .error {
+    background: #ffebee;
+    color: #c62828;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  a {
+    color: #d4a574;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+    padding: 10px 20px;
+    background: #f0e6d2;
+    border-radius: 6px;
+  }
+  a:hover {
+    background: #e6dcc4;
+  }
+</style>
+</head>
+<body>
+
+<div class="message">
+  <h2>🧹 Cache Clearing</h2>
+  <div id="status">Clearing browser cache...</div>
+  <div id="result"></div>
+  <a href="index.html">← Back to App</a>
+</div>
+
+<script>
+try {
+  // Clear all localStorage
+  const keys = Object.keys(localStorage);
+  keys.forEach(key => {
+    localStorage.removeItem(key);
+    console.log('Cleared:', key);
+  });
+
+  // Clear all sessionStorage
+  const sessionKeys = Object.keys(sessionStorage);
+  sessionKeys.forEach(key => {
+    sessionStorage.removeItem(key);
+  });
+
+  // Verify
+  const remaining = Object.keys(localStorage).filter(k => k.includes('zaufani'));
+
+  if (remaining.length === 0) {
+    document.getElementById('status').innerHTML = '<h3>✅ Cache Cleared Successfully!</h3>';
+    document.getElementById('result').innerHTML = `
+      <div class="success">
+        <p>All local data has been cleared.</p>
+        <p>You can now login with a fresh start.</p>
+      </div>
+    `;
+  } else {
+    throw new Error('Failed to clear all keys: ' + remaining.join(', '));
+  }
+
+} catch (error) {
+  document.getElementById('status').innerHTML = '<h3>❌ Error</h3>';
+  document.getElementById('result').innerHTML = `
+    <div class="error">
+      <p>${error.message}</p>
+      <p>Try manually: F12 → Application → Local Storage → Clear All</p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
