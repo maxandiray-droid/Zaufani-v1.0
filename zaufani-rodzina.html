@@ -1065,33 +1065,17 @@
   </div>
 
   <div class="auth-form">
-    <!-- Login/Register toggle -->
-    <div style="display: flex; gap: 8px; margin-bottom: 20px;">
-      <button style="flex: 1; padding: 10px; border: 2px solid var(--amber); background: var(--amber); color: white; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 13px;" id="btn-login-mode" onclick="switchAuthForm('login')">🔓 Connexion</button>
-      <button style="flex: 1; padding: 10px; border: 2px solid var(--cream-dark); background: white; color: var(--ink); border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 13px;" id="btn-register-mode" onclick="switchAuthForm('register')">✍️ Inscription</button>
-    </div>
-
-    <!-- Login form -->
+    <!-- V.1.0 Simple Name Login -->
     <div id="auth-login-form">
-      <input type="email" class="form-input" placeholder="Adres e-mail" id="auth-email" onkeypress="if(event.key==='Enter') login()">
-      <input type="password" class="form-input" placeholder="Hasło" id="auth-pass" style="margin-bottom: 16px;" onkeypress="if(event.key==='Enter') login()">
-      <button class="auth-submit" onclick="login()">Zaloguj się →</button>
-    </div>
-
-    <!-- Register form (hidden by default) -->
-    <div id="auth-register-form" style="display: none;">
-      <input type="text" class="form-input" placeholder="Prénom et Nom" id="reg-fullname">
-      <input type="email" class="form-input" placeholder="Adres e-mail" id="reg-email">
-      <input type="password" class="form-input" placeholder="Mot de passe" id="reg-pass">
-      <input type="password" class="form-input" placeholder="Confirmer mot de passe" id="reg-pass-confirm" style="margin-bottom: 16px;">
-      <button class="auth-submit" onclick="register()">Créer un compte →</button>
+      <input type="text" class="form-input" placeholder="Votre nom" id="auth-name" style="margin-bottom: 16px;" onkeypress="if(event.key==='Enter') loginSimple()">
+      <button class="auth-submit" onclick="loginSimple()">Continuer →</button>
     </div>
 
     <div class="folk-divider"><span>✦</span></div>
 
     <div class="auth-note">
-      Pas de compte? Créez-en un avec "✍️ Inscription"!<br><br>
-      <span style="color: var(--gray-warm); font-size: 12px;">Invité? Vérifiez votre lien d'invitation.</span>
+      Bienvenue en V.1.0 - Mode marché!<br><br>
+      <span style="color: var(--gray-warm); font-size: 12px;">Entrez votre nom pour commencer.</span>
     </div>
   </div>
 </div>
@@ -2606,6 +2590,71 @@
         }, 600);
       }
     }, 400);
+  }
+
+  // V.1.0: Simple name-based login
+  function loginSimple() {
+    const name = document.getElementById('auth-name').value.trim();
+    if (!name) {
+      showToast('⚠️ Entrez votre nom');
+      return;
+    }
+
+    console.log('🔍 V.1.0 Login attempt:', name);
+
+    // Try to find user by name
+    let user = findUserByName(name);
+
+    // If user doesn't exist, create them automatically
+    if (!user) {
+      console.log('👤 User not found, creating new user:', name);
+      const newUser = {
+        id: 'user_' + Date.now(),
+        fullName: name,
+        email: 'v10_' + name.toLowerCase().replace(/\s+/g, '_') + '@zaufani.local',
+        role: 'user',
+        createdAt: new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+        sponsors: [],
+        followers: [],
+        posts: [],
+        isActive: true,
+        avatar: '👤',
+        city: '',
+        profession: ''
+      };
+      zaufaniDB_addUser(newUser);
+      user = newUser;
+      console.log('✅ User created:', user.id);
+    } else {
+      user.lastLogin = new Date().toISOString();
+      zaufaniDB_updateUser(user.id, { lastLogin: user.lastLogin });
+    }
+
+    // Login success
+    userState.isAuthenticated = true;
+    userState.userId = user.id;
+    userState.email = user.email;
+    userState.fullName = user.fullName;
+    userState.role = user.role;
+    userState.isAdmin = user.role === 'admin';
+    userState.totalDonated = user.totalDonated || 0;
+    userState.hasNoAds = user.hasNoAds || false;
+    userState.needsSponsorship = false; // V.1.0: No sponsorship required
+    userState.sponsorCount = 0;
+
+    console.log('✅ V.1.0 Login success:', user.fullName);
+    loginSuccess();
+  }
+
+  function findUserByName(name) {
+    const lowerName = name.toLowerCase();
+    for (const user of zaufaniDB.users) {
+      if (user.fullName.toLowerCase() === lowerName) {
+        return user;
+      }
+    }
+    return null;
   }
 
   function login() {
@@ -6053,19 +6102,23 @@
     const app = document.getElementById('app');
 
     if (userState.isAuthenticated) {
-      if (userState.needsSponsorship && userState.sponsorCount < 2) {
-        authScreen.style.display = 'none';
-        waitingScreen.style.display = 'flex';
-        app.style.display = 'none';
-        // Start polling when waiting screen is shown
-        startSponsorshipPolling();
-      } else {
+      // V.1.0: Skip sponsorship requirement for users created via name-based login
+      const isV10User = userState.email && userState.email.startsWith('v10_');
+
+      if (isV10User || !userState.needsSponsorship || userState.sponsorCount >= 2) {
+        // Show app directly (no sponsorship screen for V.1.0 users)
         authScreen.style.display = 'none';
         waitingScreen.style.display = 'none';
         app.style.display = 'flex';
         app.classList.add('visible');
         userState.needsSponsorship = false;
         stopSponsorshipPolling();
+      } else {
+        // Show sponsorship screen for regular V.1 users only
+        authScreen.style.display = 'none';
+        waitingScreen.style.display = 'flex';
+        app.style.display = 'none';
+        startSponsorshipPolling();
       }
     }
   }
