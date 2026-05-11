@@ -1534,6 +1534,12 @@
         </div>
       </div>
 
+      <!-- Wallet Transaction History -->
+      <div class="profile-section">
+        <div class="profile-section-title">📊 Historique du portefeuille</div>
+        <div id="wallet-history" style="font-size: 13px; color: var(--gray-warm); text-align: center; padding: 20px;">Aucune transaction</div>
+      </div>
+
       <!-- Notifications -->
       <div class="profile-section">
         <div class="profile-section-title">📬 Notifications</div>
@@ -3075,6 +3081,7 @@
     if (tab === 'konto') {
       setTimeout(() => {
         displayUserNotifications();
+        displayWalletHistory();
         displayUserTransactions();
       }, 100);
     }
@@ -3184,6 +3191,45 @@
     const days = Math.floor(hours / 24);
     if (days < 7) return days + 'j';
     return date.toLocaleDateString('fr-FR');
+  }
+
+  function displayWalletHistory() {
+    const historyDiv = document.getElementById('wallet-history');
+    if (!historyDiv) return;
+
+    const currentUser = zaufaniDB_getUserById(userState.userId);
+    if (!currentUser || !currentUser.wallet || !currentUser.wallet.transactions || currentUser.wallet.transactions.length === 0) {
+      historyDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--gray-warm);">Aucune transaction dans votre portefeuille</div>';
+      return;
+    }
+
+    const transactions = currentUser.wallet.transactions
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    let html = '';
+    transactions.forEach(tx => {
+      const date = new Date(tx.timestamp);
+      const timeAgo = getTimeAgo(date);
+      const isCredit = tx.type === 'credit';
+      const color = isCredit ? 'var(--forest)' : 'var(--terracotta)';
+      const icon = isCredit ? '➕' : '➖';
+      const sign = isCredit ? '+' : '−';
+
+      html += `
+        <div style="background: white; border-left: 4px solid ${color}; border-radius: 8px; padding: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: start;">
+          <div style="flex: 1;">
+            <div style="font-weight: 700; color: var(--ink); font-size: 12px;">${tx.description}</div>
+            <div style="font-size: 11px; color: var(--gray-warm); margin-top: 4px;">${timeAgo}</div>
+          </div>
+          <div style="text-align: right; margin-left: 12px;">
+            <div style="font-weight: 700; color: ${color}; font-size: 13px;">${icon} ${sign}${Math.abs(tx.amount).toFixed(2)}€</div>
+            <div style="font-size: 10px; color: var(--gray-light); margin-top: 2px;">Solde: ${tx.balance.toFixed(2)}€</div>
+          </div>
+        </div>
+      `;
+    });
+
+    historyDiv.innerHTML = html;
   }
 
   function displayMarketplaceListings(filterCategory = null) {
