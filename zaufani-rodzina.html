@@ -2718,6 +2718,12 @@
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
     modal.id = 'modal-avatar-picker-v10';
+    // Prevent closing by clicking background - avatar selection is mandatory
+    modal.onclick = (e) => {
+      if (e.target === modal) {
+        showToast('⚠️ Veuillez choisir un avatar pour continuer');
+      }
+    };
     modal.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: flex-end; z-index: 100;';
 
     const sheet = document.createElement('div');
@@ -3143,6 +3149,13 @@
     listDiv.innerHTML = html;
   }
 
+  // Escape HTML to prevent XSS
+  function escapeHTML(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
   function displayUserNotifications() {
     const notifDiv = document.getElementById('notifications-list');
     if (!notifDiv) return;
@@ -3163,12 +3176,16 @@
       const bgColor = notif.read ? 'var(--cream-light)' : 'rgba(200,121,42,0.1)';
       const borderColor = notif.read ? 'var(--cream-dark)' : 'var(--amber)';
 
+      // Escape HTML in user-controlled data
+      const safeTitle = escapeHTML(notif.title || '');
+      const safeMessage = escapeHTML(notif.message || '');
+
       html += `
         <div style="background: ${bgColor}; border: 1.5px solid ${borderColor}; border-radius: 12px; padding: 12px; margin-bottom: 10px; ${!notif.read ? 'font-weight: 600;' : ''}">
           <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 6px;">
             <div style="flex: 1;">
-              <div style="font-weight: 700; font-size: 13px; color: var(--ink);">${notif.title}</div>
-              <div style="font-size: 12px; color: var(--gray-warm); margin-top: 4px;">${notif.message}</div>
+              <div style="font-weight: 700; font-size: 13px; color: var(--ink);">${safeTitle}</div>
+              <div style="font-size: 12px; color: var(--gray-warm); margin-top: 4px;">${safeMessage}</div>
             </div>
             ${notif.amount ? `<div style="font-weight: 700; color: var(--forest); font-size: 13px; margin-left: 8px;">+${notif.amount.toFixed(2)}€</div>` : ''}
           </div>
@@ -3375,6 +3392,12 @@
       return;
     }
 
+    // Prevent seller from buying their own listing
+    if (listing.sellerId === userState.userId) {
+      showToast('❌ Vous ne pouvez pas acheter votre propre annonce');
+      return;
+    }
+
     // CHECK BALANCE BEFORE PAYPAL - CRITICAL FIX #3
     const buyer = zaufaniDB_getUserById(userState.userId);
     if (!buyer) {
@@ -3394,16 +3417,18 @@
     document.getElementById('donation-amount').value = listing.price;
     document.getElementById('donation-currency').value = 'EUR';
 
-    // Store listing context
+    // Store listing context WITH original price (prevent amount tampering)
     window.purchasingListingId = listingId;
+    window.purchasingListingPrice = listing.price;
 
     // Update modal to show it's a purchase WITH fees breakdown
     const modal = document.getElementById('modal-donation');
     if (modal) {
       modal.querySelector('.sheet-title').textContent = '💳 Acheter: ' + listing.title;
 
-      // Add fee breakdown info
-      const platformFee = listing.price * 0.05;
+      // Add fee breakdown info (using same rounding as payment processing)
+      const platformFee = Math.round(listing.price * 0.05 * 100) / 100;
+      const sellerAmount = Math.round((listing.price - platformFee) * 100) / 100;
       const totalAmount = listing.price;
 
       let breakdownHTML = `
@@ -6233,9 +6258,9 @@
     initializeUserWallet(buyerId);
     initializeUserWallet(listing.sellerId);
 
-    // Calculate fees (5% to Zaufani platform)
-    const platformFee = amount * 0.05;
-    const sellerAmount = amount - platformFee;
+    // Calculate fees (5% to Zaufani platform) - with proper rounding
+    const platformFee = Math.round(amount * 0.05 * 100) / 100;  // Round to 2 decimals
+    const sellerAmount = Math.round((amount - platformFee) * 100) / 100;  // Ensure proper rounding
 
     // Debit buyer
     const debitResult = debitWallet(buyerId, amount, `Purchase: ${listing.title}`);
@@ -6272,7 +6297,12 @@
     const listing = getListing(listingId);
     if (!listing) return null;
 
-    const transactionId = 'tx-' + Date.now();
+    // Generate unique transaction ID (timestamp + random suffix to prevent collisions)
+    let transactionId = 'tx-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+    // Extra safety: check if ID already exists
+    while (zaufaniDB.marketplace.transactions && zaufaniDB.marketplace.transactions[transactionId]) {
+      transactionId = 'tx-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+    }
     const transaction = {
       id: transactionId,
       listingId: listingId,
@@ -7471,10 +7501,10 @@
         // Show loading message while processing payment
         showToast('⏳ En attente du paiement...');
 
-        // Set a timeout to warn if payment takes too long
+        // Set a timeout to warn if payment takes too long (8 seconds for PayPal processing)
         const paymentTimeout = setTimeout(() => {
           showToast('⏳ Le paiement prend plus de temps que prévu... Vérification en cours');
-        }, 3000);
+        }, 8000);
 
         return actions.order.capture().then((details) => {
           clearTimeout(paymentTimeout);
@@ -7484,7 +7514,15 @@
           if (window.purchasingListingId) {
             // MARKETPLACE PURCHASE - PROCESS PAYMENT TO SELLER
             const listingId = window.purchasingListingId;
+            const originalPrice = window.purchasingListingPrice;
             const listing = getListing(listingId);
+
+            // SECURITY: Verify amount wasn't tampered with
+            if (Math.abs(amount - originalPrice) > 0.01) {
+              showToast(`❌ Erreur: Montant incohérent (${amount}€ vs ${originalPrice}€). Paiement annulé.`);
+              console.error(`⚠️ SECURITY: Amount tampering detected. Expected ${originalPrice}€, got ${amount}€`);
+              return;
+            }
 
             if (listing && userState.userId) {
               console.log(`💳 Processing marketplace payment:
