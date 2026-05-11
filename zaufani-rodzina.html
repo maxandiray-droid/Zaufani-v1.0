@@ -4622,6 +4622,20 @@
 
     zaufaniDB.users[userId] = { ...zaufaniDB.users[userId], ...updates };
     saveDatabase();
+
+    // For wallet updates, also queue to offline system if Firebase unavailable
+    if (updates.wallet && !navigator.onLine) {
+      saveToOfflineQueue({
+        type: 'wallet-update',
+        data: {
+          userId: userId,
+          wallet: updates.wallet,
+          timestamp: new Date().toISOString()
+        }
+      });
+      console.log(`📋 [OFFLINE] Queued wallet update for user: ${userId}`);
+    }
+
     syncUsersToFirebase();  // Sync changes to Firebase
     return { success: true, user: zaufaniDB.users[userId] };
   }
@@ -5142,6 +5156,17 @@
               firebaseDB.ref(`shared/users/${op.data.userId}`).set(op.data);
             }
             console.log(`✅ [SYNC] Synced user update: ${op.data.userId}`);
+            break;
+
+          case 'wallet-update':
+            if (useFirebase && firebaseDB) {
+              // Update user wallet in Firebase
+              firebaseDB.ref(`shared/users/${op.data.userId}/wallet`).set(op.data.wallet).catch(err => {
+                console.warn(`⚠️ [SYNC] Failed to sync wallet update: ${err.message}`);
+                throw err;
+              });
+            }
+            console.log(`✅ [SYNC] Synced wallet update for user: ${op.data.userId}`);
             break;
 
           default:
