@@ -7708,19 +7708,27 @@
   const installBtn = document.getElementById('install-btn');
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+  // Check if app is running in standalone mode (installed)
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                       navigator.standalone === true ||
+                       document.referrer.includes('android-app://');
+
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     installPrompt = event;
-    if (installContainer) {
+    if (installContainer && !isStandalone) {
       installContainer.style.display = 'block';
     }
     console.log('Install prompt available');
   });
 
-  // Show button on mobile even if beforeinstallprompt doesn't fire
-  if (isMobile && installContainer) {
+  // Show button on mobile only if NOT in standalone mode (not installed as app)
+  if (isMobile && installContainer && !isStandalone) {
     installContainer.style.display = 'block';
     console.log('Mobile device detected, showing install button');
+  } else if (installContainer && isStandalone) {
+    installContainer.style.display = 'none';
+    console.log('App is running in standalone mode, hiding install button');
   }
 
   if (installBtn) {
