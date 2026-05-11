@@ -2533,7 +2533,7 @@
         userState.isAuthenticated = true;
         userState.userId = user.id;
         userState.email = user.email;
-        userState.fullName = user.name;
+        userState.fullName = user.fullName;
         userState.role = user.role;
         userState.isAdmin = user.role === 'admin';
         userState.totalDonated = user.totalDonated || 0;
@@ -2574,7 +2574,7 @@
       if (user) {
         const nameEl = document.querySelector('.profile-name');
         const avatarEl = document.querySelector('.profile-av');
-        if (nameEl) nameEl.textContent = user.name;
+        if (nameEl) nameEl.textContent = user.fullName;
         if (avatarEl) avatarEl.textContent = user.avatar;
 
         // Show admin section if admin
@@ -4312,7 +4312,7 @@
       [adminId]: {
         id: adminId,
         email: 'maxandiray@gmail.com',
-        name: 'Maximilien d\'Iray',
+        fullName: 'Maximilien d\'Iray',
         password: zaufaniDB_hashPassword('admin123'),  // Use consistent hashing function
         role: 'admin',
         avatar: '👑',
@@ -4320,7 +4320,13 @@
         createdAt: new Date().toISOString(),
         invitedByAdmin: false,
         sponsors: [],
-        sponsorCount: 0
+        sponsorCount: 0,
+        wallet: {
+          balance: 0,
+          totalEarned: 0,
+          totalSpent: 0,
+          transactions: []
+        }
       }
     };
 
@@ -5306,7 +5312,7 @@
       <div style="background: white; border-radius: 12px; padding: 14px; border: 1px solid var(--cream-dark); margin-bottom: 10px; display: flex; gap: 12px; align-items: center;">
         <div style="font-size: 28px;">${user.avatar || '🧑'}</div>
         <div style="flex: 1; min-width: 0;">
-          <div style="font-weight: 700; font-size: 14px; color: var(--ink);">${user.name}</div>
+          <div style="font-weight: 700; font-size: 14px; color: var(--ink);">${user.fullName}</div>
           <div style="font-size: 12px; color: var(--gray-warm);">${user.email}</div>
           <div style="font-size: 11px; color: var(--amber); margin-top: 2px;">
             💰 ${user.totalDonated}€ ${user.role === 'admin' ? '| 👑 Admin' : ''} ${user.hasNoAds ? '| 🎁 No Ads' : ''}
@@ -5385,9 +5391,9 @@
     const user = getUserById(userId);
     if (!user) return;
 
-    if (confirm(`Êtes-vous sûr de vouloir supprimer ${user.name}?`)) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer ${user.fullName}?`)) {
       if (deleteUser(userId)) {
-        showToast(`✓ ${user.name} supprimé`);
+        showToast(`✓ ${user.fullName} supprimé`);
         loadAdminDashboard();
       }
     }
@@ -5721,7 +5727,7 @@
       <div class="family-item">
         <div class="family-avatar">${user.avatar}</div>
         <div class="family-info">
-          <div class="family-name">${user.name}</div>
+          <div class="family-name">${user.fullName}</div>
           <div class="family-distance">${user.distance < 1 ? Math.round(user.distance * 1000) + 'm' : user.distance.toFixed(1) + 'km'} • ${user.city}</div>
         </div>
         <div class="online-indicator"></div>
@@ -6815,7 +6821,7 @@
     // Populate fields with current data
     selectedAvatar = user.avatar || '👨';
     document.getElementById('current-avatar').textContent = selectedAvatar;
-    document.getElementById('edit-fullname').value = user.name || '';
+    document.getElementById('edit-fullname').value = user.fullName || '';
     document.getElementById('edit-bio').value = user.bio || '';
     document.getElementById('edit-city').value = user.city || '';
 
@@ -6858,7 +6864,7 @@
     // Update user in database
     const user = getUserById(userState.userId);
     if (user) {
-      user.name = fullname;
+      user.fullName = fullname;
       user.avatar = selectedAvatar;
       user.bio = bio;
       user.city = city;
