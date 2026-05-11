@@ -1534,6 +1534,12 @@
         </div>
       </div>
 
+      <!-- Notifications -->
+      <div class="profile-section">
+        <div class="profile-section-title">📬 Notifications</div>
+        <div id="notifications-list" style="font-size: 13px; color: var(--gray-warm); text-align: center; padding: 20px;">Aucune notification</div>
+      </div>
+
       <!-- Marketplace Transactions -->
       <div class="profile-section">
         <div class="profile-section-title">💳 Mes transactions</div>
@@ -3067,7 +3073,10 @@
       setTimeout(() => displayMarketplaceListings(), 100);
     }
     if (tab === 'konto') {
-      setTimeout(() => displayUserTransactions(), 100);
+      setTimeout(() => {
+        displayUserNotifications();
+        displayUserTransactions();
+      }, 100);
     }
     if (tab === 'nowinki') {
       setTimeout(() => displayNewsTimeline(), 100);
@@ -3125,6 +3134,56 @@
     });
 
     listDiv.innerHTML = html;
+  }
+
+  function displayUserNotifications() {
+    const notifDiv = document.getElementById('notifications-list');
+    if (!notifDiv) return;
+
+    const currentUser = zaufaniDB_getUserById(userState.userId);
+    if (!currentUser || !currentUser.notifications || currentUser.notifications.length === 0) {
+      notifDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--gray-warm);">Aucune notification</div>';
+      return;
+    }
+
+    const notifications = currentUser.notifications
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    let html = '';
+    notifications.forEach(notif => {
+      const date = new Date(notif.timestamp);
+      const timeAgo = getTimeAgo(date);
+      const bgColor = notif.read ? 'var(--cream-light)' : 'rgba(200,121,42,0.1)';
+      const borderColor = notif.read ? 'var(--cream-dark)' : 'var(--amber)';
+
+      html += `
+        <div style="background: ${bgColor}; border: 1.5px solid ${borderColor}; border-radius: 12px; padding: 12px; margin-bottom: 10px; ${!notif.read ? 'font-weight: 600;' : ''}">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 6px;">
+            <div style="flex: 1;">
+              <div style="font-weight: 700; font-size: 13px; color: var(--ink);">${notif.title}</div>
+              <div style="font-size: 12px; color: var(--gray-warm); margin-top: 4px;">${notif.message}</div>
+            </div>
+            ${notif.amount ? `<div style="font-weight: 700; color: var(--forest); font-size: 13px; margin-left: 8px;">+${notif.amount.toFixed(2)}€</div>` : ''}
+          </div>
+          <div style="font-size: 10px; color: var(--gray-light); text-align: right;">${timeAgo}</div>
+        </div>
+      `;
+    });
+
+    notifDiv.innerHTML = html;
+  }
+
+  function getTimeAgo(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+    if (seconds < 60) return 'À l\'instant';
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return minutes + ' min';
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + 'h';
+    const days = Math.floor(hours / 24);
+    if (days < 7) return days + 'j';
+    return date.toLocaleDateString('fr-FR');
   }
 
   function displayMarketplaceListings(filterCategory = null) {
@@ -4485,7 +4544,8 @@
         totalEarned: 0,
         totalSpent: 0,
         transactions: []
-      }
+      },
+      notifications: []
     };
 
     zaufaniDB.users[newUser.id] = newUser;
@@ -5923,6 +5983,8 @@
     const user = zaufaniDB_getUserById(userId);
     if (!user) return null;
 
+    let updated = false;
+
     if (!user.wallet) {
       user.wallet = {
         balance: 0,
@@ -5930,8 +5992,21 @@
         totalSpent: 0,
         transactions: []
       };
-      zaufaniDB_updateUser(userId, { wallet: user.wallet });
+      updated = true;
     }
+
+    if (!user.notifications) {
+      user.notifications = [];
+      updated = true;
+    }
+
+    if (updated) {
+      zaufaniDB_updateUser(userId, {
+        wallet: user.wallet,
+        notifications: user.notifications
+      });
+    }
+
     return user.wallet;
   }
 
@@ -5983,6 +6058,28 @@
     return { success: true, newBalance: user.wallet.balance };
   }
 
+  function addNotificationToUser(userId, notificationData) {
+    const user = zaufaniDB_getUserById(userId);
+    if (!user) return { success: false, error: 'User not found' };
+
+    if (!user.notifications) user.notifications = [];
+
+    const notification = {
+      id: 'notif-' + Date.now(),
+      type: notificationData.type,
+      title: notificationData.title,
+      message: notificationData.message,
+      amount: notificationData.amount || null,
+      timestamp: new Date().toISOString(),
+      read: false
+    };
+
+    user.notifications.push(notification);
+    zaufaniDB_updateUser(userId, { notifications: user.notifications });
+    console.log(`📬 Notification added to ${user.fullName}:`, notification.title);
+    return { success: true, notification };
+  }
+
   function processMarketplacePayment(listingId, buyerId, amount) {
     const listing = getListing(listingId);
     if (!listing) return { success: false, error: 'Listing not found' };
@@ -6009,6 +6106,14 @@
 
     // Credit seller (minus platform fee)
     creditWallet(listing.sellerId, sellerAmount, `Sale: ${listing.title}`);
+
+    // Notify seller that they received payment
+    addNotificationToUser(listing.sellerId, {
+      type: 'payment_received',
+      title: `✅ Paiement reçu! ${sellerAmount.toFixed(2)}€`,
+      message: `${buyer.fullName} a acheté "${listing.title}". Vous avez reçu ${sellerAmount.toFixed(2)}€ (après frais de 5%).`,
+      amount: sellerAmount
+    });
 
     // Log payment for records
     console.log(`💳 Payment processed:
