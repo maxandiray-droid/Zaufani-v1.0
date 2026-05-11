@@ -4690,13 +4690,21 @@
           createdAt: user.createdAt,
           lastLogin: user.lastLogin,
           isActive: user.isActive,
-          sponsorCount: user.sponsorCount
+          sponsorCount: user.sponsorCount,
+          // Payment system data - critical for syncing wallet changes
+          wallet: user.wallet ? {
+            balance: user.wallet.balance,
+            totalEarned: user.wallet.totalEarned,
+            totalSpent: user.wallet.totalSpent,
+            // Note: full transactions array not synced to reduce data size
+          } : null,
+          notifications: user.notifications || []
           // NOTE: password field intentionally NOT synced
         };
       }
 
       firebaseDB.ref('shared/users').set(usersToSync).then(() => {
-        console.log('✅ Users synced to Firebase');
+        console.log('✅ Users synced to Firebase (including wallet data)');
       }).catch(err => {
         console.warn('⚠️ Failed to sync users to Firebase:', err.message);
       });
