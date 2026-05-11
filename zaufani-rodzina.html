@@ -4553,21 +4553,18 @@
     }
   };
 
-  // Load existing data from localStorage on startup
-  function loadLocalDatabase() {
-    const saved = localStorage.getItem('zaufani-database');
-    if (saved) {
-      try {
-        zaufaniDB = JSON.parse(saved);
-        console.log('✅ Database loaded from localStorage');
-      } catch (e) {
-        console.warn('⚠️ Failed to load database:', e.message);
-      }
-    }
+  // Initialize database - create empty structure or restore from cache
+  function initializeDatabaseStructure() {
+    // Always ensure base structure exists
+    if (!zaufaniDB.users) zaufaniDB.users = {};
+    if (!zaufaniDB.posts) zaufaniDB.posts = {};
+    if (!zaufaniDB.marketplace) zaufaniDB.marketplace = {};
+    if (!zaufaniDB.settings) zaufaniDB.settings = {};
+    console.log('✅ Database structure initialized');
   }
 
-  // Load database immediately on page load
-  loadLocalDatabase();
+  // Initialize base structure on startup (no data loading yet - that happens via Firebase)
+  initializeDatabaseStructure();
 
   // Flag to prevent Firebase listeners from overwriting local changes
   let pauseFirebaseSync = false;

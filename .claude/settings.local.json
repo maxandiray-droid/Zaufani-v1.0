@@ -11,7 +11,14 @@
       "Bash(python3 -m http.server 8000)",
       "Bash(cd /d \"C:\\\\Users\\\\Maxim\\\\Documents\\\\zaufani\")",
       "Bash(python3 -m http.server 8000 --bind 127.0.0.1)",
-      "Bash(curl -s http://localhost:8000/zaufani-rodzina.html)"
+      "Bash(curl -s http://localhost:8000/zaufani-rodzina.html)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git diff *)",
+      "Bash(grep -n \"syncUsersToFirebase\\\\|syncMarketplaceToFirebase\" C:\\\\\\\\Users\\\\\\\\Maxim\\\\\\\\Documents\\\\\\\\zaufani\\\\\\\\zaufani-rodzina.html)",
+      "mcp__Claude_in_Chrome__switch_browser",
+      "Bash(cat)",
+      "Read(//tmp/**)"
     ]
   }
 }
