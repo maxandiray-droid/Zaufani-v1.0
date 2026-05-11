@@ -2623,6 +2623,7 @@
 
     // Try to find user by name
     let user = findUserByName(name);
+    let isNewUser = false;
 
     // If user doesn't exist, create them automatically
     if (!user) {
@@ -2631,6 +2632,7 @@
       const result = zaufaniDB_addUser(v10Email, 'v10', name, 'user');
       if (result.success) {
         user = result.user;
+        isNewUser = true;
         console.log('✅ User created:', user.id);
       } else {
         showToast('❌ ' + result.error);
@@ -2661,7 +2663,15 @@
 
     console.log('✅ V.1.0 Login success:', user.fullName);
     console.log('💰 Wallet balance:', userState.walletBalance + '€');
+
     loginSuccess();
+
+    // CRITICAL FIX #4: Show avatar picker for new v1.0 users
+    if (isNewUser) {
+      setTimeout(() => {
+        openAvatarPickerV10Modal();
+      }, 600);
+    }
   }
 
   function findUserByName(name) {
@@ -2687,6 +2697,73 @@
     if (spentEl) spentEl.textContent = user.wallet.totalSpent.toFixed(2) + '€';
 
     userState.walletBalance = user.wallet.balance;
+  }
+
+  // V1.0 Avatar Picker Modal for new users (CRITICAL FIX #4)
+  function openAvatarPickerV10Modal() {
+    const avatars = ['👨', '👩', '👨‍🦱', '👩‍🦱', '👨‍🦳', '👩‍🦳', '👦', '👧', '🧑', '👴', '👵', '🧑‍🦰'];
+
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.id = 'modal-avatar-picker-v10';
+    modal.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: flex-end; z-index: 100;';
+
+    const sheet = document.createElement('div');
+    sheet.className = 'bottom-sheet';
+    sheet.style.cssText = 'background: white; border-radius: 20px 20px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 430px; max-height: 70vh; overflow-y: auto;';
+
+    sheet.innerHTML = `
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 8px;">Choisissez votre avatar</div>
+        <div style="font-size: 14px; color: var(--gray-warm);">C'est votre identité dans Zaufani!</div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
+        ${avatars.map(emoji => `
+          <div onclick="selectAvatarV10('${emoji}')" class="avatar-picker-option" style="font-size: 36px; padding: 12px; border-radius: 12px; border: 2px solid var(--cream-dark); cursor: pointer; text-align: center; transition: all 0.2s; background: white;" data-emoji="${emoji}">
+            ${emoji}
+          </div>
+        `).join('')}
+      </div>
+
+      <button onclick="confirmAvatarV10()" style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 12px; padding: 14px; font-weight: 700; font-size: 16px; cursor: pointer;">
+        ✅ Confirmer
+      </button>
+    `;
+
+    modal.appendChild(sheet);
+    document.body.appendChild(modal);
+
+    // Set first avatar as default
+    window.v10SelectedAvatar = avatars[0];
+    document.querySelector('[data-emoji="' + avatars[0] + '"]').style.background = 'var(--amber)';
+    document.querySelector('[data-emoji="' + avatars[0] + '"]').style.color = 'white';
+  }
+
+  function selectAvatarV10(emoji) {
+    window.v10SelectedAvatar = emoji;
+    document.querySelectorAll('.avatar-picker-option').forEach(opt => {
+      opt.style.background = 'white';
+      opt.style.color = 'black';
+    });
+    document.querySelector('[data-emoji="' + emoji + '"]').style.background = 'var(--amber)';
+    document.querySelector('[data-emoji="' + emoji + '"]').style.color = 'white';
+  }
+
+  function confirmAvatarV10() {
+    const user = zaufaniDB_getUserById(userState.userId);
+    if (user && window.v10SelectedAvatar) {
+      user.avatar = window.v10SelectedAvatar;
+      zaufaniDB_updateUser(user.id, { avatar: window.v10SelectedAvatar });
+      userState.avatar = window.v10SelectedAvatar;
+
+      // Update profile display
+      const avatarEl = document.querySelector('.profile-av');
+      if (avatarEl) avatarEl.textContent = window.v10SelectedAvatar;
+
+      console.log('✅ Avatar changed to:', window.v10SelectedAvatar);
+      document.getElementById('modal-avatar-picker-v10').remove();
+    }
   }
 
   function login() {
