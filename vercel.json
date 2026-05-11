@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "buildCommand": "echo 'Static build'",
+  "outputDirectory": ".",
+  "public": true,
+  "functions": {},
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/zaufani-rodzina.html"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/zaufani-rodzina.html"
+    }
+  ]
+}

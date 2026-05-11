@@ -1,0 +1,21 @@
+[build]
+publish = "."
+command = "echo 'Building for Netlify'"
+
+[[redirects]]
+from = "/"
+to = "/zaufani-rodzina.html"
+status = 200
+
+[[redirects]]
+from = "/*"
+to = "/zaufani-rodzina.html"
+status = 200
+
+[context.production]
+environment = { REACT_STATIC_FILES_REWRITE_ALL = "true" }
+
+[dev]
+framework = "none"
+command = "python serve.py"
+port = 8000
