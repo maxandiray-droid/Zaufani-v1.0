@@ -4570,12 +4570,10 @@
   let pauseFirebaseSync = false;
 
   function initDatabase() {
-    const saved = localStorage.getItem('zaufani-database');
-    if (saved) {
-      zaufaniDB = JSON.parse(saved);
-    } else {
-      createDefaultDatabase();
-    }
+    // For public deployment: ALWAYS start fresh, don't load old localStorage data
+    // Firebase will load real shared data after user login
+    // This ensures clean state and Firebase-primary behavior
+    createDefaultDatabase();
   }
 
   function createDefaultDatabase() {
