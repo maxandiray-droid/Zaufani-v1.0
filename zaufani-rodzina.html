@@ -1515,6 +1515,25 @@
         </div>
       </div>
 
+      <!-- Wallet Section -->
+      <div class="profile-section" style="background: linear-gradient(135deg, rgba(200,121,42,0.1), rgba(200,121,42,0.05)); border: 1.5px solid var(--amber); border-radius: 16px; padding: 16px;">
+        <div class="profile-section-title">💰 Portefeuille</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+          <div style="background: white; padding: 12px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 11px; color: var(--gray-warm); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Solde</div>
+            <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--amber);" id="wallet-balance">0€</div>
+          </div>
+          <div style="background: white; padding: 12px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 11px; color: var(--gray-warm); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Gains totaux</div>
+            <div style="font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--forest);" id="wallet-earned">0€</div>
+          </div>
+        </div>
+        <div style="background: white; padding: 12px; border-radius: 12px; text-align: center;">
+          <div style="font-size: 11px; color: var(--gray-warm); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Total dépensé</div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--terracotta);" id="wallet-spent">0€</div>
+        </div>
+      </div>
+
       <!-- Marketplace Transactions -->
       <div class="profile-section">
         <div class="profile-section-title">💳 Mes transactions</div>
@@ -2621,6 +2640,9 @@
       zaufaniDB_updateUser(user.id, { lastLogin: new Date().toISOString() });
     }
 
+    // Initialize wallet if needed
+    initializeUserWallet(user.id);
+
     // Login success
     userState.isAuthenticated = true;
     userState.userId = user.id;
@@ -2632,11 +2654,13 @@
     userState.hasNoAds = user.hasNoAds || false;
     userState.needsSponsorship = false; // V.1.0: No sponsorship required
     userState.sponsorCount = 0;
+    userState.walletBalance = (user.wallet && user.wallet.balance) || 0;
 
     // Clear form
     document.getElementById('auth-name').value = '';
 
     console.log('✅ V.1.0 Login success:', user.fullName);
+    console.log('💰 Wallet balance:', userState.walletBalance + '€');
     loginSuccess();
   }
 
@@ -2649,6 +2673,20 @@
       }
     }
     return null;
+  }
+
+  function updateWalletDisplay(user) {
+    if (!user || !user.wallet) return;
+
+    const balanceEl = document.getElementById('wallet-balance');
+    const earnedEl = document.getElementById('wallet-earned');
+    const spentEl = document.getElementById('wallet-spent');
+
+    if (balanceEl) balanceEl.textContent = user.wallet.balance.toFixed(2) + '€';
+    if (earnedEl) earnedEl.textContent = user.wallet.totalEarned.toFixed(2) + '€';
+    if (spentEl) spentEl.textContent = user.wallet.totalSpent.toFixed(2) + '€';
+
+    userState.walletBalance = user.wallet.balance;
   }
 
   function login() {
@@ -2690,12 +2728,15 @@
     }
   }
 
-  // ── PROFILE STATS ──
+  // ── PROFILE STATS & WALLET ──
   function updateProfileStats() {
     if (!userState.isAuthenticated) return;
 
     const user = zaufaniDB_getUser(userState.email);
     if (!user) return;
+
+    // Update wallet display
+    updateWalletDisplay(user);
 
     // Update posts count
     const postsCount = user.posts ? user.posts.length : 0;
@@ -4340,7 +4381,13 @@
       sponsors: [],
       invitationCode: 'INV-' + Math.random().toString(36).substring(2, 11).toUpperCase(),
       posts: [],
-      donations: []
+      donations: [],
+      wallet: {
+        balance: 0,
+        totalEarned: 0,
+        totalSpent: 0,
+        transactions: []
+      }
     };
 
     zaufaniDB.users[newUser.id] = newUser;
@@ -5770,6 +5817,115 @@
     return zaufaniDB.marketplace.listings[listingId] || null;
   }
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 💰 WALLET MANAGEMENT (Payment System)
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  function initializeUserWallet(userId) {
+    const user = zaufaniDB_getUserById(userId);
+    if (!user) return null;
+
+    if (!user.wallet) {
+      user.wallet = {
+        balance: 0,
+        totalEarned: 0,
+        totalSpent: 0,
+        transactions: []
+      };
+      zaufaniDB_updateUser(userId, { wallet: user.wallet });
+    }
+    return user.wallet;
+  }
+
+  function creditWallet(userId, amount, description = 'Credit') {
+    const user = zaufaniDB_getUserById(userId);
+    if (!user) return { success: false, error: 'User not found' };
+
+    initializeUserWallet(userId);
+
+    user.wallet.balance += amount;
+    user.wallet.totalEarned += amount;
+    user.wallet.transactions.push({
+      id: 'tx-' + Date.now(),
+      type: 'credit',
+      amount: amount,
+      description: description,
+      timestamp: new Date().toISOString(),
+      balance: user.wallet.balance
+    });
+
+    zaufaniDB_updateUser(userId, { wallet: user.wallet });
+    console.log(`✅ Credited ${amount}€ to ${user.fullName}. New balance: ${user.wallet.balance}€`);
+    return { success: true, newBalance: user.wallet.balance };
+  }
+
+  function debitWallet(userId, amount, description = 'Debit') {
+    const user = zaufaniDB_getUserById(userId);
+    if (!user) return { success: false, error: 'User not found' };
+
+    initializeUserWallet(userId);
+
+    if (user.wallet.balance < amount) {
+      return { success: false, error: 'Insufficient balance', balance: user.wallet.balance };
+    }
+
+    user.wallet.balance -= amount;
+    user.wallet.totalSpent += amount;
+    user.wallet.transactions.push({
+      id: 'tx-' + Date.now(),
+      type: 'debit',
+      amount: amount,
+      description: description,
+      timestamp: new Date().toISOString(),
+      balance: user.wallet.balance
+    });
+
+    zaufaniDB_updateUser(userId, { wallet: user.wallet });
+    console.log(`✅ Debited ${amount}€ from ${user.fullName}. New balance: ${user.wallet.balance}€`);
+    return { success: true, newBalance: user.wallet.balance };
+  }
+
+  function processMarketplacePayment(listingId, buyerId, amount) {
+    const listing = getListing(listingId);
+    if (!listing) return { success: false, error: 'Listing not found' };
+
+    const buyer = zaufaniDB_getUserById(buyerId);
+    const seller = zaufaniDB_getUserById(listing.sellerId);
+
+    if (!buyer) return { success: false, error: 'Buyer not found' };
+    if (!seller) return { success: false, error: 'Seller not found' };
+
+    // Initialize wallets if needed
+    initializeUserWallet(buyerId);
+    initializeUserWallet(listing.sellerId);
+
+    // Calculate fees (5% to Zaufani platform)
+    const platformFee = amount * 0.05;
+    const sellerAmount = amount - platformFee;
+
+    // Debit buyer
+    const debitResult = debitWallet(buyerId, amount, `Purchase: ${listing.title}`);
+    if (!debitResult.success) {
+      return { success: false, error: debitResult.error };
+    }
+
+    // Credit seller (minus platform fee)
+    creditWallet(listing.sellerId, sellerAmount, `Sale: ${listing.title}`);
+
+    // Log payment for records
+    console.log(`💳 Payment processed:
+      Buyer: ${buyer.fullName} (-${amount}€)
+      Seller: ${seller.fullName} (+${sellerAmount}€)
+      Platform fee: ${platformFee}€`);
+
+    return {
+      success: true,
+      buyerBalance: debitResult.newBalance,
+      sellerBalance: sellerAmount,
+      fee: platformFee
+    };
+  }
+
   function createTransaction(listingId, buyerId, price) {
     const listing = getListing(listingId);
     if (!listing) return null;
@@ -5784,7 +5940,8 @@
       status: 'paid',
       createdAt: new Date().toISOString(),
       deliveredAt: null,
-      rating: null
+      rating: null,
+      paymentProcessed: true
     };
 
     // Update listing status
@@ -6974,22 +7131,37 @@
 
           // Check if it's a marketplace purchase or donation
           if (window.purchasingListingId) {
-            // MARKETPLACE PURCHASE
+            // MARKETPLACE PURCHASE - PROCESS PAYMENT TO SELLER
             const listingId = window.purchasingListingId;
             const listing = getListing(listingId);
 
             if (listing && userState.userId) {
-              // Create transaction
-              const transactionId = createTransaction(listingId, userState.userId, amount);
-              window.purchasingListingId = null;
+              console.log(`💳 Processing marketplace payment:
+                Listing: ${listing.title}
+                Price: ${amount}€
+                Buyer: ${userState.fullName}
+                Seller ID: ${listing.sellerId}`);
 
-              closeModal('modal-donation');
-              showToast(`✓ Achat confirmé! 📦`);
+              // Process payment (transfer money to seller, debit buyer)
+              const paymentResult = processMarketplacePayment(listingId, userState.userId, amount);
 
-              // Open chat with seller
-              setTimeout(() => {
-                openTransactionChat(transactionId);
-              }, 500);
+              if (paymentResult.success) {
+                // Create transaction only after payment succeeds
+                const transactionId = createTransaction(listingId, userState.userId, amount);
+                window.purchasingListingId = null;
+
+                closeModal('modal-donation');
+                showToast(`✅ Achat confirmé! Paiement effectué 💳`);
+                showToast(`💚 ${paymentResult.sellerAmount.toFixed(2)}€ envoyés au vendeur`);
+
+                // Open chat with seller
+                setTimeout(() => {
+                  openTransactionChat(transactionId);
+                }, 500);
+              } else {
+                showToast(`❌ Erreur: ${paymentResult.error}`);
+                console.error('Payment failed:', paymentResult);
+              }
             }
           } else {
             // DONATION
@@ -7017,7 +7189,7 @@
             showToast(message);
           }
 
-          console.log('Payment Details:', details);
+          console.log('✅ PayPal Payment Details:', details);
         });
       },
       onError: (err) => {
