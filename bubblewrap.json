@@ -1,0 +1,25 @@
+{
+  "packageId": "com.zaufani.rodzina",
+  "appName": "Zaufani Rodzina",
+  "appVersion": "1.0.0",
+  "appVersionCode": 1,
+  "launcherName": "Zaufani",
+  "host": "zaufani.web.app",
+  "startUrl": "/zaufani-rodzina.html",
+  "signingKeyPath": "./zaufani-signing-key.keystore",
+  "signingKeyAlias": "zaufani",
+  "signingKeyPassword": "temp123456",
+  "displayMode": "standalone",
+  "themeColor": "#C8792A",
+  "iconUrl": "https://zaufani.web.app/assets/icon-512.png",
+  "shortcuts": [
+    {
+      "name": "Marketplace",
+      "shortName": "Kupuj/Sprzedawaj",
+      "url": "/?tab=home",
+      "icons": []
+    }
+  ],
+  "enableNotifications": true,
+  "preferRelatedApplications": false
+}

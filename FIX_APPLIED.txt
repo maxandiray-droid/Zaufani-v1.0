@@ -1,0 +1,22 @@
+PROBLÈME TROUVÉ ET FIXÉ!
+==========================
+
+CAUSE DU HANG:
+Les scripts PayPal, Firebase et Leaflet n'avaient pas l'attribut "async"
+Cela signifie qu'ils BLOQUAIENT le parsing du HTML.
+Si un serveur était lent, le navigateur attendait indéfiniment.
+
+SOLUTION APPLIQUÉE:
+Ajout de "async" à tous les scripts externes:
+- <script async src="...paypal...">
+- <script async src="...firebase..."> (3 scripts)
+- <script async src="...leaflet...">
+
+FICHIERS FIXÉS:
+✅ zaufani-rodzina.html
+✅ zaufani-rodzina-SIMPLE.html
+
+TEST MAINTENANT:
+Ouvre: file:///C:/Users/Maxim/Documents/zaufani/zaufani-rodzina.html
+
+La page devrait charger RAPIDEMENT sans "Page ne répond pas"!

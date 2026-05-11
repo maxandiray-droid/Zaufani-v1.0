@@ -1,0 +1,100 @@
+{
+  "name": "Zaufani Rodzina - Sieć Rodzinna",
+  "short_name": "Zaufani",
+  "description": "Twój prywatny serwis rodzinny. Dziel się lokalizacją, kupuj/sprzedawaj między sobą, organizuj aktywności rodzinne.",
+  "start_url": "/zaufani-rodzina.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF6EF",
+  "theme_color": "#C8792A",
+  "categories": ["lifestyle", "productivity", "family"],
+  "screenshots": [
+    {
+      "src": "/assets/screenshot-mobile-1.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/assets/screenshot-mobile-2.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/assets/screenshot-tablet.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Marketplace",
+      "short_name": "Acheter/Vendre",
+      "description": "Accédez au marketplace P2P",
+      "url": "/zaufani-rodzina.html?tab=home",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect fill='%23C8792A' width='96' height='96'/%3E%3Ctext x='48' y='60' font-size='40' text-anchor='middle' fill='%23FFF'%3E🛒%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Ma Localisation",
+      "short_name": "Carte",
+      "description": "Partager ma localisation avec la famille",
+      "url": "/zaufani-rodzina.html?tab=mapa",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect fill='%23C8792A' width='96' height='96'/%3E%3Ctext x='48' y='60' font-size='40' text-anchor='middle' fill='%23FFF'%3E📍%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "photo",
+          "accept": ["image/*"]
+        }
+      ],
+      "text": "title"
+    }
+  }
+}

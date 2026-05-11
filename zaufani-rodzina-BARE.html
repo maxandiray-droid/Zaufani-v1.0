@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaufani — Rodzina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber: #C8792A;
+    --cream: #FAF6EF;
+    --ink: #1A1208;
+    --gray-warm: #8A7B6A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .auth-container {
+    text-align: center;
+    padding: 40px;
+    max-width: 400px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: var(--gray-warm);
+    margin-bottom: 30px;
+  }
+
+  .auth-buttons {
+    display: flex;
+    gap: 15px;
+  }
+
+  button {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-login {
+    background: var(--amber);
+    color: white;
+  }
+
+  .btn-login:active {
+    transform: scale(0.98);
+  }
+
+  .btn-register {
+    background: white;
+    color: var(--amber);
+    border: 2px solid var(--amber);
+  }
+
+  .btn-register:active {
+    background: var(--cream);
+  }
+
+  .status {
+    margin-top: 30px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    display: none;
+  }
+
+  .status.visible {
+    display: block;
+  }
+
+  .status.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .status.error {
+    background: #ffebee;
+    color: #c62828;
+  }
+</style>
+</head>
+<body>
+
+<div class="auth-container">
+  <h1>🏡 Zaufani</h1>
+  <p>Famille connectée, famille unie</p>
+
+  <div class="auth-buttons">
+    <button class="btn-login" onclick="handleLogin()">🔑 Connexion</button>
+    <button class="btn-register" onclick="handleRegister()">📝 Inscription</button>
+  </div>
+
+  <div class="status" id="status"></div>
+</div>
+
+<script>
+console.log('✅ Page chargée - JavaScript prêt');
+
+let clickCount = 0;
+
+function handleLogin() {
+  clickCount++;
+  console.log('Login cliqué', clickCount, 'fois');
+  showStatus('Connexion - Bouton fonctionne! (' + clickCount + ' clics)', 'success');
+}
+
+function handleRegister() {
+  clickCount++;
+  console.log('Register cliqué', clickCount, 'fois');
+  showStatus('Inscription - Bouton fonctionne! (' + clickCount + ' clics)', 'success');
+}
+
+function showStatus(msg, type) {
+  const status = document.getElementById('status');
+  status.textContent = msg;
+  status.className = 'status visible ' + type;
+  setTimeout(() => {
+    status.classList.remove('visible');
+  }, 3000);
+}
+
+// Test pour vérifier que JavaScript répond
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('✅ DOM chargé et prêt');
+});
+</script>
+
+</body>
+</html>

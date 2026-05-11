@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaufani — Test Ultra-Minimal</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #FAF6EF;
+    color: #1A1208;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  button {
+    background: #C8792A;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:active {
+    background: #8B4E12;
+  }
+  .info {
+    margin-top: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🧪 Test Ultra-Minimal</h1>
+<p>Pas de scripts externes. Juste HTML + CSS + JavaScript simple.</p>
+
+<button onclick="testClick()">Clique-moi</button>
+<button onclick="showInfo()">Affiche Info</button>
+
+<div class="info" id="info" style="display:none;">
+  <p>✅ JavaScript fonctionne!</p>
+  <p id="clickCount">Clics: 0</p>
+</div>
+
+<script>
+let clicks = 0;
+
+function testClick() {
+  clicks++;
+  document.getElementById('clickCount').textContent = 'Clics: ' + clicks;
+  console.log('Bouton cliqué ' + clicks + ' fois');
+}
+
+function showInfo() {
+  const info = document.getElementById('info');
+  if (info.style.display === 'none') {
+    info.style.display = 'block';
+  } else {
+    info.style.display = 'none';
+  }
+}
+
+console.log('✅ Page chargée et JavaScript prêt');
+</script>
+
+</body>
+</html>

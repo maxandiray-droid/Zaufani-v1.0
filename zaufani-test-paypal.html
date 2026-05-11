@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test - PayPal Uniquement</title>
+<script async src="https://www.paypal.com/sdk/js?client-id=AXpLKDR0HfxwIxh7Zn5DGkCjm0J1JZOuCvXcM9psE1_rB9wlyDyOC-kZy11WyjgSbm0pHTRJ_YoopKNS&currency=PLN"></script>
+<style>
+  body { font-family: Arial; background: #FAF6EF; padding: 40px; text-align: center; }
+  button { padding: 15px 30px; background: #C8792A; color: white; border: none; border-radius: 10px; cursor: pointer; }
+  button:active { transform: scale(0.98); }
+</style>
+</head>
+<body>
+<h1>🧪 Test PayPal Uniquement</h1>
+<button onclick="alert('Bouton fonctionne!')">Clique-moi</button>
+<p id="log">PayPal chargé?</p>
+<script>
+console.log('✅ PayPal script loaded');
+setTimeout(() => {
+  document.getElementById('log').textContent = 'PayPal: ' + (typeof paypal !== 'undefined' ? '✅ OUI' : '❌ NON');
+}, 2000);
+</script>
+</body>
+</html>

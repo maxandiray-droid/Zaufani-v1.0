@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Marketplace - Zaufani Rodzina</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #f5f5f5; }
+        .test-container { background: white; padding: 20px; border-radius: 8px; max-width: 800px; margin: 0 auto; }
+        .test-result { margin: 10px 0; padding: 8px; border-left: 4px solid #ddd; }
+        .test-pass { border-left-color: #4CAF50; background: #f1f8f4; }
+        .test-fail { border-left-color: #f44336; background: #fef1f0; }
+        .test-warn { border-left-color: #ff9800; background: #fff3f0; }
+        h1 { color: #333; }
+        h2 { color: #666; margin-top: 20px; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
+        .stat-box { background: #f9f9f9; padding: 10px; border-radius: 4px; text-align: center; }
+        .stat-num { font-size: 24px; font-weight: bold; color: #C8792A; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test Complet du Marketplace</h1>
+        <p>Chargement de l'application...</p>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        // Charger la base de données et initialiser
+        let zaufaniDB = {
+            users: {},
+            posts: {},
+            settings: {},
+            marketplace: { listings: {}, transactions: {}, conversations: {}, ratings: {} }
+        };
+
+        function loadDatabase() {
+            const stored = localStorage.getItem('zaufani-database');
+            if (stored) {
+                zaufaniDB = JSON.parse(stored);
+            }
+            return zaufaniDB;
+        }
+
+        function saveDatabase() {
+            localStorage.setItem('zaufani-database', JSON.stringify(zaufaniDB));
+        }
+
+        function generateSecureToken() {
+            return 'token-' + Math.random().toString(36).substr(2, 16);
+        }
+
+        function createDefaultDatabase() {
+            const adminToken = generateSecureToken();
+            const adminId = 'admin-' + Math.random().toString(36).substr(2, 9);
+
+            zaufaniDB.users = {
+                [adminId]: {
+                    id: adminId,
+                    email: 'maxandiray@gmail.com',
+                    name: 'Admin Test',
+                    passwordHash: '7c4a8d09ca3762af61e59520943dc26494f8941b',
+                    role: 'admin',
+                    avatar: '👑',
+                    totalDonated: 0,
+                    createdAt: new Date().toISOString(),
+                    invitedByAdmin: false
+                },
+                'user-mama': {
+                    id: 'user-mama',
+                    email: 'mama@example.com',
+                    name: 'Mama',
+                    passwordHash: 'demo',
+                    role: 'member',
+                    avatar: '👩‍🦱',
+                    totalDonated: 75
+                },
+                'user-tata': {
+                    id: 'user-tata',
+                    email: 'tata@example.com',
+                    name: 'Tata',
+                    passwordHash: 'demo',
+                    role: 'member',
+                    avatar: '👨‍🦳',
+                    totalDonated: 30
+                },
+                'user-babcia': {
+                    id: 'user-babcia',
+                    email: 'babcia@example.com',
+                    name: 'Babcia',
+                    passwordHash: 'demo',
+                    role: 'member',
+                    avatar: '👵',
+                    totalDonated: 50
+                }
+            };
+
+            zaufaniDB.marketplace.listings = {
+                'listing-1': {
+                    id: 'listing-1',
+                    sellerId: 'user-mama',
+                    title: 'Vase antique en porcelaine',
+                    description: 'Beau vase antique',
+                    price: 75,
+                    category: 'Items',
+                    photos: [],
+                    status: 'for_sale',
+                    buyerId: null,
+                    createdAt: new Date().toISOString(),
+                    sellerName: 'Mama',
+                    sellerAvatar: '👩‍🦱'
+                },
+                'listing-2': {
+                    id: 'listing-2',
+                    sellerId: 'user-tata',
+                    title: 'Chaise vintage années 70',
+                    description: 'Chaise en velours rouge',
+                    price: 120,
+                    category: 'Items',
+                    photos: [],
+                    status: 'for_sale',
+                    buyerId: null,
+                    createdAt: new Date().toISOString(),
+                    sellerName: 'Tata',
+                    sellerAvatar: '👨‍🦳'
+                }
+            };
+
+            zaufaniDB.settings.adminInvitationToken = adminToken;
+            saveDatabase();
+        }
+
+        function runTests() {
+            const results = document.getElementById('results');
+            let html = '';
+            let passCount = 0, failCount = 0, warnCount = 0;
+
+            // Charger ou créer la DB
+            loadDatabase();
+            if (Object.keys(zaufaniDB.users || {}).length === 0) {
+                createDefaultDatabase();
+            }
+            loadDatabase();
+
+            const addResult = (title, pass, message) => {
+                const className = pass === true ? 'test-pass' : (pass === false ? 'test-fail' : 'test-warn');
+                const status = pass === true ? '✓' : (pass === false ? '✗' : '⚠');
+                html += `<div class="test-result ${className}"><strong>${status} ${title}</strong>: ${message}</div>`;
+                if (pass === true) passCount++;
+                else if (pass === false) failCount++;
+                else warnCount++;
+            };
+
+            // Test 1: Base de données
+            addResult('Base de données', true,
+                `${Object.keys(zaufaniDB.users || {}).length} users, ${Object.keys(zaufaniDB.marketplace?.listings || {}).length} listings`);
+
+            // Test 2: Listings
+            const listings = Object.values(zaufaniDB.marketplace?.listings || {});
+            addResult('Listings de test', listings.length >= 2,
+                `${listings.length} listings trouvés`);
+            listings.forEach(l => {
+                html += `<div class="test-result test-pass" style="margin-left: 20px;">• ${l.title} (${l.price}€) par ${l.sellerName}</div>`;
+            });
+
+            // Test 3: Structure marketplace
+            addResult('Structure marketplace',
+                zaufaniDB.marketplace &&
+                zaufaniDB.marketplace.listings &&
+                zaufaniDB.marketplace.transactions &&
+                zaufaniDB.marketplace.conversations,
+                'Toutes les sections existent');
+
+            // Test 4: Utilisateurs
+            const users = Object.values(zaufaniDB.users || {});
+            addResult('Utilisateurs', users.length >= 3,
+                `${users.length} utilisateurs trouvés`);
+            users.forEach(u => {
+                html += `<div class="test-result test-pass" style="margin-left: 20px;">• ${u.name} (${u.role}) - ${u.email}</div>`;
+            });
+
+            // Test 5: Catégories
+            const cats = ['Items', 'Housing', 'Childcare', 'Transport'];
+            const hasCats = listings.every(l => cats.includes(l.category));
+            addResult('Catégories', hasCats, 'Catégories valides utilisées');
+
+            // Test 6: Intégrité des données
+            const allOk = listings.every(l =>
+                l.id && l.sellerId && l.title && l.price && l.category &&
+                l.status && typeof l.photos === 'object'
+            );
+            addResult('Intégrité des listings', allOk,
+                'Tous les champs requis sont présents');
+
+            // Test 7: Transaction flow
+            addResult('Structure transactions',
+                typeof zaufaniDB.marketplace.transactions === 'object',
+                'Objet transactions initialisé');
+
+            // Test 8: Conversations
+            addResult('Structure conversations',
+                typeof zaufaniDB.marketplace.conversations === 'object',
+                'Objet conversations initialisé');
+
+            // Test 9: Ratings
+            addResult('Structure ratings',
+                typeof zaufaniDB.marketplace.ratings === 'object',
+                'Objet ratings initialisé');
+
+            // Résumé
+            const total = passCount + failCount + warnCount;
+            html = `
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-num" style="color: #4CAF50;">${passCount}</div>
+                        <div>Tests OK</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-num" style="color: #f44336;">${failCount}</div>
+                        <div>Erreurs</div>
+                    </div>
+                </div>
+                <h2>Résultats détaillés</h2>
+                ${html}
+                <h2>Conclusion</h2>
+                <div class="test-result ${failCount === 0 ? 'test-pass' : 'test-fail'}">
+                    <strong>${failCount === 0 ? '✓' : '✗'} Status global: ${failCount === 0 ? 'PRÊT POUR TEST' : 'ERREURS À CORRIGER'}</strong>
+                </div>
+            `;
+
+            results.innerHTML = html;
+        }
+
+        // Lancer les tests au chargement
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>

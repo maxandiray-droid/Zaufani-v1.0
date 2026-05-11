@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaufani — Test Avec Scripts</title>
+
+<!-- Scripts externes (comme dans l'original) -->
+<script async src="https://www.paypal.com/sdk/js?client-id=AXpLKDR0HfxwIxh7Zn5DGkCjm0J1JZOuCvXcM9psE1_rB9wlyDyOC-kZy11WyjgSbm0pHTRJ_YoopKNS&currency=PLN"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx" crossorigin="anonymous"></script>
+<script async src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script async src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script async src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #FAF6EF;
+    color: #1A1208;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  button {
+    background: #C8792A;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:active {
+    background: #8B4E12;
+  }
+  .info {
+    margin-top: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🧪 Test Avec Scripts Externes</h1>
+<p>Mêmes scripts que l'original. Teste si les scripts bloquent JavaScript.</p>
+
+<button onclick="testClick()">Clique-moi</button>
+<button onclick="showInfo()">Affiche Info</button>
+
+<div class="info" id="info" style="display:none;">
+  <p>✅ JavaScript fonctionne même avec les scripts!</p>
+  <p id="clickCount">Clics: 0</p>
+</div>
+
+<script>
+let clicks = 0;
+
+function testClick() {
+  clicks++;
+  document.getElementById('clickCount').textContent = 'Clics: ' + clicks;
+  console.log('Bouton cliqué ' + clicks + ' fois');
+}
+
+function showInfo() {
+  const info = document.getElementById('info');
+  if (info.style.display === 'none') {
+    info.style.display = 'block';
+  } else {
+    info.style.display = 'none';
+  }
+}
+
+console.log('✅ Page chargée avec scripts externes');
+</script>
+
+</body>
+</html>

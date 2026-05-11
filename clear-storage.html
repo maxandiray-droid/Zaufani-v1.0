@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Vider le localStorage</title>
+<style>
+  body {
+    font-family: Arial;
+    background: #FAF6EF;
+    padding: 40px;
+    text-align: center;
+  }
+  .message {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    margin: 20px 0;
+  }
+  .success {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+  .error {
+    background: #ffebee;
+    color: #c62828;
+  }
+</style>
+</head>
+<body>
+
+<h1>🧹 Vider le stockage local</h1>
+
+<div id="status" class="message">
+  Suppression en cours...
+</div>
+
+<script>
+try {
+  // Liste de toutes les clés à supprimer
+  const keysToDelete = [
+    'zaufani-database',
+    'zaufani-language',
+    'admin-token',
+    'zaufani-offline-queue'
+  ];
+
+  // Supprimer chaque clé
+  keysToDelete.forEach(key => {
+    if (localStorage.getItem(key)) {
+      localStorage.removeItem(key);
+      console.log('✅ Supprimé:', key);
+    }
+  });
+
+  // Vérifier que c'est bien supprimé
+  const remaining = Object.keys(localStorage).filter(k => k.includes('zaufani'));
+
+  if (remaining.length === 0) {
+    document.getElementById('status').innerHTML = `
+      <h2 style="color: #2e7d32;">✅ Stockage vidé avec succès!</h2>
+      <p>Toutes les données Zaufani ont été supprimées du localStorage.</p>
+      <p>Redirection vers l'app dans 3 secondes...</p>
+    `;
+    document.getElementById('status').className = 'message success';
+
+    // Rediriger après 3 secondes
+    setTimeout(() => {
+      window.location.href = 'file:///C:/Users/Maxim/Documents/zaufani/zaufani-rodzina.html';
+    }, 3000);
+  } else {
+    throw new Error('Échec: clés restantes - ' + remaining.join(', '));
+  }
+
+} catch (error) {
+  document.getElementById('status').innerHTML = `
+    <h2 style="color: #c62828;">❌ Erreur</h2>
+    <p>${error.message}</p>
+    <p>Essayez manuellement: F12 → Application → Local Storage → Supprimer les clés</p>
+  `;
+  document.getElementById('status').className = 'message error';
+}
+</script>
+
+</body>
+</html>

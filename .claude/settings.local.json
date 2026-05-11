@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(npm --version)",
+      "PowerShell(npm --version)",
+      "PowerShell($env:Path += \";C:\\\\Program Files\\\\nodejs\"; & \"C:\\\\Program Files\\\\nodejs\\\\npm.cmd\" install -g firebase-tools --force)",
+      "Bash(firebase projects:list)",
+      "Bash(npm start *)",
+      "Bash(python3 -m http.server 8000)",
+      "Bash(cd /d \"C:\\\\Users\\\\Maxim\\\\Documents\\\\zaufani\")",
+      "Bash(python3 -m http.server 8000 --bind 127.0.0.1)",
+      "Bash(curl -s http://localhost:8000/zaufani-rodzina.html)"
+    ]
+  }
+}

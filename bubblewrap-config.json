@@ -1,0 +1,32 @@
+{
+  "manifest": {
+    "backgroundColor": "#FAF6EF",
+    "themeColor": "#C8792A"
+  },
+  "packageId": "com.zaufani.rodzina",
+  "appName": "Zaufani Rodzina",
+  "appVersion": "1.0.0",
+  "appVersionCode": 1,
+  "launcherName": "Zaufani",
+  "signingKeyPath": "./zaufani-signing-key.keystore",
+  "signingKeyAlias": "zaufani",
+  "signingKeyPassword": "temp123456",
+  "signingKeyFullName": "Zaufani",
+  "signingKeyOrganization": "Zaufani",
+  "signingKeyOrganizationalUnit": "Zaufani Team",
+  "signingKeyCountryCode": "PL",
+  "shortcuts": [
+    {
+      "name": "Marketplace",
+      "shortName": "Kupuj/Sprzedawaj",
+      "url": "/zaufani-rodzina.html?tab=home"
+    },
+    {
+      "name": "Moja Lokalizacja",
+      "shortName": "Mapa",
+      "url": "/zaufani-rodzina.html?tab=mapa"
+    }
+  ],
+  "enableNotifications": true,
+  "display": "standalone"
+}

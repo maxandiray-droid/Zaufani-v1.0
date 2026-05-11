@@ -1,0 +1,11 @@
+TEST MAINTENANT:
+
+file:///C:/Users/Maxim/Documents/zaufani/zaufani-rodzina-NO-SAVE.html
+
+Cette version a:
+- saveDatabase() DÉSACTIVÉE (plus de JSON.stringify)
+- loadDatabaseFromFirebase() DÉSACTIVÉE (plus de JSON.parse)
+- Tous les appels à localStorage.setItem commentés
+
+Si la page charge RAPIDEMENT = le problème est JSON.stringify/JSON.parse
+Si la page ne charge toujours pas = le problème est ailleurs
