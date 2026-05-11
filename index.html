@@ -7708,28 +7708,57 @@
   const installBtn = document.getElementById('install-btn');
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-  // Check if app is running in standalone mode (installed)
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
-                       navigator.standalone === true ||
-                       document.referrer.includes('android-app://');
+  // Dynamic check for standalone mode - runs each time to detect installation state
+  function isRunningAsInstalledApp() {
+    // iOS native app indicator
+    if (navigator.standalone === true) return true;
+
+    // Android/Chrome PWA display mode
+    if (window.matchMedia('(display-mode: standalone)').matches) return true;
+
+    // Android fullscreen check (PWA running without address bar)
+    if (window.innerHeight === screen.height && window.innerWidth === screen.width) return true;
+
+    // Android TWA/app scheme check
+    if (document.referrer.includes('android-app://')) return true;
+
+    return false;
+  }
+
+  // Update install button visibility based on current state
+  function updateInstallButtonVisibility() {
+    if (!installContainer) return;
+
+    const isStandalone = isRunningAsInstalledApp();
+
+    if (isStandalone) {
+      installContainer.style.display = 'none';
+      console.log('Standalone mode detected, hiding install button');
+    } else if (isMobile) {
+      installContainer.style.display = 'block';
+      console.log('Mobile browser mode, showing install button');
+    }
+  }
 
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     installPrompt = event;
-    if (installContainer && !isStandalone) {
-      installContainer.style.display = 'block';
-    }
+    updateInstallButtonVisibility();
     console.log('Install prompt available');
   });
 
-  // Show button on mobile only if NOT in standalone mode (not installed as app)
-  if (isMobile && installContainer && !isStandalone) {
-    installContainer.style.display = 'block';
-    console.log('Mobile device detected, showing install button');
-  } else if (installContainer && isStandalone) {
-    installContainer.style.display = 'none';
-    console.log('App is running in standalone mode, hiding install button');
-  }
+  // Check on initial load
+  updateInstallButtonVisibility();
+
+  // Re-check when visibility changes (app returns from background)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden === false) {
+      updateInstallButtonVisibility();
+    }
+  });
+
+  // Re-check when window is resized (orientation change)
+  window.addEventListener('orientationchange', updateInstallButtonVisibility);
 
   if (installBtn) {
     installBtn.addEventListener('click', async () => {
@@ -7738,9 +7767,7 @@
         const result = await installPrompt.userChoice;
         console.log('Install result:', result.outcome);
         installPrompt = null;
-        if (installContainer) {
-          installContainer.style.display = 'none';
-        }
+        updateInstallButtonVisibility();
       } else {
         showToast('App not installable on this browser');
       }
@@ -7750,8 +7777,7 @@
   window.addEventListener('appinstalled', () => {
     console.log('PWA installed successfully');
     showToast('App installed successfully!');
-    if (installContainer) {
-      installContainer.style.display = 'none';
+    updateInstallButtonVisibility();
     }
   });
 </script>
