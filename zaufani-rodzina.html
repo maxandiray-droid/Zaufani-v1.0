@@ -6130,6 +6130,11 @@
     const listing = getListing(listingId);
     if (!listing) return { success: false, error: 'Listing not found' };
 
+    // Check if listing is still available for sale
+    if (listing.status !== 'for_sale') {
+      return { success: false, error: 'Listing no longer available (already sold or removed)' };
+    }
+
     const buyer = zaufaniDB_getUserById(buyerId);
     const seller = zaufaniDB_getUserById(listing.sellerId);
 
