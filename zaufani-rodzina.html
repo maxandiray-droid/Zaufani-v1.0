@@ -7704,6 +7704,7 @@
   let installPrompt = null;
   const installContainer = document.getElementById('install-prompt-container');
   const installBtn = document.getElementById('install-btn');
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
@@ -7713,6 +7714,12 @@
     }
     console.log('Install prompt available');
   });
+
+  // Show button on mobile even if beforeinstallprompt doesn't fire
+  if (isMobile && installContainer) {
+    installContainer.style.display = 'block';
+    console.log('Mobile device detected, showing install button');
+  }
 
   if (installBtn) {
     installBtn.addEventListener('click', async () => {
