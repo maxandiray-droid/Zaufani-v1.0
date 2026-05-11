@@ -2608,27 +2608,17 @@
     // If user doesn't exist, create them automatically
     if (!user) {
       console.log('👤 User not found, creating new user:', name);
-      const newUser = {
-        id: 'user_' + Date.now(),
-        fullName: name,
-        email: 'v10_' + name.toLowerCase().replace(/\s+/g, '_') + '@zaufani.local',
-        role: 'user',
-        createdAt: new Date().toISOString(),
-        lastLogin: new Date().toISOString(),
-        sponsors: [],
-        followers: [],
-        posts: [],
-        isActive: true,
-        avatar: '👤',
-        city: '',
-        profession: ''
-      };
-      zaufaniDB_addUser(newUser);
-      user = newUser;
-      console.log('✅ User created:', user.id);
+      const v10Email = 'v10_' + name.toLowerCase().replace(/\s+/g, '_') + '@zaufani.local';
+      const result = zaufaniDB_addUser(v10Email, 'v10', name, 'user');
+      if (result.success) {
+        user = result.user;
+        console.log('✅ User created:', user.id);
+      } else {
+        showToast('❌ ' + result.error);
+        return;
+      }
     } else {
-      user.lastLogin = new Date().toISOString();
-      zaufaniDB_updateUser(user.id, { lastLogin: user.lastLogin });
+      zaufaniDB_updateUser(user.id, { lastLogin: new Date().toISOString() });
     }
 
     // Login success
@@ -2643,14 +2633,18 @@
     userState.needsSponsorship = false; // V.1.0: No sponsorship required
     userState.sponsorCount = 0;
 
+    // Clear form
+    document.getElementById('auth-name').value = '';
+
     console.log('✅ V.1.0 Login success:', user.fullName);
     loginSuccess();
   }
 
   function findUserByName(name) {
+    if (!zaufaniDB.users) return null;
     const lowerName = name.toLowerCase();
-    for (const user of zaufaniDB.users) {
-      if (user.fullName.toLowerCase() === lowerName) {
+    for (const user of Object.values(zaufaniDB.users)) {
+      if (user.fullName && user.fullName.toLowerCase() === lowerName) {
         return user;
       }
     }
