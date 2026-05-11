@@ -1,13 +1,13 @@
 {
-  "name": "Zaufani Rodzina - Sieć Rodzinna",
+  "name": "Zaufani Rodzina v1.0",
   "short_name": "Zaufani",
-  "description": "Twój prywatny serwis rodzinny. Dziel się lokalizacją, kupuj/sprzedawaj między sobą, organizuj aktywności rodzinne.",
-  "start_url": "/zaufani-rodzina.html",
-  "scope": "/",
+  "description": "Twój prywatny serwis rodzinny. Dziel się z rodziną, handluj bezpośrednio.",
+  "start_url": "/Zaufani-v1.0/index.html",
+  "scope": "/Zaufani-v1.0/",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "portrait",
   "background_color": "#FAF6EF",
-  "theme_color": "#C8792A",
+  "theme_color": "#d4a574",
   "categories": ["lifestyle", "productivity", "family"],
   "screenshots": [
     {
