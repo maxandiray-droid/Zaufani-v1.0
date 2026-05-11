@@ -1078,6 +1078,13 @@
       Bienvenue en V.1.0 - Mode marché!<br><br>
       <span style="color: var(--gray-warm); font-size: 12px;">Entrez votre nom pour commencer.</span>
     </div>
+
+    <!-- PWA Install Button -->
+    <div id="install-prompt-container" style="margin-top: 24px; display: none;">
+      <button id="install-btn" style="width: 100%; padding: 12px 20px; background: var(--amber); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">
+        📱 Installer l'app
+      </button>
+    </div>
   </div>
 </div>
 
@@ -7692,6 +7699,44 @@
         console.log('Service Worker registration failed:', error);
       });
   }
+
+  // PWA Install Prompt Handler
+  let installPrompt = null;
+  const installContainer = document.getElementById('install-prompt-container');
+  const installBtn = document.getElementById('install-btn');
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    installPrompt = event;
+    if (installContainer) {
+      installContainer.style.display = 'block';
+    }
+    console.log('Install prompt available');
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (installPrompt) {
+        installPrompt.prompt();
+        const result = await installPrompt.userChoice;
+        console.log('Install result:', result.outcome);
+        installPrompt = null;
+        if (installContainer) {
+          installContainer.style.display = 'none';
+        }
+      } else {
+        showToast('App not installable on this browser');
+      }
+    });
+  }
+
+  window.addEventListener('appinstalled', () => {
+    console.log('PWA installed successfully');
+    showToast('App installed successfully!');
+    if (installContainer) {
+      installContainer.style.display = 'none';
+    }
+  });
 </script>
 </body>
 </html>
