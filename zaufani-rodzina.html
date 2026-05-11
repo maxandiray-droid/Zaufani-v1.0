@@ -3397,10 +3397,50 @@
     // Store listing context
     window.purchasingListingId = listingId;
 
-    // Update modal to show it's a purchase WITH balance info
+    // Update modal to show it's a purchase WITH fees breakdown
     const modal = document.getElementById('modal-donation');
     if (modal) {
       modal.querySelector('.sheet-title').textContent = '💳 Acheter: ' + listing.title;
+
+      // Add fee breakdown info
+      const platformFee = listing.price * 0.05;
+      const totalAmount = listing.price;
+
+      let breakdownHTML = `
+        <div style="background: rgba(200,121,42,0.1); border: 1.5px solid var(--amber); border-radius: 12px; padding: 12px; margin: 12px 0; font-size: 13px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <span style="color: var(--gray-warm);">Prix de l'article:</span>
+            <span style="font-weight: 700; color: var(--ink);">${listing.price.toFixed(2)}€</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 6px; border-top: 1px solid var(--cream-dark);">
+            <span style="color: var(--terracotta); font-size: 12px;">Frais Zaufani (5%):</span>
+            <span style="font-weight: 700; color: var(--terracotta);">+${platformFee.toFixed(2)}€</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--cream-dark); margin-top: 6px;">
+            <span style="font-weight: 700; color: var(--ink);">Montant à payer:</span>
+            <span style="font-weight: 700; font-size: 16px; color: var(--amber);">${totalAmount.toFixed(2)}€</span>
+          </div>
+        </div>
+      `;
+
+      // Insert breakdown before donation-note if it exists, otherwise before PayPal button
+      const donationNote = modal.querySelector('.donation-note');
+      const paypalContainer = modal.querySelector('#paypal-button-container');
+      let existingBreakdown = modal.querySelector('[data-fee-breakdown]');
+
+      if (existingBreakdown) {
+        existingBreakdown.innerHTML = breakdownHTML;
+      } else {
+        const tempDiv = document.createElement('div');
+        tempDiv.setAttribute('data-fee-breakdown', 'true');
+        tempDiv.innerHTML = breakdownHTML;
+
+        if (donationNote) {
+          donationNote.parentNode.insertBefore(tempDiv, donationNote);
+        } else if (paypalContainer) {
+          paypalContainer.parentNode.insertBefore(tempDiv, paypalContainer);
+        }
+      }
     }
 
     openDonation();
@@ -3744,6 +3784,21 @@
 
     if (!title || !cat || !price) {
       showToast('⚠️ Titre, catégorie et prix requis');
+      return;
+    }
+
+    // Validate price
+    const priceNum = parseFloat(price);
+    if (isNaN(priceNum) || priceNum <= 0) {
+      showToast('❌ Le prix doit être supérieur à 0€');
+      return;
+    }
+    if (priceNum > 99999) {
+      showToast('❌ Le prix maximum est 99999€');
+      return;
+    }
+    if (priceNum < 0.50) {
+      showToast('❌ Le prix minimum est 0.50€');
       return;
     }
 
@@ -7413,7 +7468,16 @@
         });
       },
       onApprove: (data, actions) => {
+        // Show loading message while processing payment
+        showToast('⏳ En attente du paiement...');
+
+        // Set a timeout to warn if payment takes too long
+        const paymentTimeout = setTimeout(() => {
+          showToast('⏳ Le paiement prend plus de temps que prévu... Vérification en cours');
+        }, 3000);
+
         return actions.order.capture().then((details) => {
+          clearTimeout(paymentTimeout);
           const amount = parseFloat(document.getElementById('donation-amount').value) || 0;
 
           // Check if it's a marketplace purchase or donation
