@@ -3193,6 +3193,21 @@
       return;
     }
 
+    // CHECK BALANCE BEFORE PAYPAL - CRITICAL FIX #3
+    const buyer = zaufaniDB_getUserById(userState.userId);
+    if (!buyer) {
+      showToast('❌ Utilisateur non trouvé');
+      return;
+    }
+
+    initializeUserWallet(userState.userId);
+
+    if (buyer.wallet.balance < listing.price) {
+      showToast(`❌ Solde insuffisant! Vous avez ${buyer.wallet.balance.toFixed(2)}€ mais l'article coûte ${listing.price}€`);
+      console.warn(`⚠️ Purchase blocked: insufficient balance. User has ${buyer.wallet.balance}€, item costs ${listing.price}€`);
+      return;
+    }
+
     // Open PayPal payment
     document.getElementById('donation-amount').value = listing.price;
     document.getElementById('donation-currency').value = 'EUR';
@@ -3200,7 +3215,7 @@
     // Store listing context
     window.purchasingListingId = listingId;
 
-    // Update modal to show it's a purchase
+    // Update modal to show it's a purchase WITH balance info
     const modal = document.getElementById('modal-donation');
     if (modal) {
       modal.querySelector('.sheet-title').textContent = '💳 Acheter: ' + listing.title;
