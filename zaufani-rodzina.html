@@ -1173,18 +1173,22 @@
     <div class="tab-pane active" id="tab-home">
       <!-- Search -->
       <div style="padding: 16px 20px 0; position: relative;">
-        <div style="display: flex; align-items: center; gap: 10px; background: white; border-radius: 50px; padding: 12px 18px; border: 1.5px solid var(--cream-dark); box-shadow: 0 2px 12px var(--shadow);">
-          <span style="font-size: 14px;">🔍</span>
+        <label for="home-search-input" style="display: flex; align-items: center; gap: 10px; background: white; border-radius: 50px; padding: 12px 18px; border: 1.5px solid var(--cream-dark); box-shadow: 0 2px 12px var(--shadow); min-height: 44px; cursor: text;">
+          <span style="font-size: 16px; flex-shrink: 0;">🔍</span>
           <input
-            type="text"
+            type="search"
+            inputmode="search"
             id="home-search-input"
             placeholder="Szukaj w rodzinie…"
             oninput="filterHomeSearch()"
             autocomplete="off"
-            style="flex: 1; border: none; outline: none; background: transparent; font-family: 'Lato', sans-serif; font-size: 14px; color: var(--ink); min-width: 0;"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            style="flex: 1 1 auto; width: 100%; min-width: 0; border: none; outline: none; background: transparent; font-family: 'Lato', sans-serif; font-size: 16px; color: var(--ink); -webkit-appearance: none; appearance: none; padding: 0;"
           >
-          <button id="home-search-clear" onclick="clearHomeSearch()" style="display: none; background: transparent; border: none; cursor: pointer; padding: 0; font-size: 16px; color: var(--gray-warm);">✕</button>
-        </div>
+          <button type="button" id="home-search-clear" onclick="clearHomeSearch()" style="display: none; background: transparent; border: none; cursor: pointer; padding: 4px 6px; font-size: 16px; color: var(--gray-warm); flex-shrink: 0;">✕</button>
+        </label>
         <div id="home-search-results" style="display: none; position: absolute; top: calc(100% - 4px); left: 20px; right: 20px; background: white; border-radius: 16px; box-shadow: 0 8px 24px var(--shadow-strong); max-height: 60vh; overflow-y: auto; z-index: 50; border: 1px solid var(--cream-dark);"></div>
       </div>
 

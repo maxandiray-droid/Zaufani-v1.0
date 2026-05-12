@@ -1,7 +1,7 @@
 // Zaufani v1.0 Service Worker
 // Enables offline support and app installation
 
-const CACHE_NAME = 'zaufani-v1.0-cache-v1';
+const CACHE_NAME = 'zaufani-v1.0-cache-v2';
 const ASSETS_TO_CACHE = [
   '/Zaufani-v1.0/index.html',
   '/Zaufani-v1.0/manifest.json',
