@@ -2,96 +2,131 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clear Cache - Zaufani</title>
 <style>
   body {
     font-family: Arial, sans-serif;
     background: #FAF6EF;
-    padding: 40px;
+    padding: 20px;
     text-align: center;
   }
   .message {
     background: white;
-    padding: 40px;
-    border-radius: 10px;
-    max-width: 400px;
-    margin: 50px auto;
+    padding: 32px 24px;
+    border-radius: 14px;
+    max-width: 480px;
+    margin: 30px auto;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
   }
-  .success {
-    background: #e8f5e9;
-    color: #2e7d32;
-    padding: 20px;
-    border-radius: 8px;
-    margin: 20px 0;
-  }
-  .error {
-    background: #ffebee;
-    color: #c62828;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  a {
-    color: #d4a574;
-    text-decoration: none;
-    margin-top: 20px;
-    display: inline-block;
-    padding: 10px 20px;
-    background: #f0e6d2;
+  .step {
+    text-align: left;
+    margin: 12px 0;
+    padding: 10px 12px;
+    background: #f9f4ea;
+    border-left: 3px solid #d4a574;
     border-radius: 6px;
+    font-size: 14px;
   }
-  a:hover {
-    background: #e6dcc4;
+  .step.done { background: #e8f5e9; border-left-color: #2e7d32; }
+  .step.error { background: #ffebee; border-left-color: #c62828; }
+  a.btn {
+    display: inline-block;
+    color: white;
+    background: #d4a574;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 15px;
   }
 </style>
 </head>
 <body>
 
 <div class="message">
-  <h2>🧹 Cache Clearing</h2>
-  <div id="status">Clearing browser cache...</div>
-  <div id="result"></div>
-  <a href="index.html">← Back to App</a>
+  <h2>🧹 Réinitialisation complète</h2>
+  <div id="steps"></div>
+  <a class="btn" id="back-link" href="index.html" style="display:none;">→ Ouvrir l'app fraîche</a>
 </div>
 
 <script>
-try {
-  // Clear all localStorage
-  const keys = Object.keys(localStorage);
-  keys.forEach(key => {
-    localStorage.removeItem(key);
-    console.log('Cleared:', key);
-  });
+const steps = document.getElementById('steps');
+const back = document.getElementById('back-link');
 
-  // Clear all sessionStorage
-  const sessionKeys = Object.keys(sessionStorage);
-  sessionKeys.forEach(key => {
-    sessionStorage.removeItem(key);
-  });
+function add(label, status) {
+  const div = document.createElement('div');
+  div.className = 'step ' + status;
+  div.textContent = (status === 'done' ? '✅ ' : status === 'error' ? '❌ ' : '⏳ ') + label;
+  steps.appendChild(div);
+  return div;
+}
 
-  // Verify
-  const remaining = Object.keys(localStorage).filter(k => k.includes('zaufani'));
-
-  if (remaining.length === 0) {
-    document.getElementById('status').innerHTML = '<h3>✅ Cache Cleared Successfully!</h3>';
-    document.getElementById('result').innerHTML = `
-      <div class="success">
-        <p>All local data has been cleared.</p>
-        <p>You can now login with a fresh start.</p>
-      </div>
-    `;
-  } else {
-    throw new Error('Failed to clear all keys: ' + remaining.join(', '));
+async function run() {
+  // 1. localStorage
+  try {
+    const lsCount = localStorage.length;
+    localStorage.clear();
+    add('localStorage vidé (' + lsCount + ' entrées)', 'done');
+  } catch (e) {
+    add('localStorage: ' + e.message, 'error');
   }
 
-} catch (error) {
-  document.getElementById('status').innerHTML = '<h3>❌ Error</h3>';
-  document.getElementById('result').innerHTML = `
-    <div class="error">
-      <p>${error.message}</p>
-      <p>Try manually: F12 → Application → Local Storage → Clear All</p>
-    </div>
-  `;
+  // 2. sessionStorage
+  try {
+    const ssCount = sessionStorage.length;
+    sessionStorage.clear();
+    add('sessionStorage vidé (' + ssCount + ' entrées)', 'done');
+  } catch (e) {
+    add('sessionStorage: ' + e.message, 'error');
+  }
+
+  // 3. Service Worker caches
+  if ('caches' in window) {
+    try {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+      add('Caches du service worker vidés (' + keys.length + ' caches)', 'done');
+    } catch (e) {
+      add('Caches: ' + e.message, 'error');
+    }
+  } else {
+    add('Cache API non supportée (ignoré)', 'done');
+  }
+
+  // 4. Unregister service workers
+  if ('serviceWorker' in navigator) {
+    try {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
+      add('Service workers déregistrés (' + regs.length + ' workers)', 'done');
+    } catch (e) {
+      add('Service worker: ' + e.message, 'error');
+    }
+  } else {
+    add('Service Worker non supporté (ignoré)', 'done');
+  }
+
+  // 5. IndexedDB (firebase uses this)
+  if ('indexedDB' in window && indexedDB.databases) {
+    try {
+      const dbs = await indexedDB.databases();
+      await Promise.all(dbs.map(db => new Promise(res => {
+        const req = indexedDB.deleteDatabase(db.name);
+        req.onsuccess = req.onerror = req.onblocked = () => res();
+      })));
+      add('IndexedDB vidées (' + dbs.length + ' bases)', 'done');
+    } catch (e) {
+      add('IndexedDB: ' + e.message, 'error');
+    }
+  }
+
+  add('✓ Tout est réinitialisé. Ouvre l\'app pour charger la dernière version.', 'done');
+  back.style.display = 'inline-block';
 }
+
+run();
 </script>
 
 </body>

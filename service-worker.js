@@ -1,103 +1,78 @@
 // Zaufani v1.0 Service Worker
 // Enables offline support and app installation
 
-const CACHE_NAME = 'zaufani-v1.0-cache-v2';
-const ASSETS_TO_CACHE = [
-  '/Zaufani-v1.0/index.html',
-  '/Zaufani-v1.0/manifest.json',
-  '/Zaufani-v1.0/service-worker.js'
-];
+const CACHE_NAME = 'zaufani-v1.0-cache-v3';
+// Only pre-cache the manifest so install doesn't depend on a particular path.
+// The HTML is intentionally NOT pre-cached so we always get the latest from the network.
+const ASSETS_TO_CACHE = [];
 
-// Install event: cache files
 self.addEventListener('install', event => {
-  console.log('[Service Worker] Installing...');
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('[Service Worker] Caching files');
-      return cache.addAll(ASSETS_TO_CACHE);
-    }).catch(err => {
-      console.warn('[Service Worker] Cache failed:', err);
-    })
+      if (ASSETS_TO_CACHE.length) return cache.addAll(ASSETS_TO_CACHE);
+    }).catch(() => {})
   );
   self.skipWaiting();
 });
 
-// Activate event: clean up old caches
 self.addEventListener('activate', event => {
-  console.log('[Service Worker] Activating...');
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('[Service Worker] Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    caches.keys().then(cacheNames => Promise.all(
+      cacheNames.map(name => (name !== CACHE_NAME) ? caches.delete(name) : null)
+    ))
   );
   self.clients.claim();
 });
 
-// Fetch event: serve from cache, fallback to network
 self.addEventListener('fetch', event => {
-  // Only handle GET requests
-  if (event.request.method !== 'GET') {
-    return;
-  }
+  if (event.request.method !== 'GET') return;
 
-  // For Firebase requests, always go to network
-  if (event.request.url.includes('firebase') ||
-      event.request.url.includes('firebaseio.com')) {
+  const url = event.request.url;
+
+  // Firebase: always network, never cache
+  if (url.includes('firebase') || url.includes('firebaseio.com')) {
     event.respondWith(
-      fetch(event.request).catch(err => {
-        console.log('[Service Worker] Firebase fetch failed (offline):', err.message);
-        return new Response('Offline - Firebase unavailable', { status: 503 });
-      })
+      fetch(event.request).catch(() =>
+        new Response('Offline - Firebase unavailable', { status: 503 })
+      )
     );
     return;
   }
 
-  // For other requests: try network first, fallback to cache
+  // HTML navigations: ALWAYS network-first with cache: 'no-store' to bypass
+  // the HTTP cache (browser may otherwise serve a stale GitHub Pages copy).
+  const isHtmlNav = event.request.mode === 'navigate' ||
+                    (event.request.headers.get('accept') || '').includes('text/html');
+
+  if (isHtmlNav) {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-store' })
+        .catch(() => caches.match(event.request).then(r => r || new Response(
+          '<!doctype html><meta charset="utf-8"><title>Hors-ligne</title><body style="font-family:sans-serif;padding:24px"><h2>Hors-ligne</h2><p>Reconnecte-toi à internet pour charger l\'app.</p>',
+          { status: 503, headers: { 'Content-Type': 'text/html' } }
+        )))
+    );
+    return;
+  }
+
+  // Other assets: network-first, cache successful responses for offline use
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // Cache successful responses
-        if (response.ok && !response.headers.get('content-type')?.includes('text/html')) {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseClone);
-          });
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone)).catch(() => {});
         }
         return response;
       })
-      .catch(err => {
-        console.log('[Service Worker] Fetch failed, using cache:', event.request.url);
-        // Fallback to cache
-        return caches.match(event.request)
-          .then(cachedResponse => {
-            if (cachedResponse) {
-              return cachedResponse;
-            }
-            // Return offline page if not cached
-            return new Response('Offline - Page not cached', {
-              status: 503,
-              statusText: 'Service Unavailable',
-              headers: new Headers({
-                'Content-Type': 'text/plain'
-              })
-            });
-          });
-      })
+      .catch(() =>
+        caches.match(event.request).then(r => r || new Response('Offline', { status: 503 }))
+      )
   );
 });
 
-// Handle messages from clients
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
-
-console.log('[Service Worker] Loaded for Zaufani v1.0');
