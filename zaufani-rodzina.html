@@ -871,12 +871,17 @@
     position: fixed; bottom: calc(var(--nav-h) + 24px); left: 50%;
     transform: translateX(-50%) translateY(20px);
     background: var(--ink); color: white;
-    padding: 12px 20px; border-radius: 50px;
+    padding: 12px 18px; border-radius: 50px;
     font-size: 14px; font-weight: 700;
     z-index: 300; opacity: 0;
     transition: all 0.3s; white-space: nowrap;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    display: inline-flex; align-items: center; gap: 8px;
   }
+  .toast .icon { width: 16px; height: 16px; color: rgba(255,255,255,0.85); }
+  .toast[data-variant="success"] .icon { color: #6BCB77; }
+  .toast[data-variant="error"] .icon { color: #E07A5F; }
+  .toast[data-variant="warn"] .icon { color: #E8A050; }
   .toast.show {
     opacity: 1; transform: translateX(-50%) translateY(0);
   }
@@ -7798,9 +7803,31 @@
   }
 
   // ── TOAST ──
+  const TOAST_ICONS = {
+    success: '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+    error:   '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+    warn:    '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>',
+    info:    '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>'
+  };
+  function detectToastVariant(msg) {
+    const m = String(msg).trim();
+    if (/^(✅|✓)/.test(m)) return { variant: 'success', text: m.replace(/^(✅|✓)\s*/, '') };
+    if (/^❌/.test(m)) return { variant: 'error', text: m.replace(/^❌\s*/, '') };
+    if (/^(⚠️|⚠)/.test(m)) return { variant: 'warn', text: m.replace(/^(⚠️|⚠)\s*/, '') };
+    return { variant: 'default', text: m };
+  }
+  function escapeText(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
   function showToast(msg) {
     const t = document.getElementById('toast');
-    t.textContent = msg;
+    if (!t) return;
+    const { variant, text } = detectToastVariant(msg);
+    // Strip any remaining leading emoji (📱, 📋, 🤝, etc.) so the message reads cleanly
+    const clean = text.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]️?\s*/u, '');
+    t.dataset.variant = variant;
+    const iconHtml = variant === 'default' ? '' : (TOAST_ICONS[variant] || '');
+    t.innerHTML = iconHtml + '<span>' + escapeText(clean) + '</span>';
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2400);
   }
