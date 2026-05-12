@@ -1148,6 +1148,22 @@
   </div>
 </div>
 
+<!-- ══════════ SEARCH SCREEN ══════════ -->
+<div class="screen" id="screen-search" style="display: none;">
+  <div style="padding: 16px 20px; display: flex; flex-direction: column; height: 100%; background: var(--cream);">
+    <!-- Header -->
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+      <button onclick="closeSearch()" style="background: transparent; border: none; font-size: 24px; cursor: pointer; padding: 0;">←</button>
+      <input type="text" id="search-input" placeholder="Chercher dans la famille..." onkeyup="performSearch()" style="flex: 1; padding: 12px 14px; border: 1.5px solid var(--cream-dark); border-radius: 50px; font-family: 'Lato', sans-serif; font-size: 14px; outline: none;">
+    </div>
+
+    <!-- Results -->
+    <div id="search-results" style="flex: 1; overflow-y: auto; padding-bottom: 20px;">
+      <!-- Results populated by JavaScript -->
+    </div>
+  </div>
+</div>
+
 <!-- ══════════ MAIN APP ══════════ -->
 <div id="app">
 
@@ -3929,7 +3945,68 @@
   }
 
   function showSearch() {
-    showToast('🔍 Szukaj w ogłoszeniach rodziny…');
+    document.getElementById('screen-search').classList.add('active');
+    document.getElementById('search-input').focus();
+  }
+
+  function closeSearch() {
+    document.getElementById('screen-search').classList.remove('active');
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-results').innerHTML = '';
+  }
+
+  function performSearch() {
+    const query = document.getElementById('search-input').value.toLowerCase().trim();
+    const resultsDiv = document.getElementById('search-results');
+
+    if (!query) {
+      resultsDiv.innerHTML = '';
+      return;
+    }
+
+    const results = [];
+
+    // Search in demo posts
+    for (const [postId, post] of Object.entries(posts)) {
+      const matchTitle = post.title.toLowerCase().includes(query);
+      const matchDesc = post.desc.toLowerCase().includes(query);
+      const matchCategory = post.cat.toLowerCase().includes(query);
+      const matchSeller = post.seller.toLowerCase().includes(query);
+
+      if (matchTitle || matchDesc || matchCategory || matchSeller) {
+        results.push({
+          id: postId,
+          title: post.title,
+          desc: post.desc,
+          emoji: post.emoji,
+          seller: post.seller,
+          price: post.price,
+          unit: post.unit,
+          cat: post.cat,
+          bg: post.bg,
+          type: 'demo'
+        });
+      }
+    }
+
+    // Display results
+    if (results.length === 0) {
+      resultsDiv.innerHTML = '<div style="text-align: center; padding: 40px 20px; color: var(--gray-warm);">Aucun résultat trouvé pour "' + query + '"</div>';
+    } else {
+      resultsDiv.innerHTML = results.map(result => `
+        <div class="post-card" onclick="openPost('${result.id}')" style="cursor: pointer; margin-bottom: 12px;">
+          <div class="post-card-header">
+            <div class="post-avatar" style="background: ${result.bg}; font-size: 28px;">${result.emoji}</div>
+            <div style="flex: 1;">
+              <div class="post-avatar-name">${result.title}</div>
+              <div class="post-avatar-rel">${result.cat} • ${result.seller}</div>
+            </div>
+            <div class="post-time">${result.price} <small>${result.unit}</small></div>
+          </div>
+          <div class="post-desc" style="padding: 0 16px 12px; font-size: 13px; color: var(--gray-warm); line-height: 1.4;">${result.desc.substring(0, 100)}...</div>
+        </div>
+      `).join('');
+    }
   }
 
   // ── DEBUG PANEL ──
