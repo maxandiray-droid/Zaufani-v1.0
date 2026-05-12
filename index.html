@@ -1253,24 +1253,24 @@
       <!-- Sponsorship button -->
       <div style="padding: 12px 20px;">
         <button class="btn-sponsor" onclick="openSponsorship()">
-          <span style="font-size: 18px;">🤝</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 20px; color: var(--amber);"><path d="M12 20s-7-4-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 6-7 10-7 10z"/></svg>
           <div style="flex: 1; text-align: left;">
             <div style="font-weight: 700; font-size: 14px; color: var(--ink);">Parrainages</div>
             <div style="font-size: 11px; color: var(--gray-warm); margin-top: 2px;">Envoyer & gérer</div>
           </div>
-          <span style="color: var(--gray-light); font-size: 16px;">›</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 16px; color: var(--gray-light);"><path d="m9 6 6 6-6 6"/></svg>
         </button>
       </div>
 
       <!-- Donation banner -->
       <div style="padding: 0 20px;">
         <div style="background: linear-gradient(135deg, rgba(200,121,42,0.08), rgba(200,121,42,0.04)); border: 1px solid rgba(200,121,42,0.15); border-radius: 16px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="openDonation()">
-          <span style="font-size: 18px;">☕</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 20px; color: var(--amber);"><path d="M4 9h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M16 11h2a2 2 0 0 1 0 4h-2M6 4v2M10 4v2M14 4v2"/></svg>
           <div style="flex: 1; min-width: 0;">
             <div style="font-size: 12px; font-weight: 700; color: var(--amber-dark);">Soutenir le projet</div>
             <div style="font-size: 11px; color: var(--gray-warm); margin-top: 1px;">Aide volontaire</div>
           </div>
-          <span style="color: var(--amber); font-size: 14px; font-weight: 700;">›</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 14px; color: var(--amber);"><path d="m9 6 6 6-6 6"/></svg>
         </div>
       </div>
 
@@ -1436,7 +1436,8 @@
         </div>
 
         <button class="btn-submit" onclick="submitPost()">
-          ✦ Opublikuj ogłoszenie
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 8px;"><path d="M12 4 14 10 20 12 14 14 12 20 10 14 4 12 10 10 Z" fill="currentColor" stroke="none"/></svg>
+          Opublikuj ogłoszenie
         </button>
       </div>
     </div>
@@ -1836,7 +1837,7 @@
 <div class="modal-overlay" id="modal-donation" onclick="if(event.target===this)closeModal('modal-donation')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Wspomóż Zaufani Rodzina ☕</div>
+    <div class="sheet-title">Wspomóż Zaufani Rodzina</div>
     <div class="sheet-sub">Aplikacja jest bezpłatna i zawsze taka pozostanie. Jeśli chcesz pomóc pokryć koszty serwera i utrzymania — każda złotówka ma znaczenie.</div>
 
     <!-- Currency Selector -->
@@ -1897,7 +1898,7 @@
 <div class="modal-overlay" id="modal-sponsorship" onclick="if(event.target===this)closeModal('modal-sponsorship')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Parrainages 🤝</div>
+    <div class="sheet-title">Parrainages</div>
 
     <!-- Send invites section -->
     <div style="margin-bottom: 28px;">
