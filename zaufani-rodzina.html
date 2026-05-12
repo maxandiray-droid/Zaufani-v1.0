@@ -4037,7 +4037,11 @@
   }
 
   function isDebugEnabled() {
-    return userState.isAdmin && debugToken === VALID_DEBUG_TOKEN;
+    try {
+      return userState.isAdmin && debugToken === VALID_DEBUG_TOKEN;
+    } catch (e) {
+      return false;
+    }
   }
 
   function updateDebugButtonVisibility() {
