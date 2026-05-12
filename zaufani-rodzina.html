@@ -463,7 +463,9 @@
   }
   .cat-tile:active { transform: scale(0.95); box-shadow: none; }
   .cat-tile:hover { border-color: var(--amber); }
-  .cat-emoji { font-size: 36px; }
+  .cat-emoji { font-size: 30px; display: inline-flex; align-items: center; justify-content: center; color: var(--amber-dark); }
+  .cat-emoji svg { width: 28px; height: 28px; stroke-width: 1.4; }
+  .cat-tile.featured .cat-emoji { color: var(--amber); }
   .cat-tile h4 { font-size: 14px; font-weight: 700; color: var(--ink); }
   .cat-count { font-size: 11px; color: var(--gray-warm); }
   .cat-tile.featured {
@@ -1313,53 +1315,53 @@
       </div>
 
       <div class="cats-grid">
-        <div class="cat-tile featured" onclick="showToast('🏠 Noclegi rodzinne')">
-          <span class="cat-emoji">🏠</span>
+        <div class="cat-tile featured" onclick="showToast('Noclegi rodzinne')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 3l9 8M5 10v10h14V10"/></svg></span>
           <h4>Noclegi</h4>
           <span class="cat-count">3 ogłoszenia</span>
         </div>
-        <div class="cat-tile" onclick="showToast('👶 Opieka nad dziećmi')">
-          <span class="cat-emoji">👶</span>
+        <div class="cat-tile" onclick="showToast('Opieka nad dziećmi')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 0-16 0c0 6 5 9 8 9s8-3 8-9z"/><path d="M9 11h.01M15 11h.01M9 15c1 1 2 1.5 3 1.5s2-.5 3-1.5"/></svg></span>
           <h4>Opieka</h4>
           <span class="cat-count">2 ogłoszenia</span>
         </div>
-        <div class="cat-tile" onclick="showToast('🛋️ Rzeczy do oddania')">
-          <span class="cat-emoji">🛋️</span>
+        <div class="cat-tile" onclick="showToast('Rzeczy do oddania')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4zM3 7v10l9 4 9-4V7M12 11v10"/></svg></span>
           <h4>Rzeczy</h4>
           <span class="cat-count">5 ogłoszeń</span>
         </div>
-        <div class="cat-tile" onclick="showToast('🚗 Wspólne podróże')">
-          <span class="cat-emoji">🚗</span>
+        <div class="cat-tile" onclick="showToast('Wspólne podróże')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11 7 6h10l2 5M5 11h14v6H5zM5 17v2M19 17v2"/><circle cx="8" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="14" r="1" fill="currentColor" stroke="none"/></svg></span>
           <h4>Przewóz</h4>
           <span class="cat-count">1 ogłoszenie</span>
         </div>
-        <div class="cat-tile" onclick="showToast('🔧 Pomoc w domu')">
-          <span class="cat-emoji">🔧</span>
+        <div class="cat-tile" onclick="showToast('Pomoc w domu')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 7 3-3 4 4-3 3a3 3 0 0 1-3-3zM14 7l-8 8a2 2 0 1 0 3 3l8-8M9 16l-3 3"/></svg></span>
           <h4>Pomoc</h4>
           <span class="cat-count">2 ogłoszenia</span>
         </div>
-        <div class="cat-tile" onclick="showToast('🎓 Korepetycje')">
-          <span class="cat-emoji">🎓</span>
+        <div class="cat-tile" onclick="showToast('Korepetycje')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2 9l10 5 10-5zM6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></span>
           <h4>Korepetycje</h4>
           <span class="cat-count">2 ogłoszenia</span>
         </div>
-        <div class="cat-tile" onclick="showToast('🍕 Gotowanie')">
-          <span class="cat-emoji">🍕</span>
+        <div class="cat-tile" onclick="showToast('Gotowanie')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6M4 13h16M7 4c0-1 .5-2 2-2s2 1 2 2c1 0 2 .5 2 2 1 0 2 1 2 2 1 0 2 .5 2 2H5c0-1.5 1-2 2-2 0-1 .5-2 2-2"/></svg></span>
           <h4>Gotowanie</h4>
           <span class="cat-count">1 ogłoszenie</span>
         </div>
-        <div class="cat-tile" onclick="showToast('🐕 Zwierzęta')">
-          <span class="cat-emoji">🐕</span>
+        <div class="cat-tile" onclick="showToast('Zwierzęta')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="9" r="1.6" fill="currentColor" stroke="none"/><circle cx="17" cy="9" r="1.6" fill="currentColor" stroke="none"/><circle cx="5" cy="14" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="14" r="1.4" fill="currentColor" stroke="none"/><path d="M9 20c0-3 2-5 3-5s3 2 3 5c0 1-1 1.5-3 1.5S9 21 9 20z" fill="currentColor" stroke="none"/></svg></span>
           <h4>Zwierzęta</h4>
           <span class="cat-count">1 ogłoszenie</span>
         </div>
-        <div class="cat-tile" onclick="showToast('🌱 Ogród')">
-          <span class="cat-emoji">🌱</span>
+        <div class="cat-tile" onclick="showToast('Ogród')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22V11M12 11c0-4 3-7 8-7-1 6-4 8-8 8zM12 11c0-3-2-5-6-5 1 4 3 5 6 5z"/></svg></span>
           <h4>Ogród</h4>
           <span class="cat-count">3 ogłoszenia</span>
         </div>
-        <div class="cat-tile" onclick="showToast('🎁 Inne')">
-          <span class="cat-emoji">🎁</span>
+        <div class="cat-tile" onclick="showToast('Inne')">
+          <span class="cat-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="1"/><path d="M2 7h20v3H2zM12 7v13M9 7s-2-3 0-4 3 4 3 4M15 7s2-3 0-4-3 4-3 4"/></svg></span>
           <h4>Inne</h4>
           <span class="cat-count">4 ogłoszenia</span>
         </div>
@@ -2461,6 +2463,23 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  // ── CATEGORY ICONS (Lucide-style, monochrome, currentColor) ──
+  const CATEGORY_SVG = {
+    'Noclegi':    '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 3l9 8M5 10v10h14V10"/></svg>',
+    'Opieka':     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 0-16 0c0 6 5 9 8 9s8-3 8-9z"/><path d="M9 11h.01M15 11h.01M9 15c1 1 2 1.5 3 1.5s2-.5 3-1.5"/></svg>',
+    'Rzeczy':     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4zM3 7v10l9 4 9-4V7M12 11v10"/></svg>',
+    'Przewóz':    '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11 7 6h10l2 5M5 11h14v6H5zM5 17v2M19 17v2"/><circle cx="8" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="14" r="1" fill="currentColor" stroke="none"/></svg>',
+    'Pomoc':      '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 7 3-3 4 4-3 3a3 3 0 0 1-3-3zM14 7l-8 8a2 2 0 1 0 3 3l8-8M9 16l-3 3"/></svg>',
+    'Korepetycje':'<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2 9l10 5 10-5zM6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg>',
+    'Gotowanie':  '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6M4 13h16M7 4c0-1 .5-2 2-2s2 1 2 2c1 0 2 .5 2 2 1 0 2 1 2 2 1 0 2 .5 2 2H5c0-1.5 1-2 2-2 0-1 .5-2 2-2"/></svg>',
+    'Zwierzęta':  '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="9" r="1.6" fill="currentColor" stroke="none"/><circle cx="17" cy="9" r="1.6" fill="currentColor" stroke="none"/><circle cx="5" cy="14" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="14" r="1.4" fill="currentColor" stroke="none"/><path d="M9 20c0-3 2-5 3-5s3 2 3 5c0 1-1 1.5-3 1.5S9 21 9 20z" fill="currentColor" stroke="none"/></svg>',
+    'Ogród':      '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22V11M12 11c0-4 3-7 8-7-1 6-4 8-8 8zM12 11c0-3-2-5-6-5 1 4 3 5 6 5z"/></svg>',
+    'Inne':       '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="1"/><path d="M2 7h20v3H2zM12 7v13M9 7s-2-3 0-4 3 4 3 4M15 7s2-3 0-4-3 4-3 4"/></svg>'
+  };
+  function categoryIcon(cat) {
+    return CATEGORY_SVG[cat] || CATEGORY_SVG['Inne'];
+  }
+
   // ── DATA ──
   const posts = {
     post1: {
@@ -4043,7 +4062,7 @@
 
     resultsDiv.innerHTML = matches.map(({ id, post }) => `
       <div onclick="selectHomeSearchResult('${id}')" style="display: flex; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--cream-dark); cursor: pointer; align-items: center;">
-        <div style="width: 44px; height: 44px; border-radius: 12px; background: ${post.bg}; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;">${post.emoji}</div>
+        <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(200,121,42,0.1); display: flex; align-items: center; justify-content: center; color: var(--amber-dark); flex-shrink: 0;">${categoryIcon(post.cat)}</div>
         <div style="flex: 1; min-width: 0;">
           <div style="font-weight: 700; font-size: 13px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(post.title)}</div>
           <div style="font-size: 11px; color: var(--gray-warm); margin-top: 2px;">${escapeHtml(post.cat)} • ${escapeHtml(post.seller)}</div>
