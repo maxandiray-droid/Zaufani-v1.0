@@ -657,10 +657,11 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 18px; flex-shrink: 0;
   }
-  .menu-item-icon.amber { background: rgba(200,121,42,0.12); }
-  .menu-item-icon.green { background: rgba(45,80,22,0.1); }
-  .menu-item-icon.blue { background: rgba(30,80,160,0.1); }
-  .menu-item-icon.red { background: rgba(180,60,40,0.1); }
+  .menu-item-icon.amber { background: rgba(200,121,42,0.12); color: var(--amber-dark); }
+  .menu-item-icon.green { background: rgba(45,80,22,0.1); color: var(--forest); }
+  .menu-item-icon.blue { background: rgba(30,80,160,0.1); color: #1E50A0; }
+  .menu-item-icon.red { background: rgba(180,60,40,0.1); color: var(--terracotta); }
+  .menu-item-icon svg { width: 20px; height: 20px; }
   .menu-item-text { font-size: 15px; font-weight: 700; color: var(--ink); flex: 1; }
   .menu-item-sub { font-size: 12px; color: var(--gray-warm); }
   .menu-item-arrow { font-size: 16px; color: var(--gray-light); }
@@ -1554,50 +1555,50 @@
         <div class="profile-section-title">Moje konto</div>
         <div class="menu-list">
           <div class="menu-item" onclick="openEditProfile()">
-            <div class="menu-item-icon amber">👤</div>
+            <div class="menu-item-icon amber"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div>
             <div>
               <div class="menu-item-text">Edytuj profil</div>
               <div class="menu-item-sub">Imię, zdjęcie, opis</div>
             </div>
-            <span class="menu-item-arrow">›</span>
+            <span class="menu-item-arrow"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 16px;"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
           <div class="menu-item" onclick="showToast('🔔 Powiadomienia')">
-            <div class="menu-item-icon amber">🔔</div>
+            <div class="menu-item-icon amber"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9zM10 21a2 2 0 0 0 4 0"/></svg></div>
             <div>
               <div class="menu-item-text">Powiadomienia</div>
               <div class="menu-item-sub">Wiadomości, nowe ogłoszenia</div>
             </div>
-            <span class="menu-item-arrow">›</span>
+            <span class="menu-item-arrow"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 16px;"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
           <div class="menu-item" onclick="openSendInvitationModal()">
-            <div class="menu-item-icon green">👨‍👩‍👧</div>
+            <div class="menu-item-icon green"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.8"/><path d="M15 16c2 0 6 1.2 6 4"/></svg></div>
             <div>
               <div class="menu-item-text">Zaproś do rodziny</div>
               <div class="menu-item-sub">Partage un lien d'invitation</div>
             </div>
-            <span class="menu-item-arrow">›</span>
+            <span class="menu-item-arrow"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 16px;"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
         </div>
       </div>
 
       <!-- Admin Section (hidden by default) -->
       <div class="profile-section" id="admin-section" style="display: none;">
-        <div class="profile-section-title">👑 Administration</div>
+        <div class="profile-section-title">Administration</div>
         <div class="menu-list">
           <div class="menu-item" onclick="openAdminPanel()" style="background: rgba(200,121,42,0.08); border-color: var(--amber);">
-            <div class="menu-item-icon amber">👑</div>
+            <div class="menu-item-icon amber"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l4 4 5-6 5 6 4-4-2 12H5z"/><path d="M5 19h14"/></svg></div>
             <div>
               <div class="menu-item-text">Panel Admin</div>
               <div class="menu-item-sub">Gérer les utilisateurs et contenu</div>
             </div>
-            <span class="menu-item-arrow">›</span>
+            <span class="menu-item-arrow"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 16px;"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
         </div>
       </div>
 
       <!-- Wallet Section -->
       <div class="profile-section" style="background: linear-gradient(135deg, rgba(200,121,42,0.1), rgba(200,121,42,0.05)); border: 1.5px solid var(--amber); border-radius: 16px; padding: 16px;">
-        <div class="profile-section-title">💰 Portefeuille</div>
+        <div class="profile-section-title">Portefeuille</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
           <div style="background: white; padding: 12px; border-radius: 12px; text-align: center;">
             <div style="font-size: 11px; color: var(--gray-warm); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Solde</div>
@@ -1616,19 +1617,19 @@
 
       <!-- Wallet Transaction History -->
       <div class="profile-section">
-        <div class="profile-section-title">📊 Historique du portefeuille</div>
+        <div class="profile-section-title">Historique du portefeuille</div>
         <div id="wallet-history" style="font-size: 13px; color: var(--gray-warm); text-align: center; padding: 20px;">Aucune transaction</div>
       </div>
 
       <!-- Notifications -->
       <div class="profile-section">
-        <div class="profile-section-title">📬 Notifications</div>
+        <div class="profile-section-title">Notifications</div>
         <div id="notifications-list" style="font-size: 13px; color: var(--gray-warm); text-align: center; padding: 20px;">Aucune notification</div>
       </div>
 
       <!-- Marketplace Transactions -->
       <div class="profile-section">
-        <div class="profile-section-title">💳 Mes transactions</div>
+        <div class="profile-section-title">Mes transactions</div>
         <div id="transactions-list" style="font-size: 13px; color: var(--gray-warm); text-align: center; padding: 20px;">Chargement...</div>
       </div>
 
@@ -1636,39 +1637,39 @@
         <div class="profile-section-title">Ustawienia</div>
         <div class="menu-list">
           <div class="menu-item" onclick="openPrivacySettings()">
-            <div class="menu-item-icon blue">🔒</div>
+            <div class="menu-item-icon blue"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
             <div>
               <div class="menu-item-text">Prywatność</div>
               <div class="menu-item-sub">Kto widzi Twoje ogłoszenia</div>
             </div>
-            <span class="menu-item-arrow">›</span>
+            <span class="menu-item-arrow"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 16px;"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
           <div class="menu-item" onclick="openLanguageModal()">
-            <div class="menu-item-icon blue">🌐</div>
+            <div class="menu-item-icon blue"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
             <div>
               <div class="menu-item-text" id="menu-lang-text">Język</div>
               <div class="menu-item-sub" id="menu-lang-sub">Polski</div>
             </div>
-            <span class="menu-item-arrow">›</span>
+            <span class="menu-item-arrow"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 16px;"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
           <div class="menu-item" onclick="openDonation()">
-            <div class="menu-item-icon" style="background: rgba(200,121,42,0.1);">☕</div>
+            <div class="menu-item-icon" style="background: rgba(200,121,42,0.1); color: var(--amber-dark);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M16 11h2a2 2 0 0 1 0 4h-2M6 4v2M10 4v2M14 4v2"/></svg></div>
             <div>
               <div class="menu-item-text">Wspomóż projekt</div>
               <div class="menu-item-sub">Dobrowolna wpłata na utrzymanie</div>
             </div>
-            <span class="menu-item-arrow" style="color: var(--amber);">›</span>
+            <span class="menu-item-arrow" style="color: var(--amber);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 16px;"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
           <div class="menu-item" id="menu-admin" style="display: none; margin-top: 4px;" onclick="openAdminPanel()">
-            <div class="menu-item-icon red">🔐</div>
+            <div class="menu-item-icon red"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3 8 8 9 5-1 8-4 8-9V6z"/><circle cx="12" cy="11" r="1.6"/><path d="M12 12.5v3"/></svg></div>
             <div>
               <div class="menu-item-text" style="color: var(--terracotta);">Panel Admin</div>
               <div class="menu-item-sub">Gestion de l'application</div>
             </div>
-            <span class="menu-item-arrow">›</span>
+            <span class="menu-item-arrow"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="font-size: 16px;"><path d="m9 6 6 6-6 6"/></svg></span>
           </div>
           <div class="menu-item" onclick="logout()" style="margin-top: 4px;">
-            <div class="menu-item-icon red">🚪</div>
+            <div class="menu-item-icon red"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5M16 17l5-5-5-5M21 12H9"/></svg></div>
             <div>
               <div class="menu-item-text" style="color: var(--terracotta);">Wyloguj się</div>
             </div>
@@ -2950,7 +2951,7 @@
     const user = zaufaniDB_getUser(userState.email);
     const donated = user ? user.totalDonated || 0 : 0;
     const hasNoAds = user ? user.hasNoAds : false;
-    const message = hasNoAds ? `💎 VIP (${donated}€ donné)` : `⭐ Réputation basée sur ${donated}€ donné`;
+    const message = hasNoAds ? `VIP (${donated}€ donné)` : `Réputation basée sur ${donated}€ donné`;
     showToast(message);
   }
 
@@ -3204,7 +3205,7 @@
       else if (tx.status === 'in_transit') { statusLabel = '🚚 En transit'; statusColor = 'var(--amber)'; }
       else if (tx.status === 'delivered') { statusLabel = '✓ Livré'; statusColor = 'var(--forest)'; }
 
-      const rating = tx.rating ? `⭐ ${tx.rating}` : '💬 À évaluer';
+      const rating = tx.rating ? `<span style="color: var(--amber);">★</span> ${tx.rating}` : 'À évaluer';
 
       html += `
         <div style="background: white; border-radius: 12px; padding: 12px; border: 1px solid var(--cream-dark); margin-bottom: 10px; cursor: pointer;" onclick="openTransactionChat('${tx.id}')">
@@ -3349,7 +3350,7 @@
 
     const listingsHTML = listings.map(listing => {
       const rating = getSellerRating(listing.sellerId);
-      const ratingStars = '⭐'.repeat(Math.round(rating.score)) + '☆'.repeat(5 - Math.round(rating.score));
+      const ratingStars = '<span style="color: var(--amber);">' + '★'.repeat(Math.round(rating.score)) + '</span><span style="color: var(--gray-light);">' + '☆'.repeat(5 - Math.round(rating.score)) + '</span>';
 
       return `
         <div class="post-card" onclick="openMarketplaceListing('${listing.id}')">
@@ -3386,7 +3387,7 @@
     if (!listing) return;
 
     const rating = getSellerRating(listing.sellerId);
-    const ratingStars = '⭐'.repeat(Math.round(rating.score)) + '☆'.repeat(5 - Math.round(rating.score));
+    const ratingStars = '<span style="color: var(--amber);">' + '★'.repeat(Math.round(rating.score)) + '</span><span style="color: var(--gray-light);">' + '☆'.repeat(5 - Math.round(rating.score)) + '</span>';
 
     const modal = document.getElementById('modal-marketplace-listing') || createMarketplaceListingModal();
     const content = `
@@ -3619,13 +3620,13 @@
           ✓ Marquer livré
         </button>
         <button style="flex: 1; background: var(--amber); color: white; border: none; border-radius: 8px; padding: 10px; font-weight: 700; cursor: pointer; font-size: 12px;" onclick="openTransactionRating('${transactionId}')">
-          ⭐ Évaluer
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 4px;"><path d="m12 3 2.6 6 6.4.6-4.8 4.4 1.4 6.4L12 17l-5.6 3.4 1.4-6.4L3 9.6 9.4 9z"/></svg> Évaluer
         </button>
       `;
     } else if (userState.userId === tx.buyerId && tx.status === 'delivered' && !tx.rating) {
       actionsHTML += `
         <button style="flex: 1; background: var(--amber); color: white; border: none; border-radius: 8px; padding: 10px; font-weight: 700; cursor: pointer; font-size: 12px;" onclick="openTransactionRating('${transactionId}')">
-          ⭐ Évaluer la transaction
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 4px;"><path d="m12 3 2.6 6 6.4.6-4.8 4.4 1.4 6.4L12 17l-5.6 3.4 1.4-6.4L3 9.6 9.4 9z"/></svg> Évaluer la transaction
         </button>
       `;
     }
@@ -3693,7 +3694,7 @@
     sheet.innerHTML = `
       <div class="sheet-handle"></div>
       <div style="padding: 20px;">
-        <div class="sheet-title">Évaluer cette transaction ⭐</div>
+        <div class="sheet-title">Évaluer cette transaction</div>
         <div class="sheet-sub" style="margin-bottom: 20px;">Donnez une note au vendeur pour ${listing.title}</div>
 
         <div style="text-align: center; margin-bottom: 20px;">
