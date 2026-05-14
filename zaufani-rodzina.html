@@ -3405,7 +3405,7 @@
   }
 
   function displayMarketplaceListings(filterCategory = null) {
-    const feedElement = document.getElementById('home-feed');
+    const feedElement = document.getElementById('main-feed');
     if (!feedElement) return;
 
     // Add category filter
@@ -4746,14 +4746,14 @@
 
   // ── FIREBASE INITIALIZATION ──
   const firebaseConfig = {
-    apiKey: "AIzaSyB5d8JNTCtnPf3jP-g3D2mlkqCNXlZKhNo",
-    authDomain: "zaufani-83295.firebaseapp.com",
-    databaseURL: "https://zaufani-83295.firebaseio.com",
-    projectId: "zaufani-83295",
-    storageBucket: "zaufani-83295.firebasestorage.app",
-    messagingSenderId: "329766881508",
-    appId: "1:329766881508:web:03c495d179b788b9d8c4f1",
-    measurementId: "G-E4RWHG2Z0K"
+    apiKey: "AIzaSyBno2MnYg6WLdlW-_rBJ5jZRi-P7_BCj_M",
+    authDomain: "zaufani-5470a.firebaseapp.com",
+    databaseURL: "https://zaufani-5470a-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "zaufani-5470a",
+    storageBucket: "zaufani-5470a.firebasestorage.app",
+    messagingSenderId: "154053128688",
+    appId: "1:154053128688:web:df327812c0b790d6142d35",
+    measurementId: "G-Y007TNESQN"
   };
 
   let firebaseApp = null;
@@ -4762,6 +4762,8 @@
   let useFirebase = false;
 
   // Initialize Firebase when it's available (scripts are async)
+  // Resolved when Firebase auth is ready (anonymous sign-in completes)
+  let firebaseAuthReady = null;
   function initFirebase() {
     try {
       if (typeof firebase !== 'undefined' && !firebaseApp) {
@@ -4770,6 +4772,19 @@
         firebaseAuth = firebase.auth();
         useFirebase = true;
         console.log('✅ Firebase initialized successfully');
+
+        firebaseAuthReady = firebaseAuth.signInAnonymously()
+          .then(cred => {
+            console.log('✅ Firebase anonymous auth ready, uid:', cred.user && cred.user.uid);
+            return cred;
+          })
+          .catch(err => {
+            console.warn('⚠️ Firebase anonymous auth failed:', err.code, err.message);
+            console.warn('   → Posts won\'t sync between users until this is fixed.');
+            console.warn('   → In Firebase Console: Authentication → Sign-in method → enable Anonymous.');
+            return null;
+          });
+
         return true;
       }
     } catch (e) {
@@ -4819,12 +4834,19 @@
 
   // Initialize database - create empty structure or restore from cache
   function initializeDatabaseStructure() {
-    // Always ensure base structure exists
+    // Always ensure base structure exists — both top-level keys and
+    // nested marketplace sub-keys, because Firebase will drop empty
+    // children on snapshot.val() and leave undefined holes otherwise.
     if (!zaufaniDB.users) zaufaniDB.users = {};
     if (!zaufaniDB.posts) zaufaniDB.posts = {};
+    if (!zaufaniDB.news) zaufaniDB.news = {};
+    if (!zaufaniDB.ratings) zaufaniDB.ratings = {};
     if (!zaufaniDB.marketplace) zaufaniDB.marketplace = {};
+    if (!zaufaniDB.marketplace.listings) zaufaniDB.marketplace.listings = {};
+    if (!zaufaniDB.marketplace.transactions) zaufaniDB.marketplace.transactions = {};
+    if (!zaufaniDB.marketplace.conversations) zaufaniDB.marketplace.conversations = {};
+    if (!zaufaniDB.marketplace.ratings) zaufaniDB.marketplace.ratings = {};
     if (!zaufaniDB.settings) zaufaniDB.settings = {};
-    console.log('✅ Database structure initialized');
   }
 
   // Initialize base structure on startup (no data loading yet - that happens via Firebase)
@@ -5194,40 +5216,27 @@
         }
       }
 
-      // Save shared data (posts, marketplace, news, ratings) to Firebase for all users to see
-      if (useFirebase && firebaseDB) {
+      // Save current user's data to Firebase (targeted writes only — NEVER
+      // overwrite shared collections wholesale, that would erase other
+      // users' contributions). Individual writes for posts, listings,
+      // ratings happen at their own call sites (createListing, etc.).
+      if (useFirebase && firebaseDB && userState.isAuthenticated && userState.userId) {
         try {
-          // Save public/shared data accessible to everyone
-          firebaseDB.ref('shared/posts').set(zaufaniDB.posts || {}).catch(err => {
-            console.warn('⚠️ Firebase posts save failed:', err.message);
-          });
-
-          firebaseDB.ref('shared/marketplace').set(zaufaniDB.marketplace || {}).catch(err => {
-            console.warn('⚠️ Firebase marketplace save failed:', err.message);
-          });
-
-          firebaseDB.ref('shared/news').set(zaufaniDB.news || {}).catch(err => {
-            console.warn('⚠️ Firebase news save failed:', err.message);
-          });
-
-          firebaseDB.ref('shared/ratings').set(zaufaniDB.ratings || {}).catch(err => {
-            console.warn('⚠️ Firebase ratings save failed:', err.message);
-          });
-
-          firebaseDB.ref('shared/users').set(zaufaniDB.users || {}).catch(err => {
-            console.warn('⚠️ Firebase users save failed:', err.message);
-          });
-
-          // Save user-specific private data
-          if (userState.isAuthenticated) {
-            firebaseDB.ref('users/' + userState.userId + '/private').set({
-              privacyLevel: userState.privacyLevel,
-              hasNoAds: userState.hasNoAds,
-              totalDonated: userState.totalDonated
-            }).catch(err => {
-              console.warn('⚠️ Firebase private data save failed:', err.message);
+          const me = zaufaniDB.users && zaufaniDB.users[userState.userId];
+          if (me) {
+            firebaseDB.ref('shared/users/' + userState.userId).set(me).catch(err => {
+              console.warn('⚠️ Firebase user save failed:', err.message);
             });
           }
+
+          // Save user-specific private data
+          firebaseDB.ref('users/' + userState.userId + '/private').set({
+            privacyLevel: userState.privacyLevel,
+            hasNoAds: userState.hasNoAds,
+            totalDonated: userState.totalDonated
+          }).catch(err => {
+            console.warn('⚠️ Firebase private data save failed:', err.message);
+          });
         } catch (e) {
           console.warn('⚠️ Firebase error:', e.message);
         }
@@ -5244,11 +5253,12 @@
       if (saved) {
         try {
           zaufaniDB = JSON.parse(saved);
-          return;
         } catch (e) {
           console.error('❌ Failed to parse localStorage:', e.message);
         }
       }
+      // Always render the feed, even without Firebase (offline / dev mode)
+      if (typeof displayMarketplaceListings === 'function') displayMarketplaceListings();
       return;
     }
 
@@ -5262,11 +5272,27 @@
     ]).then(snapshots => {
       if (snapshots.some(s => s.exists())) {
         console.log('✅ Data loaded from Firebase');
-        zaufaniDB.posts = snapshots[0].val() || {};
-        zaufaniDB.marketplace = snapshots[1].val() || {};
-        zaufaniDB.news = snapshots[2].val() || {};
-        zaufaniDB.ratings = snapshots[3].val() || {};
-        zaufaniDB.users = snapshots[4].val() || {};
+        // Merge with local: keep any user/listing we just created locally,
+        // and add anything new from Firebase. Otherwise the just-created
+        // session user would be wiped before we have a chance to write
+        // it back to Firebase, which would break login flow.
+        const fbPosts = snapshots[0].val() || {};
+        const fbMarketplace = snapshots[1].val() || {};
+        const fbNews = snapshots[2].val() || {};
+        const fbRatings = snapshots[3].val() || {};
+        const fbUsers = snapshots[4].val() || {};
+        zaufaniDB.posts = { ...zaufaniDB.posts, ...fbPosts };
+        zaufaniDB.news = { ...zaufaniDB.news, ...fbNews };
+        zaufaniDB.ratings = { ...zaufaniDB.ratings, ...fbRatings };
+        zaufaniDB.users = { ...zaufaniDB.users, ...fbUsers };
+        // Marketplace has nested collections — merge each one
+        zaufaniDB.marketplace = zaufaniDB.marketplace || {};
+        zaufaniDB.marketplace.listings = { ...(zaufaniDB.marketplace.listings || {}), ...(fbMarketplace.listings || {}) };
+        zaufaniDB.marketplace.transactions = { ...(zaufaniDB.marketplace.transactions || {}), ...(fbMarketplace.transactions || {}) };
+        zaufaniDB.marketplace.conversations = { ...(zaufaniDB.marketplace.conversations || {}), ...(fbMarketplace.conversations || {}) };
+        zaufaniDB.marketplace.ratings = { ...(zaufaniDB.marketplace.ratings || {}), ...(fbMarketplace.ratings || {}) };
+        // Re-fill any holes left by Firebase (it strips empty children)
+        initializeDatabaseStructure();
       } else {
         console.log('ℹ️ No Firebase data found, using localStorage');
         const saved = localStorage.getItem('zaufani-database');
@@ -5281,6 +5307,8 @@
           }
         }
       }
+      // Render the marketplace feed now that we have data
+      if (typeof displayMarketplaceListings === 'function') displayMarketplaceListings();
     }).catch(err => {
       console.warn('⚠️ Firebase load failed:', err.message);
       console.log('ℹ️ Falling back to localStorage');
@@ -5293,6 +5321,8 @@
           console.error('❌ Failed to parse localStorage:', e.message);
         }
       }
+      // Still render the feed even if Firebase failed (offline / first load)
+      if (typeof displayMarketplaceListings === 'function') displayMarketplaceListings();
     });
   }
 
@@ -5314,6 +5344,8 @@
       firebaseDB.ref('shared/marketplace').on('value', snapshot => {
         if (snapshot.exists()) {
           zaufaniDB.marketplace = snapshot.val();
+          // Refill sub-keys Firebase may have stripped (empty children)
+          initializeDatabaseStructure();
           localStorage.setItem('zaufani-database', JSON.stringify(zaufaniDB));
           console.log('✅ Marketplace synced from Firebase');
           // Refresh marketplace display if visible
@@ -6357,19 +6389,21 @@
     // Prepare listing for Firebase (without heavy photos to save bandwidth)
     const listingForFirebase = { ...listing, photos: [] };
 
-    // Save to Firebase (without heavy photos to save bandwidth)
+    // Save to Firebase — wait for anon auth first so rules pass
     if (useFirebase && firebaseDB) {
-      firebaseDB.ref(`shared/marketplace/listings/${listingId}`).set(listingForFirebase)
+      const doWrite = () => firebaseDB.ref(`shared/marketplace/listings/${listingId}`).set(listingForFirebase)
+        .then(() => console.log('✅ Listing pushed to Firebase:', listingId))
         .catch(err => {
-          console.warn('⚠️ Firebase listing save failed:', err.message);
-          // Queue for later if offline
+          console.warn('⚠️ Firebase listing save failed:', err.code, err.message);
           if (!navigator.onLine) {
-            saveToOfflineQueue({
-              type: 'listing',
-              data: listingForFirebase
-            });
+            saveToOfflineQueue({ type: 'listing', data: listingForFirebase });
           }
         });
+      if (firebaseAuthReady) {
+        firebaseAuthReady.then(doWrite);
+      } else {
+        doWrite();
+      }
     } else {
       // Queue if Firebase not available
       saveToOfflineQueue({
@@ -6382,8 +6416,9 @@
   }
 
   function getAllListings(filterCategory = null) {
-    const listings = Object.values(zaufaniDB.marketplace.listings)
-      .filter(l => l.status === 'for_sale')
+    const listingsMap = (zaufaniDB.marketplace && zaufaniDB.marketplace.listings) || {};
+    const listings = Object.values(listingsMap)
+      .filter(l => l && l.status === 'for_sale')
       .filter(l => !filterCategory || l.category === filterCategory)
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return listings;
@@ -6728,8 +6763,8 @@
   }
 
   function getSellerRating(sellerId) {
-    const ratings = Object.values(zaufaniDB.marketplace.ratings)
-      .filter(r => r.toUserId === sellerId);
+    const ratingsMap = (zaufaniDB.marketplace && zaufaniDB.marketplace.ratings) || {};
+    const ratings = Object.values(ratingsMap).filter(r => r && r.toUserId === sellerId);
     if (ratings.length === 0) return { score: 0, count: 0 };
     const avgScore = ratings.reduce((sum, r) => sum + r.score, 0) / ratings.length;
     return { score: Math.round(avgScore * 10) / 10, count: ratings.length };
