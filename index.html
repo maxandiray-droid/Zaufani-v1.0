@@ -9,7 +9,8 @@
 <link rel="manifest" href="./manifest.json">
 <title>Zaufani — Rodzina</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400,100;9..144,500,100;9..144,600,100;9..144,700,100;9..144,900,100&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script async src="https://www.paypal.com/sdk/js?client-id=AXpLKDR0HfxwIxh7Zn5DGkCjm0J1JZOuCvXcM9psE1_rB9wlyDyOC-kZy11WyjgSbm0pHTRJ_YoopKNS&currency=PLN"></script>
 <!-- DISABLED: Google Ads blocks the page
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx"
@@ -65,12 +66,22 @@
   .icon-fill path, .icon-fill circle, .icon-fill rect { fill: currentColor; stroke: none; }
 
   body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     background: var(--cream);
     color: var(--ink);
     position: relative;
     max-width: 430px;
     margin: 0 auto;
+  }
+  /* Soften Fraunces a touch (variable axis) for editorial warmth */
+  h1, h2, h3, h4, h5, .auth-app-name, .logo-text, .post-form-title,
+  .sheet-title, .explore-title {
+    font-variation-settings: 'opsz' 48, 'SOFT' 80;
+    letter-spacing: -0.01em;
   }
 
   /* ── BACKGROUND TEXTURE (premium paper grain) ── */
@@ -141,7 +152,7 @@
     color: var(--cream);
   }
   .logo-text {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 18px; font-weight: 700;
     color: var(--ink); letter-spacing: -0.3px;
   }
@@ -240,7 +251,7 @@
     text-transform: uppercase; letter-spacing: 1px;
   }
   .greeting-name {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 26px; font-weight: 900; color: var(--ink);
   }
   .greeting-name span { color: var(--amber); }
@@ -265,7 +276,7 @@
     border: 1.5px solid var(--cream-dark);
     border-radius: 14px; padding: 13px 14px;
     cursor: pointer; transition: all 0.2s;
-    margin: 0; font-family: 'Lato', sans-serif;
+    margin: 0; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif;
   }
   .btn-sponsor:active { transform: scale(0.98); background: var(--cream-dark); }
 
@@ -297,7 +308,7 @@
     padding: 0 20px 12px;
   }
   .section-head-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 18px; font-weight: 700; color: var(--ink);
   }
   .section-head-link {
@@ -358,7 +369,7 @@
 
   .post-body { padding: 14px 16px 16px; }
   .post-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 16px; font-weight: 700;
     color: var(--ink); margin-bottom: 6px; line-height: 1.35;
   }
@@ -367,11 +378,11 @@
     display: flex; align-items: center; justify-content: space-between;
   }
   .post-price {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 20px; font-weight: 700; color: var(--amber);
   }
   .post-price small {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 12px; color: var(--gray-warm); font-weight: 400;
   }
   .post-actions { display: flex; gap: 8px; }
@@ -447,7 +458,7 @@
   /* ── EXPLORE TAB ── */
   .explore-header { padding: 20px 20px 16px; }
   .explore-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 24px; font-weight: 900; color: var(--ink);
     margin-bottom: 4px;
   }
@@ -480,7 +491,7 @@
   /* ── POST TAB (new annonce) ── */
   .post-form { padding: 20px 20px; }
   .post-form-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 22px; font-weight: 900; color: var(--ink);
     margin-bottom: 20px;
   }
@@ -497,7 +508,7 @@
     border: 1.5px solid var(--cream-dark);
     border-radius: 14px;
     padding: 13px 16px;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 15px; color: var(--ink);
     outline: none; transition: border-color 0.2s;
     -webkit-appearance: none;
@@ -531,7 +542,7 @@
     width: 100%;
     background: var(--amber); color: white;
     border: none; border-radius: 50px;
-    padding: 17px; font-family: 'Lato', sans-serif;
+    padding: 17px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 16px; font-weight: 700;
     cursor: pointer; transition: all 0.25s;
     box-shadow: 0 4px 20px rgba(200,121,42,0.35);
@@ -543,7 +554,7 @@
   /* ── MESSAGES TAB ── */
   .msg-header { padding: 20px 20px 0; }
   .msg-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 24px; font-weight: 900; color: var(--ink);
     margin-bottom: 16px;
   }
@@ -555,7 +566,7 @@
   }
   .msg-search input {
     flex: 1; border: none; outline: none;
-    font-family: 'Lato', sans-serif; font-size: 14px;
+    font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 14px;
     color: var(--ink); background: transparent;
   }
 
@@ -610,7 +621,7 @@
     background: rgba(200,121,42,0.15);
   }
   .profile-name {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 22px; font-weight: 700; color: white;
     margin-bottom: 4px;
   }
@@ -638,7 +649,7 @@
   }
   .profile-stat:last-child { border-right: none; }
   .profile-stat-num {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 22px; font-weight: 700; color: var(--amber);
   }
   .profile-stat-label { font-size: 10px; color: var(--gray-warm); font-weight: 700; letter-spacing: 0.4px; margin-top: 2px; }
@@ -711,7 +722,7 @@
     background: var(--gray-light); margin: 0 auto 24px;
   }
   .sheet-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 22px; font-weight: 900; color: var(--ink);
     margin-bottom: 8px;
   }
@@ -742,7 +753,7 @@
     position: relative; z-index: 1;
   }
   .auth-app-name {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 28px; font-weight: 900; color: var(--ink);
     margin-top: 4px;
   }
@@ -757,7 +768,7 @@
   .auth-submit {
     width: 100%; background: var(--amber); color: white;
     border: none; border-radius: 50px; padding: 16px;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 16px; font-weight: 700;
     cursor: pointer; transition: all 0.25s;
     box-shadow: 0 4px 20px rgba(200,121,42,0.35);
@@ -902,13 +913,13 @@
     background: var(--cream-dark);
     border: 2px solid transparent;
     border-radius: 14px; padding: 14px 8px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 18px; font-weight: 700;
     color: var(--ink); cursor: pointer;
     transition: all 0.2s; text-align: center;
   }
   .amount-btn small {
-    display: block; font-family: 'Lato', sans-serif;
+    display: block; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 10px; font-weight: 400;
     color: var(--gray-warm); margin-top: 2px;
   }
@@ -928,7 +939,7 @@
   .donation-custom span { font-size: 18px; font-weight: 700; color: var(--gray-warm); }
   .donation-custom input {
     flex: 1; border: none; outline: none; background: transparent;
-    font-family: 'Playfair Display', serif; font-size: 20px;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 20px;
     font-weight: 700; color: var(--ink); padding: 13px 8px;
   }
 
@@ -943,7 +954,7 @@
   .btn-donate {
     width: 100%; background: var(--amber); color: white;
     border: none; border-radius: 50px; padding: 16px;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 16px; font-weight: 700;
     cursor: pointer; transition: all 0.2s;
     box-shadow: 0 4px 16px rgba(200,121,42,0.35);
@@ -958,12 +969,12 @@
     margin-bottom: 16px;
   }
   .detail-price {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 32px; font-weight: 900; color: var(--amber);
     margin-bottom: 4px;
   }
   .detail-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
     font-size: 22px; font-weight: 700; color: var(--ink);
     margin-bottom: 10px;
   }
@@ -979,7 +990,7 @@
   .btn-contact {
     width: 100%; background: var(--ink); color: white;
     border: none; border-radius: 50px; padding: 16px;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 16px; font-weight: 700;
     cursor: pointer; transition: all 0.2s;
     display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -992,7 +1003,7 @@
     padding: 48px 32px; text-align: center; gap: 12px;
   }
   .empty-icon { font-size: 48px; }
-  .empty-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--ink); }
+  .empty-title { font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; color: var(--ink); }
   .empty-sub { font-size: 14px; color: var(--gray-warm); line-height: 1.6; }
 
   /* ── NOTIFICATION DOT ── */
@@ -1147,7 +1158,7 @@
     <!-- Header -->
     <div style="text-align: center; margin-bottom: 40px;">
       <div style="font-size: 64px; margin-bottom: 16px;">🤝</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--ink); margin-bottom: 8px;">Bienvenue!</div>
+      <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 900; color: var(--ink); margin-bottom: 8px;">Bienvenue!</div>
       <div style="font-size: 14px; color: var(--gray-warm);">Tu es presque des nôtres!</div>
     </div>
 
@@ -1248,7 +1259,7 @@
             autocorrect="off"
             autocapitalize="off"
             spellcheck="false"
-            style="flex: 1 1 auto; width: 100%; min-width: 0; border: none; outline: none; background: transparent; font-family: 'Lato', sans-serif; font-size: 16px; color: var(--ink); -webkit-appearance: none; appearance: none; padding: 0;"
+            style="flex: 1 1 auto; width: 100%; min-width: 0; border: none; outline: none; background: transparent; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 16px; color: var(--ink); -webkit-appearance: none; appearance: none; padding: 0;"
           >
           <button type="button" id="home-search-clear" onclick="clearHomeSearch()" aria-label="Effacer" style="display: none; background: transparent; border: none; cursor: pointer; padding: 4px 6px; color: var(--gray-warm); flex-shrink: 0; font-size: 16px;">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
@@ -1608,11 +1619,11 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
           <div style="background: white; padding: 12px; border-radius: 12px; text-align: center;">
             <div style="font-size: 11px; color: var(--gray-warm); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Solde</div>
-            <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--amber);" id="wallet-balance">0€</div>
+            <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 900; color: var(--amber);" id="wallet-balance">0€</div>
           </div>
           <div style="background: white; padding: 12px; border-radius: 12px; text-align: center;">
             <div style="font-size: 11px; color: var(--gray-warm); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Gains totaux</div>
-            <div style="font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--forest);" id="wallet-earned">0€</div>
+            <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; color: var(--forest);" id="wallet-earned">0€</div>
           </div>
         </div>
         <div style="background: white; padding: 12px; border-radius: 12px; text-align: center;">
@@ -1714,7 +1725,7 @@
     <div class="tab-pane" id="tab-nowinki">
       <div style="padding: 20px; display: flex; justify-content: space-between; align-items: flex-start;">
         <div>
-          <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 16px;">Rodzinne Nowinki 📰</div>
+          <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 16px;">Rodzinne Nowinki 📰</div>
           <div style="font-size: 14px; color: var(--gray-warm);">Ważne momenty w naszej rodzinie</div>
         </div>
         <button onclick="openNewsCreationModal()" style="background: var(--amber); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 8px;">＋</button>
@@ -1850,7 +1861,7 @@
     <!-- Currency Selector -->
     <div style="margin-bottom: 20px;">
       <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-warm); margin-bottom: 8px;">Wybierz walutę</label>
-      <select id="donation-currency" onchange="updateDonationAmounts()" style="width: 100%; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; padding: 12px 14px; font-family: 'Lato', sans-serif; font-size: 14px; color: var(--ink); outline: none; cursor: pointer;">
+      <select id="donation-currency" onchange="updateDonationAmounts()" style="width: 100%; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; padding: 12px 14px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 14px; color: var(--ink); outline: none; cursor: pointer;">
         <option value="PLN">🇵🇱 Polski Złoty (PLN)</option>
         <option value="EUR">🇪🇺 Euro (EUR)</option>
         <option value="USD">🇺🇸 Dolar US (USD)</option>
@@ -1978,7 +1989,7 @@
 
     <div style="background: var(--cream-dark); border-radius: 16px; padding: 16px; margin-bottom: 20px;">
       <div style="font-size: 12px; color: var(--gray-warm); margin-bottom: 8px;">Prix total</div>
-      <div style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--amber);" id="payment-price">380 zł</div>
+      <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 32px; font-weight: 900; color: var(--amber);" id="payment-price">380 zł</div>
     </div>
 
     <!-- Seller info -->
@@ -2022,7 +2033,7 @@
     <!-- Payment form (BLIK) -->
     <div id="payment-form-blik" style="margin-top: 20px;">
       <div style="font-size: 12px; color: var(--gray-warm); margin-bottom: 12px;">Ouvre ton app BLIK et entre le code ici :</div>
-      <input type="text" id="blik-code" placeholder="000000" maxlength="6" style="width: 100%; padding: 14px; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 8px; text-align: center; margin-bottom: 14px;">
+      <input type="text" id="blik-code" placeholder="000000" maxlength="6" style="width: 100%; padding: 14px; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 24px; letter-spacing: 8px; text-align: center; margin-bottom: 14px;">
       <button class="btn-submit" onclick="processPayment()">Confirmer le paiement →</button>
     </div>
 
@@ -2092,7 +2103,7 @@
       Enregistrer les informations →
     </button>
 
-    <button style="width: 100%; background: white; color: var(--ink); border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 12px; font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px;" onclick="closeModal('modal-profile-completion')">
+    <button style="width: 100%; background: white; color: var(--ink); border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 12px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px;" onclick="closeModal('modal-profile-completion')">
       Ignorer pour maintenant
     </button>
 
@@ -2109,7 +2120,7 @@
 
     <!-- Search bar -->
     <div style="margin-bottom: 16px;">
-      <input type="text" id="contacts-search" placeholder="Chercher par nom ou profession..." onkeyup="filterContacts()" style="width: 100%; padding: 11px 14px; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-family: 'Lato', sans-serif; font-size: 13px;">
+      <input type="text" id="contacts-search" placeholder="Chercher par nom ou profession..." onkeyup="filterContacts()" style="width: 100%; padding: 11px 14px; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 13px;">
     </div>
 
     <!-- Filters - Countries -->
@@ -2187,7 +2198,7 @@
     <button class="btn-submit" id="btn-send-request" onclick="sendSponsorRequest()" style="margin-bottom: 8px;">
       Envoyer la demande →
     </button>
-    <button style="width: 100%; background: transparent; color: var(--ink); border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 14px; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;" onclick="closeModal('modal-sponsor-request')">
+    <button style="width: 100%; background: transparent; color: var(--ink); border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 14px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;" onclick="closeModal('modal-sponsor-request')">
       Annuler
     </button>
 
@@ -2249,7 +2260,7 @@
       <button onclick="changeLanguage('es-ve')" class="lang-btn" data-lang="es-ve" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇻🇪 Español (VE)</button>
     </div>
 
-    <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 16px;" onclick="closeModal('modal-language')">
+    <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 16px;" onclick="closeModal('modal-language')">
       Terminer la sélection
     </button>
 
@@ -2292,7 +2303,7 @@
     <button class="btn-submit" onclick="submitNews()" style="margin-bottom: 8px;">
       Opublikuj nowinę →
     </button>
-    <button style="width: 100%; background: white; color: var(--ink); border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 12px; font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer;" onclick="closeModal('modal-news-creation')">
+    <button style="width: 100%; background: white; color: var(--ink); border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 12px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 700; cursor: pointer;" onclick="closeModal('modal-news-creation')">
       Anuluj
     </button>
 
@@ -2344,7 +2355,7 @@
 
     </div>
 
-    <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 24px;" onclick="closeModal('modal-privacy')">
+    <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 24px;" onclick="closeModal('modal-privacy')">
       Confirmer les paramètres
     </button>
 
@@ -2401,11 +2412,11 @@
 
     </div>
 
-    <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 24px;" onclick="saveProfileEdit()">
+    <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 24px;" onclick="saveProfileEdit()">
       Enregistrer les modifications
     </button>
 
-    <button style="width: 100%; background: white; color: var(--ink); border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 12px; font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px;" onclick="closeModal('modal-edit-profile')">
+    <button style="width: 100%; background: white; color: var(--ink); border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 12px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px;" onclick="closeModal('modal-edit-profile')">
       Annuler
     </button>
 
@@ -2836,7 +2847,7 @@
 
     sheet.innerHTML = `
       <div style="text-align: center; margin-bottom: 20px;">
-        <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 8px;">Choisissez votre avatar</div>
+        <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 8px;">Choisissez votre avatar</div>
         <div style="font-size: 14px; color: var(--gray-warm);">C'est votre identité dans Zaufani!</div>
       </div>
 
@@ -3426,8 +3437,8 @@
         </div>
 
         <!-- Details -->
-        <div style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--amber); margin-bottom: 4px;">${listing.price}€</div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 10px;">${listing.title}</div>
+        <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 900; color: var(--amber); margin-bottom: 4px;">${listing.price}€</div>
+        <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 10px;">${listing.title}</div>
 
         <!-- Seller info -->
         <div style="background: var(--cream-dark); border-radius: 16px; padding: 14px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
@@ -3445,8 +3456,8 @@
         <div style="display: inline-block; background: rgba(200,121,42,0.15); border: 1px solid var(--amber); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--amber); margin-bottom: 20px;">${listing.category}</div>
 
         <!-- Action buttons -->
-        <button onclick="initiatePurchase('${listingId}')" style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 16px; font-family: 'Lato', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 8px;">💳 Acheter maintenant</button>
-        <button onclick="openMarketplaceChat('${listingId}')" style="width: 100%; background: white; color: var(--amber); border: 1.5px solid var(--amber); border-radius: 50px; padding: 16px; font-family: 'Lato', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer;">💬 Contacter le vendeur</button>
+        <button onclick="initiatePurchase('${listingId}')" style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 16px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 8px;">💳 Acheter maintenant</button>
+        <button onclick="openMarketplaceChat('${listingId}')" style="width: 100%; background: white; color: var(--amber); border: 1.5px solid var(--amber); border-radius: 50px; padding: 16px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; cursor: pointer;">💬 Contacter le vendeur</button>
       </div>
     `;
 
@@ -3657,7 +3668,7 @@
     // Message input (only if not rated)
     if (!tx.rating) {
       actionsHTML += `
-        <input type="text" id="chat-message-input" placeholder="Votre message..." style="flex: 1; padding: 8px 12px; border: 1px solid var(--cream-dark); border-radius: 8px; font-family: 'Lato', sans-serif; font-size: 13px;">
+        <input type="text" id="chat-message-input" placeholder="Votre message..." style="flex: 1; padding: 8px 12px; border: 1px solid var(--cream-dark); border-radius: 8px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 13px;">
         <button style="background: var(--amber); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-weight: 700; cursor: pointer;" onclick="sendMarketplaceMessage('${transactionId}')">📤</button>
       `;
     }
@@ -3732,7 +3743,7 @@
           <div id="rating-value" style="font-size: 14px; color: var(--gray-warm); margin-top: 12px;">Cliquez sur les étoiles</div>
         </div>
 
-        <textarea id="rating-comment" placeholder="Commentaire (optionnel)..." style="width: 100%; height: 80px; padding: 12px; border: 1px solid var(--cream-dark); border-radius: 8px; font-family: 'Lato', sans-serif; font-size: 13px; resize: none; margin-bottom: 16px;"></textarea>
+        <textarea id="rating-comment" placeholder="Commentaire (optionnel)..." style="width: 100%; height: 80px; padding: 12px; border: 1px solid var(--cream-dark); border-radius: 8px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 13px; resize: none; margin-bottom: 16px;"></textarea>
 
         <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 8px; padding: 14px; font-weight: 700; cursor: pointer; font-size: 15px; margin-bottom: 8px;" onclick="submitTransactionRating('${transactionId}')">
           Envoyer l'avis
@@ -3827,7 +3838,7 @@
         <div style="width: 72px; height: 72px; border-radius: 50%; background: white; border: 3px solid var(--amber); display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 16px;">
           ${contact.emoji}
         </div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">${contact.name}</div>
+        <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">${contact.name}</div>
         <div style="font-size: 13px; color: var(--gray-warm); margin-bottom: 12px;">${contact.profession} • ${contact.city}</div>
         <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(200,121,42,0.1); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--amber); margin-bottom: 20px;">
           <span style="width: 8px; height: 8px; background: ${contact.online ? '#4CAF50' : '#9E9E9E'}; border-radius: 50%;"></span>
@@ -4536,7 +4547,7 @@
     document.getElementById('contact-detail-content').innerHTML = `
       <div style="text-align: center; margin-bottom: 20px;">
         <div style="font-size: 56px; margin-bottom: 12px;">${contact.av}</div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 4px;">${contact.name}</div>
+        <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 4px;">${contact.name}</div>
         <div style="font-size: 13px; color: var(--gray-warm); margin-bottom: 8px;">${contact.rel}</div>
         <div style="font-size: 14px; color: var(--amber); font-weight: 700;">${contact.trust}</div>
       </div>
@@ -4556,7 +4567,7 @@
         </div>
       </div>
 
-      <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="closeModal('modal-contact-detail'); switchTab('messages'); showToast('💬 Conversation ouverte')">
+      <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="closeModal('modal-contact-detail'); switchTab('messages'); showToast('💬 Conversation ouverte')">
         💬 Envoyer un message
       </button>
     `;
@@ -5936,11 +5947,11 @@
 
         <div style="background: var(--cream-dark); border-radius: 14px; padding: 16px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div style="text-align: center;">
-            <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--amber);" id="admin-stat-users">0</div>
+            <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 700; color: var(--amber);" id="admin-stat-users">0</div>
             <div style="font-size: 11px; color: var(--gray-warm); font-weight: 700;">UTILISATEURS</div>
           </div>
           <div style="text-align: center;">
-            <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--amber);" id="admin-stat-donations">0€</div>
+            <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 700; color: var(--amber);" id="admin-stat-donations">0€</div>
             <div style="font-size: 11px; color: var(--gray-warm); font-weight: 700;">DONS TOTAUX</div>
           </div>
         </div>
@@ -5969,7 +5980,7 @@
     modal.innerHTML = `
       <div style="background: white; border-radius: 20px; padding: 32px; max-width: 360px; text-align: center;">
         <div style="font-size: 48px; margin-bottom: 16px;">👑</div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 8px;">Panel Admin</div>
+        <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 8px;">Panel Admin</div>
         <div style="font-size: 14px; color: var(--gray-warm); margin-bottom: 24px;">Connexion Admin</div>
         <input type="password" id="admin-token-input" placeholder="Token admin" style="width: 100%; padding: 12px; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 14px; margin-bottom: 12px;">
         <button onclick="verifyAdminAccess()" style="width: 100%; padding: 14px; background: var(--amber); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">Accéder au panel 👑</button>
