@@ -869,9 +869,11 @@
   .payment-icon {
     width: 42px; height: 42px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
+    flex-shrink: 0;
     background: var(--cream-dark);
+    color: var(--amber-dark);
   }
+  .payment-icon svg { width: 20px; height: 20px; }
   .payment-name { font-weight: 700; font-size: 14px; color: var(--ink); }
   .payment-desc { font-size: 11px; color: var(--gray-warm); margin-top: 1px; }
   .payment-radio {
@@ -1184,7 +1186,15 @@
   <div style="padding: 40px 32px; display: flex; flex-direction: column; height: 100%;">
     <!-- Header -->
     <div style="text-align: center; margin-bottom: 40px;">
-      <div style="font-size: 64px; margin-bottom: 16px;">🤝</div>
+      <div style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; border-radius: 50%; background: var(--amber); color: var(--cream); margin-bottom: 16px; box-shadow: 0 8px 28px rgba(200,121,42,0.28);">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" style="width:36px;height:36px;" aria-hidden="true">
+          <path d="M32 8 L37 22 L32 28 L27 22 Z" fill="currentColor"/>
+          <path d="M32 56 L37 42 L32 36 L27 42 Z" fill="currentColor"/>
+          <path d="M8 32 L22 27 L28 32 L22 37 Z" fill="currentColor"/>
+          <path d="M56 32 L42 27 L36 32 L42 37 Z" fill="currentColor"/>
+          <circle cx="32" cy="32" r="3.2" fill="currentColor"/>
+        </svg>
+      </div>
       <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 900; color: var(--ink); margin-bottom: 8px;">Bienvenue!</div>
       <div style="font-size: 14px; color: var(--gray-warm);">Tu es presque des nôtres!</div>
     </div>
@@ -1214,13 +1224,11 @@
     <!-- Actions -->
     <div style="flex: 1; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
       <!-- Find Contacts -->
-      <button onclick="openTinderContacts()" style="width: 100%; background: linear-gradient(135deg, var(--amber), var(--amber-light)); color: white; border: none; border-radius: 16px; padding: 16px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;">
-        🔍 Trouver des contacts inscrits
+      <button onclick="openTinderContacts()" style="width: 100%; background: linear-gradient(135deg, var(--amber), var(--amber-light)); color: white; border: none; border-radius: 16px; padding: 16px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;">Trouver des contacts inscrits
       </button>
 
       <!-- Create Link -->
-      <button onclick="openInvitationLink()" style="width: 100%; background: white; color: var(--amber); border: 2px solid var(--amber); border-radius: 16px; padding: 16px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;">
-        🔗 Créer mon lien d'invitation
+      <button onclick="openInvitationLink()" style="width: 100%; background: white; color: var(--amber); border: 2px solid var(--amber); border-radius: 16px; padding: 16px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;">Créer mon lien d'invitation
       </button>
     </div>
 
@@ -1330,13 +1338,13 @@
 
       <!-- Quick filters -->
       <div class="quick-filters">
-        <div class="filter-chip active" onclick="selectFilter(this)">🌟 Wszystko</div>
-        <div class="filter-chip" onclick="selectFilter(this)">🏠 Noclegi</div>
-        <div class="filter-chip" onclick="selectFilter(this)">👶 Opieka</div>
-        <div class="filter-chip" onclick="selectFilter(this)">🛋️ Rzeczy</div>
-        <div class="filter-chip" onclick="selectFilter(this)">🚗 Przewóz</div>
-        <div class="filter-chip" onclick="selectFilter(this)">🔧 Pomoc</div>
-        <div class="filter-chip" onclick="selectFilter(this)">🎓 Korepetycje</div>
+        <div class="filter-chip active" onclick="selectFilter(this)">Wszystko</div>
+        <div class="filter-chip" onclick="selectFilter(this)">Noclegi</div>
+        <div class="filter-chip" onclick="selectFilter(this)">Opieka</div>
+        <div class="filter-chip" onclick="selectFilter(this)">Rzeczy</div>
+        <div class="filter-chip" onclick="selectFilter(this)">Przewóz</div>
+        <div class="filter-chip" onclick="selectFilter(this)">Pomoc</div>
+        <div class="filter-chip" onclick="selectFilter(this)">Korepetycje</div>
       </div>
 
       <!-- Feed -->
@@ -1427,17 +1435,17 @@
           <label class="form-label">Kategoria</label>
           <select class="form-select" id="new-cat">
             <option value="">Wybierz kategorię…</option>
-            <option value="Housing">🏠 Noclegi</option>
-            <option value="Childcare">👶 Opieka nad dziećmi</option>
-            <option value="Items">🛋️ Rzeczy do oddania / sprzedania</option>
-            <option value="Transport">🚗 Przewóz / Współdzielenie</option>
-            <option value="Home Help">🔧 Pomoc w domu</option>
-            <option value="Tutoring">🎓 Korepetycje</option>
-            <option value="Cooking">🍕 Gotowanie / Przepisy</option>
-            <option value="Pets">🐕 Opieka nad zwierzętami</option>
-            <option value="Garden">🌱 Ogród</option>
-            <option value="Services">🎁 Usługi</option>
-            <option value="Other">❓ Inne</option>
+            <option value="Housing">Noclegi</option>
+            <option value="Childcare">Opieka nad dziećmi</option>
+            <option value="Items">Rzeczy do oddania / sprzedania</option>
+            <option value="Transport">Przewóz / Współdzielenie</option>
+            <option value="Home Help">Pomoc w domu</option>
+            <option value="Tutoring">Korepetycje</option>
+            <option value="Cooking">Gotowanie / Przepisy</option>
+            <option value="Pets">Opieka nad zwierzętami</option>
+            <option value="Garden">Ogród</option>
+            <option value="Services">Usługi</option>
+            <option value="Other">Inne</option>
           </select>
         </div>
 
@@ -1472,7 +1480,7 @@
           <label class="form-label">Zdjęcie (opcjonalnie)</label>
           <input type="file" id="photo-upload-input" accept="image/*" style="display: none;">
           <div class="photo-upload">
-            <div class="photo-upload-icon">📷</div>
+            <div class="photo-upload-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:24px;height:24px;"><path d="M3 8a2 2 0 0 1 2-2h3l2-2h4l2 2h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="4"/></svg></div>
             <div>
               <div class="photo-upload-text">Dodaj zdjęcie</div>
               <div class="photo-upload-sub">Z galerii lub aparatu</div>
@@ -1492,7 +1500,7 @@
       <div class="msg-header">
         <div class="msg-title">Wiadomości</div>
         <div class="msg-search">
-          <span>🔍</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;color:var(--gray-warm);"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
           <input type="text" placeholder="Szukaj rozmowy…">
         </div>
       </div>
@@ -1548,8 +1556,8 @@
           <div class="profile-av"><div class="avatar avatar-4">?</div></div>
           <div>
             <div class="profile-name">Twój profil</div>
-            <div class="profile-badge">✓ Zaufany Członek Rodziny</div>
-            <div class="profile-badge" id="donation-badge" style="background: rgba(45,80,22,0.15); color: var(--forest-light); display: none; margin-top: 6px;">🎁 Bez reklam</div>
+            <div class="profile-badge">Zaufany Członek Rodziny</div>
+            <div class="profile-badge" id="donation-badge" style="background: rgba(45,80,22,0.15); color: var(--forest-light); display: none; margin-top: 6px;">Bez reklam</div>
           </div>
         </div>
       </div>
@@ -1579,8 +1587,7 @@
           <div class="completion-bar">
             <div class="completion-fill" id="completion-fill" style="width: 60%;"></div>
           </div>
-          <button style="width: 100%; background: rgba(200,121,42,0.1); color: var(--amber); border: none; border-radius: 12px; padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="openProfileCompletion()">
-            📝 Complétez votre profil
+          <button style="width: 100%; background: rgba(200,121,42,0.1); color: var(--amber); border: none; border-radius: 12px; padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="openProfileCompletion()">Complétez votre profil
           </button>
           <div style="font-size: 11px; color: var(--gray-warm); margin-top: 8px; text-align: center;">Augmente ta visibilité dans le réseau</div>
         </div>
@@ -1731,7 +1738,7 @@
 
       <!-- Family Nearby Panel -->
       <div class="family-nearby" id="family-nearby-panel">
-        <div style="font-weight: 700; font-size: 13px; margin-bottom: 10px; color: var(--ink);">👥 Famille près de toi</div>
+        <div style="font-weight: 700; font-size: 13px; margin-bottom: 10px; color: var(--ink);">Famille près de toi</div>
         <div id="nearby-list" style="font-size: 12px; color: var(--gray-warm);">Charger les données...</div>
       </div>
 
@@ -1739,7 +1746,7 @@
       <div class="map-control">
         <label class="location-toggle">
           <input type="checkbox" id="location-toggle" onchange="toggleLocationSharing()" checked>
-          <span>📍 Partager ma localisation</span>
+          <span>Partager ma localisation</span>
         </label>
         <div class="location-status">
           <div id="location-status-text">Activation GPS...</div>
@@ -1752,7 +1759,7 @@
     <div class="tab-pane" id="tab-nowinki">
       <div style="padding: 20px; display: flex; justify-content: space-between; align-items: flex-start;">
         <div>
-          <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 16px;">Rodzinne Nowinki 📰</div>
+          <div style="font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 16px;">Rodzinne Nowinki</div>
           <div style="font-size: 14px; color: var(--gray-warm);">Ważne momenty w naszej rodzinie</div>
         </div>
         <button onclick="openNewsCreationModal()" style="background: var(--amber); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 8px;">＋</button>
@@ -1768,9 +1775,9 @@
           <!-- Default sample items will be shown here -->
           <!-- News Item 1 -->
           <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative; z-index: 1;">
-            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--amber); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">👶</div>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--amber); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--amber);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;"><path d="M12 3 13.5 8 19 9 14.5 13 16 19 12 16 8 19 9.5 13 5 9 10.5 8 Z"/></svg></div>
             <div style="background: white; border-radius: 14px; padding: 16px; border: 1.5px solid var(--cream-dark); flex: 1;">
-              <div style="font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 4px;">Nowy członek rodziny! 🎉</div>
+              <div style="font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 4px;">Nowy członek rodziny!</div>
               <div style="font-size: 13px; color: var(--ink-soft); margin-bottom: 8px;">Kasia i Piotr witają małą Helenę (3,4 kg, 55 cm)</div>
               <div style="font-size: 11px; color: var(--gray-warm);">Wczoraj o 14:23</div>
             </div>
@@ -1778,7 +1785,7 @@
 
           <!-- News Item 2 -->
           <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative; z-index: 1;">
-            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--forest); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">💍</div>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--forest); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--forest);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;"><circle cx="12" cy="15" r="6"/><path d="M9 9 12 4l3 5"/></svg></div>
             <div style="background: white; border-radius: 14px; padding: 16px; border: 1.5px solid var(--cream-dark); flex: 1;">
               <div style="font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 4px;">Ślub w rodzinie!</div>
               <div style="font-size: 13px; color: var(--ink-soft); margin-bottom: 8px;">Marta i Michał powiedzieli sobie TAK! Wesele 15 czerwca w Opolu.</div>
@@ -1788,7 +1795,7 @@
 
           <!-- News Item 3 -->
           <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative; z-index: 1;">
-            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--amber-light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">🎓</div>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--amber-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--amber-light);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;"><path d="M12 4 2 9l10 5 10-5zM6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></div>
             <div style="background: white; border-radius: 14px; padding: 16px; border: 1.5px solid var(--cream-dark); flex: 1;">
               <div style="font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 4px;">Promocja Stanisława!</div>
               <div style="font-size: 13px; color: var(--ink-soft); margin-bottom: 8px;">Staszek skończył studia informatyczne na UW z wyróżnieniem!</div>
@@ -1798,7 +1805,7 @@
 
           <!-- News Item 4 -->
           <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative; z-index: 1;">
-            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--terracotta); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">🏠</div>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--terracotta); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--terracotta);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;"><path d="M3 11 12 3l9 8M5 10v10h14V10"/></svg></div>
             <div style="background: white; border-radius: 14px; padding: 16px; border: 1.5px solid var(--cream-dark); flex: 1;">
               <div style="font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 4px;">Nowy dom dla Agnieszki!</div>
               <div style="font-size: 13px; color: var(--ink-soft); margin-bottom: 8px;">Aga właśnie kupiła pierwszy własny apartament w Trójmieście.</div>
@@ -1808,9 +1815,9 @@
 
           <!-- News Item 5 -->
           <div style="display: flex; gap: 16px; position: relative; z-index: 1;">
-            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--forest-light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">🎂</div>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: white; border: 3px solid var(--forest-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--forest-light);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;"><path d="M4 12h16v8H4zM7 12V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4M12 6V3M9 3v3M15 3v3"/></svg></div>
             <div style="background: white; border-radius: 14px; padding: 16px; border: 1.5px solid var(--cream-dark); flex: 1;">
-              <div style="font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 4px;">Urodziny Babci! 🎉</div>
+              <div style="font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 4px;">Urodziny Babci!</div>
               <div style="font-size: 13px; color: var(--ink-soft); margin-bottom: 8px;">Nasza kochana Babcia Zofia skończyła 75 lat!</div>
               <div style="font-size: 11px; color: var(--gray-warm);">Miesiąc temu</div>
             </div>
@@ -1826,8 +1833,7 @@
   <!-- ADS PANEL -->
   <div class="ads-panel" id="ads-panel">
     <div class="ads-panel-content">
-      <div id="google-ads" style="text-align: center; font-size: 12px; color: var(--gray-warm); padding: 4px 8px;">
-        📢 Zone publicitaire - Configurez votre Google AdSense
+      <div id="google-ads" style="text-align: center; font-size: 12px; color: var(--gray-warm); padding: 4px 8px;">Zone publicitaire - Configurez votre Google AdSense
       </div>
     </div>
   </div>
@@ -1836,7 +1842,7 @@
   <button id="debug-btn" style="position: fixed; top: 70px; right: 20px; background: #FF6B6B; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; z-index: 9999; box-shadow: 0 2px 8px rgba(0,0,0,0.2); display: none;" onclick="toggleDebugPanel()" title="DEBUG PANEL - Admin only">🐛</button>
   <div id="debug-panel" style="position: fixed; top: 130px; right: 20px; background: black; color: #00FF00; border: 2px solid #00FF00; border-radius: 8px; padding: 15px; font-family: monospace; font-size: 11px; width: 320px; max-height: 500px; overflow-y: auto; z-index: 9998; display: none; box-shadow: 0 2px 12px rgba(0,0,0,0.4);">
     <div style="margin-bottom: 10px; border-bottom: 1px solid #00FF00; padding-bottom: 10px;">
-      <strong>🔍 DEBUG INFO</strong> <button onclick="document.getElementById('debug-panel').style.display='none'" style="background: none; border: none; color: #00FF00; cursor: pointer; float: right;">✕</button>
+      <strong>DEBUG INFO</strong> <button onclick="document.getElementById('debug-panel').style.display='none'" style="background: none; border: none; color: #00FF00; cursor: pointer; float: right;">✕</button>
     </div>
     <pre id="debug-content" style="margin: 0; white-space: pre-wrap; word-wrap: break-word;"></pre>
   </div>
@@ -1889,21 +1895,21 @@
     <div style="margin-bottom: 20px;">
       <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gray-warm); margin-bottom: 8px;">Wybierz walutę</label>
       <select id="donation-currency" onchange="updateDonationAmounts()" style="width: 100%; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; padding: 12px 14px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 14px; color: var(--ink); outline: none; cursor: pointer;">
-        <option value="PLN">🇵🇱 Polski Złoty (PLN)</option>
-        <option value="EUR">🇪🇺 Euro (EUR)</option>
-        <option value="USD">🇺🇸 Dolar US (USD)</option>
-        <option value="GBP">🇬🇧 Funt Sterling (GBP)</option>
-        <option value="CAD">🇨🇦 Dolar Kanadyjski (CAD)</option>
-        <option value="AUD">🇦🇺 Dolar Australijski (AUD)</option>
-        <option value="CHF">🇨🇭 Frank Szwajcarski (CHF)</option>
-        <option value="SEK">🇸🇪 Korona Szwedzka (SEK)</option>
-        <option value="NOK">🇳🇴 Korona Norweska (NOK)</option>
-        <option value="DKK">🇩🇰 Korona Duńska (DKK)</option>
-        <option value="CZK">🇨🇿 Korona Czeska (CZK)</option>
-        <option value="HUF">🇭🇺 Forint Węgierski (HUF)</option>
-        <option value="RON">🇷🇴 Leu Rumuński (RON)</option>
-        <option value="BGN">🇧🇬 Lew Bułgarski (BGN)</option>
-        <option value="HRK">🇭🇷 Kuna Chorwacka (HRK)</option>
+        <option value="PLN">Polski Złoty (PLN)</option>
+        <option value="EUR">Euro (EUR)</option>
+        <option value="USD">Dolar US (USD)</option>
+        <option value="GBP">Funt Sterling (GBP)</option>
+        <option value="CAD">Dolar Kanadyjski (CAD)</option>
+        <option value="AUD">Dolar Australijski (AUD)</option>
+        <option value="CHF">Frank Szwajcarski (CHF)</option>
+        <option value="SEK">Korona Szwedzka (SEK)</option>
+        <option value="NOK">Korona Norweska (NOK)</option>
+        <option value="DKK">Korona Duńska (DKK)</option>
+        <option value="CZK">Korona Czeska (CZK)</option>
+        <option value="HUF">Forint Węgierski (HUF)</option>
+        <option value="RON">Leu Rumuński (RON)</option>
+        <option value="BGN">Lew Bułgarski (BGN)</option>
+        <option value="HRK">Kuna Chorwacka (HRK)</option>
       </select>
     </div>
 
@@ -1918,8 +1924,7 @@
       <input type="number" id="donation-amount" value="20" min="1" placeholder="Inna kwota" onchange="updatePayPalButtons()">
     </div>
 
-    <div class="donation-note">
-      💙 Wpłata jest jednorazowa i w pełni dobrowolna. Bezpiecznie przetwarzana przez PayPal.
+    <div class="donation-note">Wpłata jest jednorazowa i w pełni dobrowolna. Bezpiecznie przetwarzana przez PayPal.
     </div>
 
     <!-- PayPal Button Container -->
@@ -1953,20 +1958,16 @@
         <div style="font-size: 12px; color: var(--gray-warm); margin-bottom: 14px; line-height: 1.6;">Partage ton lien d'invitation avec quelqu'un que tu veux parrainer. Il pourra créer un compte et tu seras son parrain.</div>
 
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <button style="flex: 1; min-width: 80px; background: var(--cream-dark); border: none; border-radius: 12px; padding: 10px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);" onclick="copyInviteLink()">
-            📋 Copier lien
+          <button style="flex: 1; min-width: 80px; background: var(--cream-dark); border: none; border-radius: 12px; padding: 10px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);" onclick="copyInviteLink()">Copier lien
           </button>
-          <button style="flex: 1; min-width: 80px; background: var(--cream-dark); border: none; border-radius: 12px; padding: 10px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);" onclick="shareViaWhatsApp()">
-            💬 WhatsApp
+          <button style="flex: 1; min-width: 80px; background: var(--cream-dark); border: none; border-radius: 12px; padding: 10px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);" onclick="shareViaWhatsApp()">WhatsApp
           </button>
-          <button style="flex: 1; min-width: 80px; background: var(--cream-dark); border: none; border-radius: 12px; padding: 10px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);" onclick="shareViaEmail()">
-            ✉️ Email
+          <button style="flex: 1; min-width: 80px; background: var(--cream-dark); border: none; border-radius: 12px; padding: 10px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);" onclick="shareViaEmail()">Email
           </button>
         </div>
       </div>
 
-      <div style="font-size: 12px; color: var(--gray-warm); background: rgba(200,121,42,0.07); border: 1px solid rgba(200,121,42,0.15); border-radius: 12px; padding: 10px 12px;">
-        💡 Tes parrainages : <strong>7 actifs</strong> • Réputation : ★ 4.9
+      <div style="font-size: 12px; color: var(--gray-warm); background: rgba(200,121,42,0.07); border: 1px solid rgba(200,121,42,0.15); border-radius: 12px; padding: 10px 12px;">Tes parrainages : <strong>7 actifs</strong> • Réputation : ★ 4.9
       </div>
     </div>
 
@@ -1977,26 +1978,26 @@
       <div style="display: flex; flex-direction: column; gap: 10px;">
         <!-- Request 1 -->
         <div style="background: var(--cream-dark); border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px;">
-          <div style="font-size: 26px;">👦</div>
+          <div class="avatar avatar-0" style="width:42px;height:42px;font-size:16px;">KN</div>
           <div style="flex: 1; min-width: 0;">
             <div style="font-weight: 700; font-size: 14px; color: var(--ink);">Kacper Nowak</div>
             <div style="font-size: 11px; color: var(--gray-warm); margin-top: 2px;">Demande d'adhésion • il y a 2 jours</div>
           </div>
           <div style="display: flex; gap: 6px;">
-            <button style="background: var(--forest-light); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="acceptSponsorship(this)">✓ Accepter</button>
+            <button style="background: var(--forest-light); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="acceptSponsorship(this)">Accepter</button>
             <button style="background: var(--terracotta); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="rejectSponsorship(this)">✕</button>
           </div>
         </div>
 
         <!-- Request 2 -->
         <div style="background: var(--cream-dark); border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px;">
-          <div style="font-size: 26px;">👩</div>
+          <div class="avatar avatar-2" style="width:42px;height:42px;font-size:16px;">AK</div>
           <div style="flex: 1; min-width: 0;">
             <div style="font-weight: 700; font-size: 14px; color: var(--ink);">Ania Kowalski</div>
             <div style="font-size: 11px; color: var(--gray-warm); margin-top: 2px;">Demande d'adhésion • il y a 5 jours</div>
           </div>
           <div style="display: flex; gap: 6px;">
-            <button style="background: var(--forest-light); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="acceptSponsorship(this)">✓ Accepter</button>
+            <button style="background: var(--forest-light); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="acceptSponsorship(this)">Accepter</button>
             <button style="background: var(--terracotta); color: white; border: none; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onclick="rejectSponsorship(this)">✕</button>
           </div>
         </div>
@@ -2021,10 +2022,10 @@
 
     <!-- Seller info -->
     <div style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 16px; padding: 14px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
-      <div style="font-size: 32px;">👩‍🦱</div>
+      <div class="avatar avatar-2" style="width:42px;height:42px;font-size:16px;">M</div>
       <div>
         <div style="font-weight: 700; font-size: 14px; color: var(--ink);">Mama</div>
-        <div style="font-size: 12px; color: var(--gray-warm); margin-top: 2px;">Matka • Zaufana ✓</div>
+        <div style="font-size: 12px; color: var(--gray-warm); margin-top: 2px;">Matka • Zaufana</div>
       </div>
     </div>
 
@@ -2032,7 +2033,7 @@
 
     <div id="payment-methods">
       <div class="payment-method selected" onclick="selectPayment(this, 'blik')">
-        <div class="payment-icon">📱</div>
+        <div class="payment-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg></div>
         <div>
           <div class="payment-name">BLIK</div>
           <div class="payment-desc">Code 6 chiffres instantané</div>
@@ -2040,7 +2041,7 @@
         <div class="payment-radio"></div>
       </div>
       <div class="payment-method" onclick="selectPayment(this, 'card')">
-        <div class="payment-icon">💳</div>
+        <div class="payment-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20M6 16h4"/></svg></div>
         <div>
           <div class="payment-name">Carte bancaire</div>
           <div class="payment-desc">Visa, Mastercard, Amex</div>
@@ -2048,7 +2049,7 @@
         <div class="payment-radio"></div>
       </div>
       <div class="payment-method" onclick="selectPayment(this, 'transfer')">
-        <div class="payment-icon">🏦</div>
+        <div class="payment-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9 12 4l9 5M5 9v9h14V9M9 12v4M12 12v4M15 12v4M3 20h18"/></svg></div>
         <div>
           <div class="payment-name">Virement bancaire</div>
           <div class="payment-desc">Pour montants élevés</div>
@@ -2093,7 +2094,7 @@
 <div class="modal-overlay" id="modal-profile-completion" onclick="if(event.target===this)closeModal('modal-profile-completion')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Complétez votre profil 📝</div>
+    <div class="sheet-title">Complétez votre profil</div>
     <div class="sheet-sub">Plus d'informations = Plus de visibilité et de confiance dans le réseau.</div>
 
     <div class="form-group">
@@ -2142,7 +2143,7 @@
 <div class="modal-overlay" id="modal-contacts" onclick="if(event.target===this)closeModal('modal-contacts')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Répertoire familial 👥</div>
+    <div class="sheet-title">Répertoire familial</div>
     <div class="sheet-sub">Tous les membres du réseau Zaufani Rodzina avec qui tu peux échanger.</div>
 
     <!-- Search bar -->
@@ -2154,10 +2155,10 @@
     <div style="margin-bottom: 12px;">
       <div style="font-size: 11px; font-weight: 700; color: var(--gray-warm); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">Pays</div>
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button class="filter-chip" data-filter-type="country" data-filter-value="" onclick="toggleFilter(this); filterContacts();" style="background: var(--cream-dark); border: none; border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">✓ Tous</button>
-        <button class="filter-chip" data-filter-type="country" data-filter-value="Pologne" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">🇵🇱 Pologne</button>
-        <button class="filter-chip" data-filter-type="country" data-filter-value="France" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">🇫🇷 France</button>
-        <button class="filter-chip" data-filter-type="country" data-filter-value="Allemagne" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">🇩🇪 Allemagne</button>
+        <button class="filter-chip" data-filter-type="country" data-filter-value="" onclick="toggleFilter(this); filterContacts();" style="background: var(--cream-dark); border: none; border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Tous</button>
+        <button class="filter-chip" data-filter-type="country" data-filter-value="Pologne" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Pologne</button>
+        <button class="filter-chip" data-filter-type="country" data-filter-value="France" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">France</button>
+        <button class="filter-chip" data-filter-type="country" data-filter-value="Allemagne" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Allemagne</button>
       </div>
     </div>
 
@@ -2165,11 +2166,11 @@
     <div style="margin-bottom: 12px;">
       <div style="font-size: 11px; font-weight: 700; color: var(--gray-warm); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">Profession</div>
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button class="filter-chip" data-filter-type="profession" data-filter-value="" onclick="toggleFilter(this); filterContacts();" style="background: var(--cream-dark); border: none; border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">✓ Tous</button>
-        <button class="filter-chip" data-filter-type="profession" data-filter-value="Ingénieur IT" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">💻 Tech</button>
-        <button class="filter-chip" data-filter-type="profession" data-filter-value="Avocate" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">⚖️ Droit</button>
-        <button class="filter-chip" data-filter-type="profession" data-filter-value="Médecin" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">⚕️ Santé</button>
-        <button class="filter-chip" data-filter-type="profession" data-filter-value="Chef cuisinier" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">👨‍🍳 Cuisine</button>
+        <button class="filter-chip" data-filter-type="profession" data-filter-value="" onclick="toggleFilter(this); filterContacts();" style="background: var(--cream-dark); border: none; border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Tous</button>
+        <button class="filter-chip" data-filter-type="profession" data-filter-value="Ingénieur IT" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Tech</button>
+        <button class="filter-chip" data-filter-type="profession" data-filter-value="Avocate" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Droit</button>
+        <button class="filter-chip" data-filter-type="profession" data-filter-value="Médecin" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Santé</button>
+        <button class="filter-chip" data-filter-type="profession" data-filter-value="Chef cuisinier" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">‍🍳 Cuisine</button>
       </div>
     </div>
 
@@ -2177,11 +2178,11 @@
     <div style="margin-bottom: 16px;">
       <div style="font-size: 11px; font-weight: 700; color: var(--gray-warm); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">Centres d'intérêt</div>
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button class="filter-chip" data-filter-type="interest" data-filter-value="" onclick="toggleFilter(this); filterContacts();" style="background: var(--cream-dark); border: none; border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">✓ Tous</button>
-        <button class="filter-chip" data-filter-type="interest" data-filter-value="Voyages" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">✈️ Voyages</button>
-        <button class="filter-chip" data-filter-type="interest" data-filter-value="Tech" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">🔬 Tech</button>
-        <button class="filter-chip" data-filter-type="interest" data-filter-value="Cuisine" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">🍴 Cuisine</button>
-        <button class="filter-chip" data-filter-type="interest" data-filter-value="Art" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">🎨 Art</button>
+        <button class="filter-chip" data-filter-type="interest" data-filter-value="" onclick="toggleFilter(this); filterContacts();" style="background: var(--cream-dark); border: none; border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Tous</button>
+        <button class="filter-chip" data-filter-type="interest" data-filter-value="Voyages" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Voyages</button>
+        <button class="filter-chip" data-filter-type="interest" data-filter-value="Tech" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Tech</button>
+        <button class="filter-chip" data-filter-type="interest" data-filter-value="Cuisine" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Cuisine</button>
+        <button class="filter-chip" data-filter-type="interest" data-filter-value="Art" onclick="toggleFilter(this); filterContacts();" style="background: white; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--ink); cursor: pointer; transition: all 0.2s;">Art</button>
       </div>
     </div>
 
@@ -2207,7 +2208,7 @@
 <div class="modal-overlay" id="modal-sponsor-request" onclick="if(event.target===this)closeModal('modal-sponsor-request')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Demande de parrainage 🤝</div>
+    <div class="sheet-title">Demande de parrainage</div>
     <div class="sheet-sub">Sélectionne au minimum 2 parrains de ta famille. Ils recevront une notification par email.</div>
 
     <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-warm); margin-bottom: 12px;">Tous les parrains disponibles</div>
@@ -2217,8 +2218,7 @@
     </div>
 
     <div style="background: rgba(200,121,42,0.07); border: 1px solid rgba(200,121,42,0.15); border-radius: 12px; padding: 12px; margin-bottom: 16px;">
-      <div style="font-size: 13px; color: var(--amber-dark); line-height: 1.6;">
-        💡 Chaque parrain que tu sélectionnes recevra une notification email pour confirmer son parrainage.
+      <div style="font-size: 13px; color: var(--amber-dark); line-height: 1.6;">Chaque parrain que tu sélectionnes recevra une notification email pour confirmer son parrainage.
       </div>
     </div>
 
@@ -2237,54 +2237,54 @@
 <div class="modal-overlay" id="modal-language" onclick="if(event.target===this)closeModal('modal-language')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Wybierz język 🌐</div>
+    <div class="sheet-title">Wybierz język</div>
     <div class="sheet-sub">Aplikacja będzie wyświetlana w wybranym języku</div>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; max-height: 400px; overflow-y: auto;">
       <!-- European Languages -->
-      <button onclick="changeLanguage('pl')" class="lang-btn selected" data-lang="pl" style="padding: 12px; background: white; border: 1.5px solid var(--amber); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--amber);">🇵🇱 Polski</button>
-      <button onclick="changeLanguage('en')" class="lang-btn" data-lang="en" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇬🇧 English</button>
-      <button onclick="changeLanguage('fr')" class="lang-btn" data-lang="fr" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇫🇷 Français</button>
-      <button onclick="changeLanguage('de')" class="lang-btn" data-lang="de" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇩🇪 Deutsch</button>
-      <button onclick="changeLanguage('es')" class="lang-btn" data-lang="es" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇪🇸 Español</button>
-      <button onclick="changeLanguage('it')" class="lang-btn" data-lang="it" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇮🇹 Italiano</button>
-      <button onclick="changeLanguage('pt')" class="lang-btn" data-lang="pt" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇵🇹 Português</button>
-      <button onclick="changeLanguage('pt-br')" class="lang-btn" data-lang="pt-br" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇧🇷 Português (BR)</button>
-      <button onclick="changeLanguage('ro')" class="lang-btn" data-lang="ro" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇷🇴 Română</button>
-      <button onclick="changeLanguage('cs')" class="lang-btn" data-lang="cs" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇨🇿 Čeština</button>
-      <button onclick="changeLanguage('hu')" class="lang-btn" data-lang="hu" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇭🇺 Magyar</button>
-      <button onclick="changeLanguage('sk')" class="lang-btn" data-lang="sk" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇸🇰 Slovenčina</button>
-      <button onclick="changeLanguage('hr')" class="lang-btn" data-lang="hr" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇭🇷 Hrvatski</button>
-      <button onclick="changeLanguage('sl')" class="lang-btn" data-lang="sl" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇸🇮 Slovenščina</button>
-      <button onclick="changeLanguage('bg')" class="lang-btn" data-lang="bg" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇧🇬 Български</button>
-      <button onclick="changeLanguage('el')" class="lang-btn" data-lang="el" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇬🇷 Ελληνικά</button>
-      <button onclick="changeLanguage('sv')" class="lang-btn" data-lang="sv" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇸🇪 Svenska</button>
-      <button onclick="changeLanguage('no')" class="lang-btn" data-lang="no" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇳🇴 Norsk</button>
-      <button onclick="changeLanguage('da')" class="lang-btn" data-lang="da" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇩🇰 Dansk</button>
-      <button onclick="changeLanguage('nl')" class="lang-btn" data-lang="nl" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇳🇱 Nederlands</button>
-      <button onclick="changeLanguage('fi')" class="lang-btn" data-lang="fi" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇫🇮 Suomi</button>
-      <button onclick="changeLanguage('is')" class="lang-btn" data-lang="is" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇮🇸 Íslenska</button>
-      <button onclick="changeLanguage('ca')" class="lang-btn" data-lang="ca" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇨🇦 Català</button>
-      <button onclick="changeLanguage('eu')" class="lang-btn" data-lang="eu" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇪🇸 Euskera</button>
-      <button onclick="changeLanguage('gl')" class="lang-btn" data-lang="gl" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇪🇸 Galego</button>
-      <button onclick="changeLanguage('lt')" class="lang-btn" data-lang="lt" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇱🇹 Lietuvių</button>
-      <button onclick="changeLanguage('lv')" class="lang-btn" data-lang="lv" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇱🇻 Latviešu</button>
-      <button onclick="changeLanguage('et')" class="lang-btn" data-lang="et" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇪🇪 Eesti</button>
-      <button onclick="changeLanguage('uk')" class="lang-btn" data-lang="uk" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇺🇦 Українська</button>
-      <button onclick="changeLanguage('ru')" class="lang-btn" data-lang="ru" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇷🇺 Русский</button>
-      <button onclick="changeLanguage('sq')" class="lang-btn" data-lang="sq" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇦🇱 Shqip</button>
-      <button onclick="changeLanguage('sr')" class="lang-btn" data-lang="sr" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇷🇸 Српски</button>
-      <button onclick="changeLanguage('mk')" class="lang-btn" data-lang="mk" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇲🇰 Македонски</button>
-      <button onclick="changeLanguage('bs')" class="lang-btn" data-lang="bs" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇧🇦 Bosanski</button>
+      <button onclick="changeLanguage('pl')" class="lang-btn selected" data-lang="pl" style="padding: 12px; background: white; border: 1.5px solid var(--amber); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--amber);">Polski</button>
+      <button onclick="changeLanguage('en')" class="lang-btn" data-lang="en" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">English</button>
+      <button onclick="changeLanguage('fr')" class="lang-btn" data-lang="fr" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Français</button>
+      <button onclick="changeLanguage('de')" class="lang-btn" data-lang="de" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Deutsch</button>
+      <button onclick="changeLanguage('es')" class="lang-btn" data-lang="es" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Español</button>
+      <button onclick="changeLanguage('it')" class="lang-btn" data-lang="it" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Italiano</button>
+      <button onclick="changeLanguage('pt')" class="lang-btn" data-lang="pt" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Português</button>
+      <button onclick="changeLanguage('pt-br')" class="lang-btn" data-lang="pt-br" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Português (BR)</button>
+      <button onclick="changeLanguage('ro')" class="lang-btn" data-lang="ro" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Română</button>
+      <button onclick="changeLanguage('cs')" class="lang-btn" data-lang="cs" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Čeština</button>
+      <button onclick="changeLanguage('hu')" class="lang-btn" data-lang="hu" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Magyar</button>
+      <button onclick="changeLanguage('sk')" class="lang-btn" data-lang="sk" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Slovenčina</button>
+      <button onclick="changeLanguage('hr')" class="lang-btn" data-lang="hr" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Hrvatski</button>
+      <button onclick="changeLanguage('sl')" class="lang-btn" data-lang="sl" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Slovenščina</button>
+      <button onclick="changeLanguage('bg')" class="lang-btn" data-lang="bg" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Български</button>
+      <button onclick="changeLanguage('el')" class="lang-btn" data-lang="el" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Ελληνικά</button>
+      <button onclick="changeLanguage('sv')" class="lang-btn" data-lang="sv" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Svenska</button>
+      <button onclick="changeLanguage('no')" class="lang-btn" data-lang="no" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Norsk</button>
+      <button onclick="changeLanguage('da')" class="lang-btn" data-lang="da" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Dansk</button>
+      <button onclick="changeLanguage('nl')" class="lang-btn" data-lang="nl" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Nederlands</button>
+      <button onclick="changeLanguage('fi')" class="lang-btn" data-lang="fi" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Suomi</button>
+      <button onclick="changeLanguage('is')" class="lang-btn" data-lang="is" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Íslenska</button>
+      <button onclick="changeLanguage('ca')" class="lang-btn" data-lang="ca" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Català</button>
+      <button onclick="changeLanguage('eu')" class="lang-btn" data-lang="eu" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Euskera</button>
+      <button onclick="changeLanguage('gl')" class="lang-btn" data-lang="gl" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Galego</button>
+      <button onclick="changeLanguage('lt')" class="lang-btn" data-lang="lt" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Lietuvių</button>
+      <button onclick="changeLanguage('lv')" class="lang-btn" data-lang="lv" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Latviešu</button>
+      <button onclick="changeLanguage('et')" class="lang-btn" data-lang="et" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Eesti</button>
+      <button onclick="changeLanguage('uk')" class="lang-btn" data-lang="uk" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Українська</button>
+      <button onclick="changeLanguage('ru')" class="lang-btn" data-lang="ru" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Русский</button>
+      <button onclick="changeLanguage('sq')" class="lang-btn" data-lang="sq" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Shqip</button>
+      <button onclick="changeLanguage('sr')" class="lang-btn" data-lang="sr" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Српски</button>
+      <button onclick="changeLanguage('mk')" class="lang-btn" data-lang="mk" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Македонски</button>
+      <button onclick="changeLanguage('bs')" class="lang-btn" data-lang="bs" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Bosanski</button>
       <!-- Americas -->
-      <button onclick="changeLanguage('fr-ca')" class="lang-btn" data-lang="fr-ca" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇨🇦 Français (CA)</button>
-      <button onclick="changeLanguage('en-us')" class="lang-btn" data-lang="en-us" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇺🇸 English (US)</button>
-      <button onclick="changeLanguage('es-mx')" class="lang-btn" data-lang="es-mx" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇲🇽 Español (MX)</button>
-      <button onclick="changeLanguage('es-ar')" class="lang-btn" data-lang="es-ar" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇦🇷 Español (AR)</button>
-      <button onclick="changeLanguage('es-cl')" class="lang-btn" data-lang="es-cl" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇨🇱 Español (CL)</button>
-      <button onclick="changeLanguage('es-co')" class="lang-btn" data-lang="es-co" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇨🇴 Español (CO)</button>
-      <button onclick="changeLanguage('es-pe')" class="lang-btn" data-lang="es-pe" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇵🇪 Español (PE)</button>
-      <button onclick="changeLanguage('es-ve')" class="lang-btn" data-lang="es-ve" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">🇻🇪 Español (VE)</button>
+      <button onclick="changeLanguage('fr-ca')" class="lang-btn" data-lang="fr-ca" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Français (CA)</button>
+      <button onclick="changeLanguage('en-us')" class="lang-btn" data-lang="en-us" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">English (US)</button>
+      <button onclick="changeLanguage('es-mx')" class="lang-btn" data-lang="es-mx" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Español (MX)</button>
+      <button onclick="changeLanguage('es-ar')" class="lang-btn" data-lang="es-ar" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Español (AR)</button>
+      <button onclick="changeLanguage('es-cl')" class="lang-btn" data-lang="es-cl" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Español (CL)</button>
+      <button onclick="changeLanguage('es-co')" class="lang-btn" data-lang="es-co" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Español (CO)</button>
+      <button onclick="changeLanguage('es-pe')" class="lang-btn" data-lang="es-pe" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Español (PE)</button>
+      <button onclick="changeLanguage('es-ve')" class="lang-btn" data-lang="es-ve" style="padding: 12px; background: white; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--ink);">Español (VE)</button>
     </div>
 
     <button style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px; font-family: 'Inter', 'Lato', system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 16px;" onclick="closeModal('modal-language')">
@@ -2299,7 +2299,7 @@
 <div class="modal-overlay" id="modal-news-creation" onclick="if(event.target===this)closeModal('modal-news-creation')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Nowa nowinka 📰</div>
+    <div class="sheet-title">Nowa nowinka</div>
     <div class="sheet-sub">Podziel się ważną wiadomością z rodziną</div>
 
     <div class="form-group">
@@ -2342,7 +2342,7 @@
 <div class="modal-overlay" id="modal-privacy" onclick="if(event.target===this)closeModal('modal-privacy')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">🔒 Paramètres de Confidentialité</div>
+    <div class="sheet-title">Paramètres de Confidentialité</div>
     <div class="sheet-sub">Contrôlez qui peut voir vos annonces</div>
 
     <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
@@ -2350,7 +2350,7 @@
       <!-- Public Option -->
       <div class="privacy-option" onclick="setPrivacyLevel('public', this)" data-level="public" style="padding: 16px; border: 2px solid var(--cream-dark); border-radius: 12px; cursor: pointer; transition: all 0.2s;">
         <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="font-size: 24px;">🌐</div>
+          <div style="color: var(--amber-dark);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:24px;height:24px;"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
           <div>
             <div style="font-weight: 700; font-size: 14px; color: var(--ink);">Public</div>
             <div style="font-size: 12px; color: var(--gray-warm);">Tout le monde peut voir vos annonces</div>
@@ -2361,7 +2361,7 @@
       <!-- Family Only Option -->
       <div class="privacy-option" onclick="setPrivacyLevel('family', this)" data-level="family" style="padding: 16px; border: 2px solid var(--cream-dark); border-radius: 12px; cursor: pointer; transition: all 0.2s;">
         <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="font-size: 24px;">👨‍👩‍👧‍👦</div>
+          <div style="color: var(--amber-dark);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:24px;height:24px;"><circle cx="9" cy="8" r="3"/><path d="M3 21c0-3 3-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15 17c2 0 6 1 6 4"/></svg></div>
           <div>
             <div style="font-weight: 700; font-size: 14px; color: var(--ink);">Famille uniquement</div>
             <div style="font-size: 12px; color: var(--gray-warm);">Seulement les membres confirmés de Zaufani</div>
@@ -2372,7 +2372,7 @@
       <!-- Private Option -->
       <div class="privacy-option" onclick="setPrivacyLevel('private', this)" data-level="private" style="padding: 16px; border: 2px solid var(--cream-dark); border-radius: 12px; cursor: pointer; transition: all 0.2s;">
         <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="font-size: 24px;">🔒</div>
+          <div style="color: var(--amber-dark);"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:24px;height:24px;"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
           <div>
             <div style="font-weight: 700; font-size: 14px; color: var(--ink);">Privé</div>
             <div style="font-size: 12px; color: var(--gray-warm);">Personne ne peut voir vos annonces</div>
@@ -2394,7 +2394,7 @@
 <div class="modal-overlay" id="modal-edit-profile" onclick="if(event.target===this)closeModal('modal-edit-profile')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">👤 Modifier le Profil</div>
+    <div class="sheet-title">Modifier le Profil</div>
     <div class="sheet-sub">Mettez à jour vos informations personnelles</div>
 
     <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 16px;">
@@ -2455,7 +2455,7 @@
 <div class="modal-overlay" id="modal-tinder-contacts" onclick="if(event.target===this)closeModal('modal-tinder-contacts')">
   <div class="bottom-sheet" style="max-height: 90vh; overflow-y: auto;">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Tes contacts 💫</div>
+    <div class="sheet-title">Tes contacts</div>
     <div class="sheet-sub">Retrouve qui est déjà inscrit et demande-leur un parrainage</div>
 
     <!-- Contact Cards -->
@@ -2471,7 +2471,7 @@
 <div class="modal-overlay" id="modal-invitation-link" onclick="if(event.target===this)closeModal('modal-invitation-link')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Partage ton lien 🔗</div>
+    <div class="sheet-title">Partage ton lien</div>
     <div class="sheet-sub">Envoie ce lien à tes futurs parrains pour qu'ils puissent te soutenir</div>
 
     <div style="background: var(--cream-dark); border-radius: 16px; padding: 20px; margin-top: 20px; margin-bottom: 16px;">
@@ -2479,21 +2479,17 @@
       <div style="background: white; border-radius: 12px; padding: 12px; font-family: monospace; font-size: 12px; word-break: break-all; color: var(--ink); border: 1px solid var(--cream-dark); margin-bottom: 12px;" id="invitation-link-text">
         https://zaufani.app/invite?code=ABC123XYZ789
       </div>
-      <button onclick="copyInvitationLink()" style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-        📋 Copier le lien
+      <button onclick="copyInvitationLink()" style="width: 100%; background: var(--amber); color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;">Copier le lien
       </button>
     </div>
 
     <!-- Share Buttons -->
     <div style="display: flex; flex-direction: column; gap: 10px;">
-      <button onclick="shareInvitationViaWhatsApp()" style="width: 100%; background: #25D366; color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">
-        💬 Partager sur WhatsApp
+      <button onclick="shareInvitationViaWhatsApp()" style="width: 100%; background: #25D366; color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">Partager sur WhatsApp
       </button>
-      <button onclick="shareInvitationViaEmail()" style="width: 100%; background: #EA4335; color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">
-        📧 Partager par Email
+      <button onclick="shareInvitationViaEmail()" style="width: 100%; background: #EA4335; color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">Partager par Email
       </button>
-      <button onclick="shareInvitationViaSMS()" style="width: 100%; background: #007AFF; color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">
-        📱 Partager par SMS
+      <button onclick="shareInvitationViaSMS()" style="width: 100%; background: #007AFF; color: white; border: none; border-radius: 12px; padding: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">Partager par SMS
       </button>
     </div>
 
@@ -3092,7 +3088,7 @@
     modal.innerHTML = `
       <div class="bottom-sheet" style="max-height: 95vh;">
         <div class="sheet-handle"></div>
-        <div class="sheet-title">🔐 Panel Admin</div>
+        <div class="sheet-title">Panel Admin</div>
         <div id="admin-panel-content" style="padding: 0 20px 40px;"></div>
       </div>
     `;
@@ -5998,7 +5994,7 @@
     modal.innerHTML = `
       <div class="bottom-sheet" style="max-height: 95vh; overflow-y: auto;">
         <div class="sheet-handle"></div>
-        <div class="sheet-title">👑 Panneau Admin</div>
+        <div class="sheet-title">Panneau Admin</div>
         <div class="sheet-sub">Gestion complète de la plateforme</div>
 
         <div style="background: var(--cream-dark); border-radius: 14px; padding: 16px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
