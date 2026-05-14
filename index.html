@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#FAF6EF">
+<meta name="theme-color" content="#F2EDE2">
 <link rel="manifest" href="./manifest.json">
 <title>Zaufani — Rodzina</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,8 +27,8 @@
     --amber: #C8792A;
     --amber-light: #E8A050;
     --amber-dark: #8B4E12;
-    --cream: #FAF6EF;
-    --cream-dark: #F0E8D8;
+    --cream: #F2EDE2;
+    --cream-dark: #E5DCC9;
     --terracotta: #B85C38;
     --forest: #2D5016;
     --forest-light: #3D6B1F;
@@ -73,11 +73,15 @@
     margin: 0 auto;
   }
 
-  /* ── FOLK PATTERN ── */
+  /* ── BACKGROUND TEXTURE (premium paper grain) ── */
   .folk-bg {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 0; opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='12' fill='none' stroke='%23C8792A' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='6' fill='none' stroke='%23C8792A' stroke-width='0.7'/%3E%3Cpath d='M30 18 L32 24 L30 23 L28 24Z' fill='%23C8792A'/%3E%3Cpath d='M30 42 L32 36 L30 37 L28 36Z' fill='%23C8792A'/%3E%3Cpath d='M18 30 L24 28 L23 30 L24 32Z' fill='%23C8792A'/%3E%3Cpath d='M42 30 L36 28 L37 30 L36 32Z' fill='%23C8792A'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+    /* Layered: paper noise + soft vignette for tactile depth */
+    background-image:
+      radial-gradient(ellipse at center top, rgba(26,18,8,0) 0%, rgba(26,18,8,0.035) 90%),
+      url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.07  0 0 0 0 0.03  0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: auto, 180px 180px;
   }
 
   /* ── SCREENS ── */

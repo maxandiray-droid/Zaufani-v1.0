@@ -6,24 +6,24 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FAF6EF",
-  "theme_color": "#d4a574",
+  "background_color": "#F2EDE2",
+  "theme_color": "#C8792A",
   "categories": ["lifestyle", "shopping", "family"],
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23d4a574' width='192' height='192'/%3E%3Ctext x='96' y='96' font-size='120' font-family='Arial' fill='%23FAF6EF' text-anchor='middle' dominant-baseline='central'%3E✦%3C/text%3E%3C/svg%3E",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23C8792A' width='192' height='192'/%3E%3Cg transform='translate(96 96) scale(2.6)' fill='%23F2EDE2'%3E%3Cpath d='M0 -24 L5 -10 L0 -4 L-5 -10 Z'/%3E%3Cpath d='M0 24 L5 10 L0 4 L-5 10 Z'/%3E%3Cpath d='M-24 0 L-10 -5 L-4 0 L-10 5 Z'/%3E%3Cpath d='M24 0 L10 -5 L4 0 L10 5 Z'/%3E%3Ccircle r='3.2'/%3E%3C/g%3E%3C/svg%3E",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23d4a574' width='192' height='192' rx='45'/%3E%3Ctext x='96' y='96' font-size='120' font-family='Arial' fill='%23FAF6EF' text-anchor='middle' dominant-baseline='central'%3E✦%3C/text%3E%3C/svg%3E",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23C8792A' width='192' height='192' rx='45'/%3E%3Cg transform='translate(96 96) scale(2.4)' fill='%23F2EDE2'%3E%3Cpath d='M0 -24 L5 -10 L0 -4 L-5 -10 Z'/%3E%3Cpath d='M0 24 L5 10 L0 4 L-5 10 Z'/%3E%3Cpath d='M-24 0 L-10 -5 L-4 0 L-10 5 Z'/%3E%3Cpath d='M24 0 L10 -5 L4 0 L10 5 Z'/%3E%3Ccircle r='3.2'/%3E%3C/g%3E%3C/svg%3E",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "maskable"
     },
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect fill='%23d4a574' width='512' height='512'/%3E%3Ctext x='256' y='256' font-size='320' font-family='Arial' fill='%23FAF6EF' text-anchor='middle' dominant-baseline='central'%3E✦%3C/text%3E%3C/svg%3E",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect fill='%23C8792A' width='512' height='512'/%3E%3Cg transform='translate(256 256) scale(7)' fill='%23F2EDE2'%3E%3Cpath d='M0 -24 L5 -10 L0 -4 L-5 -10 Z'/%3E%3Cpath d='M0 24 L5 10 L0 4 L-5 10 Z'/%3E%3Cpath d='M-24 0 L-10 -5 L-4 0 L-10 5 Z'/%3E%3Cpath d='M24 0 L10 -5 L4 0 L10 5 Z'/%3E%3Ccircle r='3.2'/%3E%3C/g%3E%3C/svg%3E",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
